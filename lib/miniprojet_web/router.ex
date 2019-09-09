@@ -21,5 +21,22 @@ defmodule GothamWeb.Router do
 
   scope "/api", GothamWeb do
     pipe_through :api
+
+    # User routes
+    get "/users/:userID", UserController, :show
+    post "/users", UserController, :create
+    put "/users/:userID", UserController, :update
+    delete "/users/:userID", UserController, :delete
+
+    # Working Time routes
+    get "/workingtimes/:userID", WorkingTimeController, :show_all
+    get "/workingtimes/:userID/:workingtimeID", WorkingTimeController, :show
+    post "/workingtimes/:userID", WorkingTimeController, :create
+    put "/workingtimes/:id", WorkingTimeController, :update
+    delete "/workingtimes/:id", WorkingTimeController, :delete
+
+    # Clocking routes
+    get "/clocks/:userID", ClockController, :show
+    post "/clocks/:userID", ClockController, :score # Manage departures and arrivals
   end
 end
