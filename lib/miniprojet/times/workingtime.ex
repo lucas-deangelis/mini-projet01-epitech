@@ -1,4 +1,4 @@
-defmodule Gotham.Accounts.Workingtime do
+defmodule Gotham.Times.Workingtime do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -15,5 +15,7 @@ defmodule Gotham.Accounts.Workingtime do
     workingtime
     |> cast(attrs, [:start, :end])
     |> validate_required([:start, :end])
+    |> validate_format(:end, ~r/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
+    |> validate_format(:start, ~r/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
   end
 end

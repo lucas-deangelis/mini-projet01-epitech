@@ -1,8 +1,8 @@
 defmodule GothamWeb.ClockControllerTest do
   use GothamWeb.ConnCase
 
-  alias Gotham.Accounts
-  alias Gotham.Accounts.Clock
+  alias Gotham.Times
+  alias Gotham.Times.Clock
 
   @create_attrs %{
     status: true,
@@ -15,7 +15,7 @@ defmodule GothamWeb.ClockControllerTest do
   @invalid_attrs %{status: nil, time: nil}
 
   def fixture(:clock) do
-    {:ok, clock} = Accounts.create_clock(@create_attrs)
+    {:ok, clock} = Times.create_clock(@create_attrs)
     clock
   end
 

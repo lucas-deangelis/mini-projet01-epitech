@@ -1,4 +1,4 @@
-defmodule Gotham.Clock do
+defmodule Gotham.Times.Clock do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -16,5 +16,4 @@ defmodule Gotham.Clock do
     |> cast(attrs, [:time, :status])
     |> validate_required([:time, :status])
   end
-
 end

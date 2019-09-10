@@ -1,8 +1,8 @@
 defmodule GothamWeb.WorkingtimeControllerTest do
   use GothamWeb.ConnCase
 
-  alias Gotham.Accounts
-  alias Gotham.Accounts.Workingtime
+  alias Gotham.Times
+  alias Gotham.Times.Workingtime
 
   @create_attrs %{
     end: ~N[2010-04-17 14:00:00],
@@ -15,7 +15,7 @@ defmodule GothamWeb.WorkingtimeControllerTest do
   @invalid_attrs %{end: nil, start: nil}
 
   def fixture(:workingtime) do
-    {:ok, workingtime} = Accounts.create_workingtime(@create_attrs)
+    {:ok, workingtime} = Times.create_workingtime(@create_attrs)
     workingtime
   end
 
