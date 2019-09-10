@@ -134,6 +134,24 @@ defmodule Gotham.Times do
   def get_workingtime!(id), do: Repo.get!(Workingtime, id)
 
   @doc """
+  Gets a single workingtime by its attributes start and end.
+
+  Raises `Ecto.NoResultsError` if the Workingtime does not exist.
+
+  ## Examples
+
+      iex> get_workingtime!(123)
+      %Workingtime{}
+
+      iex> get_workingtime!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_workingtime_by_attr!(id, starttime, endtime) do
+    Repo.get!(Workingtime, id)
+  end
+
+  @doc """
   Creates a workingtime.
 
   ## Examples

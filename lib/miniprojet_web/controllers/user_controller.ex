@@ -35,7 +35,7 @@ defmodule GothamWeb.UserController do
     end
   end
 
-  def update(conn, %{"userID" => id, "user" => user_params}) do
+  def update(conn, %{"id" => id, "user" => user_params}) do
     user = Accounts.get_user!(id)
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
@@ -43,7 +43,7 @@ defmodule GothamWeb.UserController do
     end
   end
 
-  def delete(conn, %{"userID" => id}) do
+  def delete(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
 
     with {:ok, %User{}} <- Accounts.delete_user(user) do

@@ -6,11 +6,6 @@ defmodule GothamWeb.WorkingtimeController do
 
   action_fallback GothamWeb.FallbackController
 
-  def index(conn, _params) do
-    workingtimes = Times.list_workingtimes()
-    render(conn, "index.json", workingtimes: workingtimes)
-  end
-
   def create(conn, %{"workingtime" => workingtime_params}) do
     with {:ok, %Workingtime{} = workingtime} <- Times.create_workingtime(workingtime_params) do
       conn
@@ -20,9 +15,19 @@ defmodule GothamWeb.WorkingtimeController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"userID" => id}) do
     workingtime = Times.get_workingtime!(id)
     render(conn, "show.json", workingtime: workingtime)
+  end
+
+  def show_by_attr(conn, %{"userID" => id}) do
+    params = conn.query_params
+
+    # check that there a start and a end params
+    if Map.has_key?(params, "start") and Map.has_key?(params, "end") do
+      workingtime = Times.get_workingtime_by_attr!(Map.get(params, "start"), Map.get(params, "end")) # get the working time by attributes
+      render(conn, "show.json", workingtime: workingtime)
+    end
   end
 
   def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
