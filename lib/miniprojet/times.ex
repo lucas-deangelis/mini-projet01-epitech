@@ -7,6 +7,7 @@ defmodule Gotham.Times do
   alias Gotham.Repo
   alias Gotham.Times.Clock
   alias Gotham.Times.Workingtime
+  alias Gotham.Accounts.User
 
   @doc """
   Returns the list of clocks.
@@ -36,6 +37,31 @@ defmodule Gotham.Times do
 
   """
   def get_clock!(id), do: Repo.get!(Clock, id)
+
+  @doc """
+  Gets a single clock by user id.
+
+  Raises `Ecto.NoResultsError` if the Clock does not exist.
+
+  ## Examples
+
+      iex> get_clock!(123)
+      %Clock{}
+
+      iex> get_clock!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_clock_by_user!(id) do
+
+    query = from c in Clock,
+      join: u in User,
+      on: c.user_id == u.id,
+      where: c.status == true,
+      where: u.id == ^id
+
+    Repo.last(query)
+  end
 
   @doc """
   Creates a clock.
