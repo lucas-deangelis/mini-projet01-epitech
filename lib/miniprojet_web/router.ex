@@ -30,11 +30,11 @@ defmodule GothamWeb.Router do
     delete "/users/:userID", UserController, :delete
 
     # Working Time routes
-    get "/workingtimes/:userID", WorkingTimeController, :show_by_attr
-    get "/workingtimes/:userID/:workingtimeID", WorkingTimeController, :show
-    post "/workingtimes/:userID", WorkingTimeController, :create
-    put "/workingtimes/:id", WorkingTimeController, :update
-    delete "/workingtimes/:id", WorkingTimeController, :delete
+    get "/workingtimes/:userID", WorkingtimeController, :show_by_attr
+    get "/workingtimes/:userID/:workingtimeID", WorkingtimeController, :show
+    post "/workingtimes/:userID", WorkingtimeController, :create
+    put "/workingtimes/:id", WorkingtimeController, :update
+    delete "/workingtimes/:id", WorkingtimeController, :delete
 
     # Clocking routes
     get "/clocks/:userID", ClockController, :show

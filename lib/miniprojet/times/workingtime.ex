@@ -15,7 +15,7 @@ defmodule Gotham.Times.Workingtime do
     workingtime
     |> cast(attrs, [:start, :end])
     |> validate_required([:start, :end])
-    |> validate_format(:end, ~r/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
-    |> validate_format(:start, ~r/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
+    #|> validate_format(~N[:end], ~r/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
+    #|> validate_format(~N[:start], ~r/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
   end
 end
