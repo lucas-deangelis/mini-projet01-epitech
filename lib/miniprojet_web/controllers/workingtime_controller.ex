@@ -2,8 +2,6 @@ defmodule GothamWeb.WorkingtimeController do
   use GothamWeb, :controller
 
   alias Gotham.Times
-  alias Gotham.Accounts.User
-  alias Gotham.Repo
   alias Gotham.Times.Workingtime
 
   action_fallback GothamWeb.FallbackController
