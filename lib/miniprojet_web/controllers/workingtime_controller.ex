@@ -25,7 +25,7 @@ defmodule GothamWeb.WorkingtimeController do
 
     # check that there a start and a end params
     if Map.has_key?(params, "start") and Map.has_key?(params, "end") do
-      workingtime = Times.get_workingtime_by_attr!(Map.get(params, "start"), Map.get(params, "end")) # get the working time by attributes
+      workingtime = Times.get_workingtime_by_attr(id, Map.get(params, "start"), Map.get(params, "end")) # get the working time by attributes
       render(conn, "show.json", workingtime: workingtime)
     end
   end

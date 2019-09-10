@@ -9,7 +9,7 @@ defmodule GothamWeb.ClockController do
   action_fallback GothamWeb.FallbackController
 
   def score(conn, %{"userID" => id}) do
-    clock = Times.get_clock_by_user!(id)
+    clock = Times.get_clock_by_user(id)
 
     # if clock in, create the clock data
     if is_nil(clock) do
@@ -29,7 +29,7 @@ defmodule GothamWeb.ClockController do
   end
 
   def show(conn, %{"userID" => id}) do
-    clock = Times.get_clock_by_user!(id)
+    clock = Times.get_clock_by_user(id)
     render(conn, "show.json", clock: clock)
   end
 

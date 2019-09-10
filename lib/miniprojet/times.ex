@@ -66,7 +66,7 @@ defmodule Gotham.Times do
       ** (Ecto.NoResultsError)
 
   """
-  def get_clock_by_user!(id) do
+  def get_clock_by_user(id) do
 
     query = from c in Clock,
       join: u in User,
@@ -187,8 +187,15 @@ defmodule Gotham.Times do
       ** (Ecto.NoResultsError)
 
   """
-  def get_workingtime_by_attr!(id, starttime, endtime) do
-    Repo.get!(Workingtime, id)
+  def get_workingtime_by_attr(id, starttime, endtime) do
+    query = from w in Workingtime,
+      join: u in User,
+      on: w.user == u.id,
+      where: w.start >= ^starttime,
+      where: w.end <= ^endtime,
+      where: u.id == ^id
+
+    Repo.all(query)
   end
 
   @doc """
