@@ -16,4 +16,5 @@ defmodule Gotham.Clock do
     |> cast(attrs, [:time, :status])
     |> validate_required([:time, :status])
   end
+
 end
