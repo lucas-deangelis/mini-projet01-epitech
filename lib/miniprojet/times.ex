@@ -5,6 +5,8 @@ defmodule Gotham.Times do
 
   import Ecto.Query, warn: false
   alias Gotham.Repo
+  alias Gotham.Times.Clock
+  alias Gotham.Times.Workingtime
 
   @doc """
   Returns the list of clocks.
