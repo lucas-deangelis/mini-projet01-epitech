@@ -35,7 +35,9 @@ defmodule Gotham.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    Repo.get!(User, id)
+  end
 
   @doc """
   Gets a single user by attributes.
@@ -51,7 +53,9 @@ defmodule Gotham.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user_by_attr!(email, username), do: Repo.get_by!(User, email, username)
+  def get_user_by_attr!(email, username) do
+    Repo.get_by!(User, [email: email, username: username])
+  end
 
   @doc """
   Creates a user.

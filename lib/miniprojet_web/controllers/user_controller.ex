@@ -19,8 +19,9 @@ defmodule GothamWeb.UserController do
   def show_by_attr(conn, %{}) do
     params = conn.query_params
 
-    if Map.has_key?(params, :email) and Map.has_key?(params, :username) do
-      user = Accounts.get_user_by_attr!(Map.get(params, :email), Map.get(params, :username))
+    # check that there an email and an username params
+    if Map.has_key?(params, "email") and Map.has_key?(params, "username") do
+      user = Accounts.get_user_by_attr!(Map.get(params, "email"), Map.get(params, "username")) # get the user by attributes
       render(conn, "show.json", user: user)
     end
   end
