@@ -38,6 +38,22 @@ defmodule Gotham.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets a single user by attributes.
+
+  Raises `Ecto.NoResultsError` if the User does not exist.
+
+  ## Examples
+
+      iex> get_user_by_attr!("mathieu.dufour@epitech.eu", "mdufour")
+      %User{}
+
+      iex> get_user_by_attr!("toto@yopmail.com", "nobody")
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user_by_attr!(email, username), do: Repo.get_by!(User, email, username)
+
+  @doc """
   Creates a user.
 
   ## Examples

@@ -23,14 +23,14 @@ defmodule GothamWeb.Router do
     pipe_through :api
 
     # User routes
-	  get "/users", UserController, :show_all
+	  get "/users", UserController, :show_by_attr
     get "/users/:userID", UserController, :show
     post "/users", UserController, :create
     put "/users/:userID", UserController, :update
     delete "/users/:userID", UserController, :delete
 
     # Working Time routes
-    get "/workingtimes/:userID", WorkingTimeController, :show_all
+    get "/workingtimes/:userID", WorkingTimeController, :show_by_attr
     get "/workingtimes/:userID/:workingtimeID", WorkingTimeController, :show
     post "/workingtimes/:userID", WorkingTimeController, :create
     put "/workingtimes/:id", WorkingTimeController, :update

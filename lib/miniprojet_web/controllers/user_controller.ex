@@ -16,9 +16,15 @@ defmodule GothamWeb.UserController do
     render(conn, "show.json", user: user)
   end
 
-  def show_all(conn, %{"userID" => id}) do
-    user = Accounts.get_user!(id)
-    render(conn, "show.json", user: user)
+  def show_by_attr(conn, %{}) do
+    params = conn.query_params
+
+    user = %{}
+
+    if Map.has_key?(params, :email) and Map.has_key?(params, :username) do
+      user = Accounts.get_user_by_attr!(Map.get(params, :email), Map.get(params, :username))
+      render(conn, "show.json", user: user)
+    end
   end
 
   def create(conn, %{"user" => user_params}) do
