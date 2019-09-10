@@ -20,7 +20,6 @@ defmodule GothamWeb.ClockController do
         |> put_resp_header("location", Routes.clock_path(conn, :show, id))
       end
     else # else just update it
-      IO.puts "coucou"
       clock_params = %{time: NaiveDateTime.utc_now(), status: false, user: Repo.get!(User, id)}
       Times.update_clock(clock, clock_params)
     end
