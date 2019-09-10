@@ -11,12 +11,12 @@ defmodule GothamWeb.UserController do
   #   render(conn, "index.json", users: users)
   # end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"userID" => id}) do
     user = Accounts.get_user!(id)
     render(conn, "show.json", user: user)
   end
 
-  def show_all(conn, %{"id" => id}) do
+  def show_all(conn, %{"userID" => id}) do
     user = Accounts.get_user!(id)
     render(conn, "show.json", user: user)
   end
@@ -30,7 +30,7 @@ defmodule GothamWeb.UserController do
     end
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
+  def update(conn, %{"userID" => id, "user" => user_params}) do
     user = Accounts.get_user!(id)
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
@@ -38,7 +38,7 @@ defmodule GothamWeb.UserController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"userID" => id}) do
     user = Accounts.get_user!(id)
 
     with {:ok, %User{}} <- Accounts.delete_user(user) do
