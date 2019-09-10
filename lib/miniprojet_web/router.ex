@@ -23,7 +23,7 @@ defmodule GothamWeb.Router do
     pipe_through :api
 
     # User routes
-	get "/users", UserController, :show
+	  get "/users", UserController, :show_all
     get "/users/:userID", UserController, :show
     post "/users", UserController, :create
     put "/users/:userID", UserController, :update

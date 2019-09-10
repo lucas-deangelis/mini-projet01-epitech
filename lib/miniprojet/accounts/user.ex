@@ -1,4 +1,4 @@
-defmodule Gotham.User do
+defmodule Gotham.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -14,6 +14,7 @@ defmodule Gotham.User do
     user
     |> cast(attrs, [:username, :email])
     |> validate_required([:username, :email])
+    |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
   end
 end
