@@ -7,7 +7,7 @@ To start your Phoenix server:
   * Install assets package with `cd assets && npm install && node node_modules/webpack/bin/webpack.js --mode development`
   * Start Phoenix endpoint at the root of your project with `mix phx.server`
 
-Please use a postgreSql database with user = postgres and password = postgres.
+Please use a postgreSql database with user = postgres and password = password.
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
