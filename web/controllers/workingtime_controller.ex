@@ -3,11 +3,14 @@ defmodule GothamWeb.WorkingtimeController do
 
   alias Gotham.Times
   alias Gotham.Times.Workingtime
+  alias Gotham.Accounts
 
   action_fallback GothamWeb.FallbackController
 
   def create(conn, %{"userID" => id, "workingtime" => workingtime_params}) do
-    with {:ok, %Workingtime{} = workingtime} <- Times.create_workingtime(workingtime_params) do
+    user = Accounts.get_user!(id)
+
+    with {:ok, %Workingtime{} = workingtime} <- Times.create_workingtime(user, workingtime_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.workingtime_path(conn, :show, id, workingtime))
@@ -22,7 +25,7 @@ defmodule GothamWeb.WorkingtimeController do
 
   def show_by_attr(conn, %{"userID" => id}) do
     params = conn.query_params
-    
+
 '''
     # check that there a start and a end params
     if Map.has_key?(params, "start") and Map.has_key?(params, "end") do
