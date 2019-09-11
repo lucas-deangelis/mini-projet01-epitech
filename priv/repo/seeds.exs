@@ -41,3 +41,40 @@ Repo.query("ALTER SEQUENCE workingtimes_id_seq RESTART")
     email: "tim.ferriss@mail.com"
 }
 |> Repo.insert!()
+
+
+%Workingtime{
+    start: ~N[2019-09-09 09:30:00],
+    end: ~N[2019-09-09 12:30:00],
+    user: 1 
+}
+|> Repo.insert!()
+
+%Workingtime{
+    start: ~N[2019-09-09 13:30:00],
+    end: ~N[2019-09-09 17:30:00],
+    user: 1 
+}
+|> Repo.insert!()
+
+%Workingtime{
+    start: ~N[2019-09-10 09:30:00],
+    end: ~N[2019-09-10 12:30:00],
+    user: 1 
+}
+|> Repo.insert!()
+
+%Workingtime{
+    start: ~N[2019-09-10 13:30:00],
+    end: ~N[2019-09-10 17:30:00],
+    user: 1 
+}
+|> Repo.insert!()
+
+%Workingtime{
+    start: ~N[2019-09-09 09:30:00],
+    end: ~N[2019-09-09 13:30:00],
+    user: 2
+}
+|> Repo.insert!()
+
