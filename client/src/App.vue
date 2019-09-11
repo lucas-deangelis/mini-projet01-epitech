@@ -2,7 +2,7 @@
   <div id="app">
     <!-- Navbar -->
     <div id="navbar">
-      <b-navbar toggleable="lg" type="dark" variant="dark" sticky="true">
+      <b-navbar toggleable="lg" type="dark" variant="dark" sticky>
         <b-navbar-brand href="#">Gotham - A Time Manager</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -55,5 +55,6 @@ export default {
 </script>
 
 <style>
+@import url('assets/fontawesome/css/all.css');
 @import url('assets/css/style.css');
 </style>

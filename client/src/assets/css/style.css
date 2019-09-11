@@ -23,6 +23,18 @@
 #workingtime {
   flex-grow: 2;
 }
+#workingtime .sub-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+#workingtimes-table thead th {
+  text-align: center;
+}
+#workingtimes-table tbody tr {
+  text-align: center;
+}
 #charts {
   display: flex;
   flex-direction: column;
