@@ -1,0 +1,8 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway|Righteous&display=swap");
+#app {
+  margin: 0 0 0 0;
+  font-family: 'Raleway', sans-serif;
+}
+.navbar .navbar-brand {
+  font-family: 'Righteous', cursive;
+}

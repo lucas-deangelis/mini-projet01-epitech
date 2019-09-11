@@ -1,28 +1,67 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- Navbar -->
+    <div id="navbar">
+      <b-navbar toggleable="lg" type="dark" variant="dark" sticky="true">
+        <b-navbar-brand href="#">Gotham - A Time Manager</b-navbar-brand>
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+              <UserComponent></UserComponent>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
+    </div>
+
+    <!-- Content -->
+
+    <div id="main-content">
+
+      <div class="content">
+        <!-- Clock module -->
+        <div id="clock">
+
+        </div>
+        <!-- Working time module -->
+        <div id="workingtime">
+
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- Chart 1 -->
+        <div class="chart">
+
+        </div>
+        <!-- Chart 2 -->
+        <div class="chart">
+
+        </div>
+        <!-- Chart 3 -->
+        <div class="chart">
+
+        </div>
+      </div>
+
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import UserComponent from './components/UserComponent.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    UserComponent
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import url('assets/css/style.css');
 </style>
