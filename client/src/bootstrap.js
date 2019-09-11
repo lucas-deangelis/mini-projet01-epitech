@@ -22,8 +22,6 @@ if (token) {
     console.error('CSRF token not found');
 }
 
-
-
 /**
  * Define the API url
  */

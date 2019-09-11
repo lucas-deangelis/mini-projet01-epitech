@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+// Bootstrap file for axios
+require('./bootstrap');
+
 
 // Global components
 Vue.component(
