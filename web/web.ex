@@ -30,11 +30,11 @@ defmodule GothamWeb do
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/miniprojet_web/templates",
+        root: "web/templates",
         namespace: GothamWeb
 
       # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
+      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 1, get_flash: 2, view_module: 1]
 
       import GothamWeb.ErrorHelpers
       import GothamWeb.Gettext
