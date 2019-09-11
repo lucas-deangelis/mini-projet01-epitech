@@ -18,6 +18,12 @@ alias Gotham.Repo
 # Le cascade permet de viser les deux autres tables qui référencent users 
 Repo.query("TRUNCATE TABLE users CASCADE", [])
 
+# Ici on remet à zéro les sequences (compteurs utilisés pour les IDs)
+Repo.query("ALTER SEQUENCE users_id_seq RESTART")
+Repo.query("ALTER SEQUENCE clocks_id_seq RESTART")
+Repo.query("ALTER SEQUENCE workingtimes_id_seq RESTART")
+
+
 %User{
     username: "joerogan",
     email: "joe.rogan@mail.com"
