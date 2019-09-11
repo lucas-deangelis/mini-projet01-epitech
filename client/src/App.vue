@@ -23,28 +23,14 @@
 
       <div class="content">
         <!-- Clock module -->
-        <div id="clock">
+        <ClockManagerComponent></ClockManagerComponent>
 
-        </div>
         <!-- Working time module -->
-        <div id="workingtime">
-
-        </div>
+        <WorkingTimesComponent></WorkingTimesComponent>
       </div>
 
       <div class="content">
-        <!-- Chart 1 -->
-        <div class="chart">
-
-        </div>
-        <!-- Chart 2 -->
-        <div class="chart">
-
-        </div>
-        <!-- Chart 3 -->
-        <div class="chart">
-
-        </div>
+        <ChartManagerComponent></ChartManagerComponent>
       </div>
 
     </div>
@@ -53,11 +39,17 @@
 
 <script>
 import UserComponent from './components/UserComponent.vue'
+import ClockManagerComponent from './components/ClockManagerComponent.vue'
+import WorkingTimesComponent from './components/WorkingTimesComponent.vue'
+import ChartManagerComponent from './components/ChartManagerComponent.vue'
 
 export default {
   name: 'app',
   components: {
-    UserComponent
+    UserComponent,
+    ClockManagerComponent,
+    WorkingTimesComponent,
+    ChartManagerComponent
   }
 }
 </script>
