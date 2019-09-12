@@ -175,11 +175,11 @@ defmodule Gotham.Times do
     Repo.get(Workingtime, workingtimeId)
   end
 
-
   def get_workingtimeUser!(workingtimeId, userId) do
     query = from w in Workingtime,
       where: w.id == ^workingtimeId,
       where: w.user == ^userId
+
     Repo.one(query)
   end
 

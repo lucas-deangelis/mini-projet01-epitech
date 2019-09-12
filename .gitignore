@@ -30,3 +30,6 @@ miniprojet-*.tar
 
 # For Mac only
 .DS_STORE
+
+#node module
+node_modules
