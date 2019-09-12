@@ -2,10 +2,10 @@
     <div id="workingtime" class="div-content">
         <div class="sub sub-header">
             <span><h2>Working Times</h2></span>
-            <b-button variant="dark" v-b-modal.modal-add>ADD</b-button>
+            <!-- <b-button variant="dark" v-b-modal.modal-add>ADD</b-button> -->
         </div>
         <div class="sub sub-content">
-            <b-table sticky-header head-variant="light" :items="items" id="workingtimes-table">
+            <b-table sticky-header head-variant="light" :items="workingtimes" id="workingtimes-table">
                 <template v-slot:cell(action)="row">
                     <b-button variant="primary" size="sm" @click="row.showDetails" class="mr-2" v-b-tooltip.hover title="Show">
                         <i class="fas fa-eye"></i>
@@ -37,7 +37,7 @@ export default {
     data() {
         return {
             fields: ['id', 'start', 'end', 'action'],
-            items: [
+            workingtimes: [
             ]
         }
     },
@@ -58,19 +58,19 @@ export default {
             .then(response => {
                 // parse the data
                 let workingTimesDatas = JSON.parse(JSON.stringify(response.data.data));
-                let parsedItems = [];
+                let parsedWorkingTimes = [];
 
                 for (const item of workingTimesDatas) {
                     console.log(item);
-                    parsedItems.push({
+                    parsedWorkingTimes.push({
                         'id': item.id,
                         'start': item.start.replace('T', ' '),
                         'end': item.end.replace('T', ' ')
                     });
                 }
 
-                // assign the parsed datas to our items
-                this.items = parsedItems;
+                // assign the parsed datas to our workingtimes
+                this.workingtimes = parsedWorkingTimes;
             })
             .catch(error => {
                 console.error(error);
