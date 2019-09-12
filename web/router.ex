@@ -33,7 +33,8 @@ defmodule GothamWeb.Router do
     # Working Time routes
     get "/workingtimes/:userID", WorkingtimeController, :show_by_attr
     get "/workingtimes/:userID/:workingtimeID", WorkingtimeController, :show
-    post "/workingtimes/:userID", WorkingtimeController, :create
+    post "/workingtimes/:userID", WorkingtimeController, :createUsrId
+    post "/workingtimes", WorkingtimeController, :create # useful for testing purposes
     put "/workingtimes/:id", WorkingtimeController, :update
     delete "/workingtimes/:id", WorkingtimeController, :delete
 

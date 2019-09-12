@@ -18,7 +18,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ## Endpoints / Controller / Functions
 
 ## User routes
-    user_path  GET     /api/users                                GothamWeb.UserController :show_by_attr
+    user_path  GET     /api/users?email=XXX&username=YYY         GothamWeb.UserController :show_by_attr
     user_path  GET     /api/users/:userID                        GothamWeb.UserController :show
     user_path  POST    /api/users                                GothamWeb.UserController :create
     user_path  PUT     /api/users/:userID                        GothamWeb.UserController :update

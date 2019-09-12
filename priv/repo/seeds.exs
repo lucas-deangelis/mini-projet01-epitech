@@ -78,3 +78,8 @@ Repo.query("ALTER SEQUENCE workingtimes_id_seq RESTART")
 }
 |> Repo.insert!()
 
+%Workingtime{
+    start: NaiveDateTime.from_iso8601("2019-09-20 09:30:00"),
+    end: NaiveDateTime.from_iso8601("2019-09-20 12:30:00"),
+    user: 3
+}
