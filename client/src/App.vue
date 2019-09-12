@@ -6,31 +6,61 @@
     <ClockManagerComponent/>
     <WorkingTimesComponent/>
     <WorkingTimeComponent/>
+    <!-- Navbar -->
+    <div id="navbar">
+      <b-navbar toggleable="lg" type="dark" variant="dark" sticky>
+        <b-navbar-brand href="#">Gotham - A Time Manager</b-navbar-brand>
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+              <UserComponent></UserComponent>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
+    </div>
+
+    <!-- Content -->
+
+    <div id="main-content">
+
+      <div class="content">
+        <!-- Clock module -->
+        <ClockManagerComponent></ClockManagerComponent>
+
+        <!-- Working time module -->
+        <WorkingTimesComponent></WorkingTimesComponent>
+      </div>
+
+      <div class="content">
+        <ChartManagerComponent></ChartManagerComponent>
+      </div>
+
+    </div>
   </div>
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld.vue'
 import UserComponent from './components/UserComponent.vue'
 import ClockManagerComponent from './components/ClockManagerComponent.vue'
 import WorkingTimesComponent from './components/WorkingTimesComponent.vue'
-import WorkingTimeComponent from './components/WorkingTimeComponent.vue'
+import ChartManagerComponent from './components/ChartManagerComponent.vue'
 
 export default {
   name: 'app',
   components: {
-    UserComponent
+    UserComponent,
+    ClockManagerComponent,
+    WorkingTimesComponent,
+    ChartManagerComponent
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import url('assets/fontawesome/css/all.css');
+@import url('assets/css/style.css');
 </style>

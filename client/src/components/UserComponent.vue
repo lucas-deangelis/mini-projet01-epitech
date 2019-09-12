@@ -1,7 +1,16 @@
 <template>
     <div>
         <H1>Récuperer les utilisateurs</H1>
+    <b-nav-item-dropdown right>
+        <!-- Using 'button-content' slot -->
+        <template v-slot:button-content>
+            <span>Username</span>
+        </template>
+        <b-dropdown-item href="#">Profile</b-dropdown-item>
+        <!-- <b-dropdown-item href="#">Sign Out</b-dropdown-item> -->
+    </b-nav-item-dropdown>
     </div>
+
 </template>
 
 
