@@ -89,6 +89,7 @@ defmodule Gotham.Times do
 
   """
   def create_clock(attrs \\ %{}) do
+    IO.inspect("inside create clock")
     %Clock{}
     |> Clock.changeset(attrs)
     |> Repo.insert()
