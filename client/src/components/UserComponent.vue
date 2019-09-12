@@ -49,6 +49,9 @@ export default {
             window.axios.get(url)
             .then(response => {
                 this.user = JSON.parse(JSON.stringify(response.data.data));
+                this.$root.user.id = this.user.id;
+                this.$root.user.username = this.user.username;
+                this.$root.user.email = this.user.email;
             })
             .catch(error => {
                 console.error(error);

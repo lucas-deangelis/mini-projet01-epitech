@@ -31,23 +31,30 @@ defmodule GothamWeb.WorkingtimeController do
     render(conn, "show.json", workingtime: workingtime)
   end
 
-  def show_by_attr(conn, %{"userID" => id, "start" => start, "end" => endTime}) do
+  def show_by_attr(conn, %{"userID" => id, "start" => startTime, "end" => endTime}) do
     params = conn.query_params
 
-    # check that there a start and a end params
-    if Map.has_key?(params, "start") and Map.has_key?(params, "end") do
-        # Converting start parameter from iso to naivedatetime
-        startTime = Map.get(params, "start")
-        |> NaiveDateTime.from_iso8601!()
+    startTime = nil
+    endTime = nil
 
-        # Converting end parameter from iso to naivedatetime
-        endTime = Map.get(params, "end")
-        |> NaiveDateTime.from_iso8601!()
-
-         # get the working time by attributes
-        workingtime = Times.get_workingtime_by_attr(id, startTime, endTime)
-        render(conn, "index.json", workingtime: workingtime)
+    IO.inspect Map.get(params, "start")
+    # check that there a start params that is not null and not empty
+    if Map.has_key?(params, "start") and !is_nil(Map.get(params, "start")) and !String.equivalent?(Map.get(params, "start"), '')  do
+      # Converting start parameter from iso to naivedatetime
+      startTime = Map.get(params, "start")
+      |> NaiveDateTime.from_iso8601!()
     end
+
+    # check that there an end params that is not null and not empty
+    if Map.has_key?(params, "end") and !is_nil(Map.get(params, "end")) and !String.equivalent?(Map.get(params, "end"), '')  do
+      # Converting end parameter from iso to naivedatetime
+      endTime = Map.get(params, "end")
+      |> NaiveDateTime.from_iso8601!()
+    end
+
+    # get the working time by attributes
+    workingtime = Times.get_workingtime_by_attr(id, startTime, endTime)
+    render(conn, "index.json", workingtime: workingtime)
 
   end
 

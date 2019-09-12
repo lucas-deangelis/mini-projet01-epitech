@@ -32,17 +32,12 @@ export default {
     name: 'WorkingTimes',
 
     props: [
-        'workingtimes'
     ],
 
     data() {
         return {
             fields: ['id', 'start', 'end', 'action'],
             items: [
-                { id: 40, start: '2019-12-09 12:00:10', end: '2019-12-09 12:00:10', action: "" },
-                { id: 21, start: '2019-11-25 10:50:00', end: '2019-11-25 10:50:00', action: "" },
-                { id: 89, start: '2019-10-01 08:25:10', end: '2019-10-01 08:25:10', action: "" },
-                { id: 38, start: '2019-08-07 19:00:10', end: '2019-08-07 19:00:10', action: "" }
             ]
         }
     },
@@ -52,21 +47,35 @@ export default {
     },
 
     mounted() {
-        getWorkingTimes: {
-            let url = window.apiUrl + '/api/workingtimes/' + this.userID;
+        this.getWorkingTimes();
+    },
+
+    methods: {
+        getWorkingTimes() {
+            let url = window.apiUrl + '/api/workingtimes/' + '1' + '?start=' + '' + '&end=' + '';  //+ this.$root.user.id;
 
             window.axios.get(url)
             .then(response => {
-                this.workingtimes = response.data;
+                // parse the data
+                let workingTimesDatas = JSON.parse(JSON.stringify(response.data.data));
+                let parsedItems = [];
+
+                for (const item of workingTimesDatas) {
+                    console.log(item);
+                    parsedItems.push({
+                        'id': item.id,
+                        'start': item.start.replace('T', ' '),
+                        'end': item.end.replace('T', ' ')
+                    });
+                }
+
+                // assign the parsed datas to our items
+                this.items = parsedItems;
             })
             .catch(error => {
                 console.error(error);
             });
         }
-    },
-
-    methods: {
-
     }
 }
 
