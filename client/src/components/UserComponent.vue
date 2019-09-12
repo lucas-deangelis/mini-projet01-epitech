@@ -1,7 +1,7 @@
 <template>
     <b-dropdown id="dropdown-user" right variant="dark" text="User" class="m-2">
         <b-dropdown-text>Id : 1</b-dropdown-text>
-        <b-dropdown-text>Username : {{this.user.username}}</b-dropdown-text>
+        <b-dropdown-text>Username : Username</b-dropdown-text>
         <b-dropdown-text>Email : test@email.com</b-dropdown-text>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item variant="danger" href="#">Logout</b-dropdown-item>
@@ -36,11 +36,10 @@ export default {
     mounted() {
         getUser: {
             let url = window.apiUrl + '/api/users/1'; //this.userID;
-
+            
             window.axios.get(url)
             .then(response => {
                 this.user = response.data;
-                console.log(response.data);
             })
             .catch(error => {
                 console.error(error);

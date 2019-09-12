@@ -1,19 +1,9 @@
-defmodule GothamWeb.CORS do
-  use Corsica.Router,
-    origins: ["http://localhost", ~r{^https?://(.*\.?)foo\.com$}],
-    allow_credentials: true,
-    max_age: 600
-
-  resource "/public/*", origins: "*"
-  resource "/*"
-end
-
 defmodule GothamWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :miniprojet
 
-  socket "/socket", GothamWeb.UserSocket,
-    websocket: true,
-    longpoll: false
+  # socket "/socket", GothamWeb.UserSocket,
+  #   websocket: true,
+  #   longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -50,7 +40,10 @@ defmodule GothamWeb.Endpoint do
     key: "_miniprojet_key",
     signing_salt: "oLn/bR8s"
 
-  plug GothamWeb.CORS
+  # Corsica to manage CORS
+  plug Corsica,
+    origins: ["http://localhost:8080", "http://127.0.0.1:8080"],
+    allow_headers: ["content-type", "authorization"]
 
   plug GothamWeb.Router
 end

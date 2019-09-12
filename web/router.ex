@@ -22,10 +22,6 @@ defmodule GothamWeb.Router do
   scope "/api", GothamWeb do
     pipe_through :api
 
-    options   "/users", UserController, :options
-    options   "/workingtimes", WorkingtimeController, :options
-    options   "/clocks", ClockController, :options
-
     # User routes
 	  get "/users", UserController, :show_by_attr
     get "/users/:userID", UserController, :show
