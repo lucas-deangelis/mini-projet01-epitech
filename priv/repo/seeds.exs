@@ -89,6 +89,6 @@ Repo.query("ALTER SEQUENCE workingtimes_id_seq RESTART")
 %Clock{
     time: ~N[2019-09-11 17:30:00],
     status: false,
-    user: 2
+    user: 3
 }
 |> Repo.insert!()

@@ -71,7 +71,6 @@ defmodule Gotham.Times do
     query = from c in Clock,
       join: u in User,
       on: c.user == u.id,
-      where: c.status == true,
       where: u.id == ^id
 
     Repo.one(query)
