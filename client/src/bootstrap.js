@@ -1,12 +1,16 @@
 /**
+ * Define the API url
+ */
+window.apiUrl = 'http://localhost:4000';
+
+
+/**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Elixir back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
 window.axios = require('axios');
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -21,8 +25,3 @@ if (token) {
 } else {
     console.error('CSRF token not found');
 }*/
-
-/**
- * Define the API url
- */
-window.apiUrl = 'http://localhost:4000';

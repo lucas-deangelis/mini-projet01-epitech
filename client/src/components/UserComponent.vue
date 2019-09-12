@@ -35,12 +35,11 @@ export default {
 
     mounted() {
         getUser: {
-            let url = window.apiUrl + '/api/users/' + 1;//this.userID;
-
+            let url = window.apiUrl + '/api/users/1'; //this.userID;
+            
             window.axios.get(url)
             .then(response => {
                 this.user = response.data;
-                console.print(response.data);
             })
             .catch(error => {
                 console.error(error);

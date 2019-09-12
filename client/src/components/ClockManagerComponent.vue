@@ -46,7 +46,7 @@ export default {
                 this.clockmanager = response.data;
             })
             .catch(error => {
-                print(error);
+                //console.error(error);
             });
         }
     },

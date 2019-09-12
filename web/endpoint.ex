@@ -1,9 +1,9 @@
 defmodule GothamWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :miniprojet
 
-  socket "/socket", GothamWeb.UserSocket,
-    websocket: true,
-    longpoll: false
+  # socket "/socket", GothamWeb.UserSocket,
+  #   websocket: true,
+  #   longpoll: false
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -39,6 +39,11 @@ defmodule GothamWeb.Endpoint do
     store: :cookie,
     key: "_miniprojet_key",
     signing_salt: "oLn/bR8s"
+
+  # Corsica to manage CORS
+  plug Corsica,
+    origins: ["http://localhost:8080", "http://127.0.0.1:8080"],
+    allow_headers: ["content-type", "authorization"]
 
   plug GothamWeb.Router
 end
