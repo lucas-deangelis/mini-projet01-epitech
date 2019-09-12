@@ -71,7 +71,6 @@ defmodule Gotham.Times do
     query = from c in Clock,
       join: u in User,
       on: c.user == u.id,
-      where: c.status == true,
       where: u.id == ^id
 
     Repo.one(query)
@@ -90,6 +89,7 @@ defmodule Gotham.Times do
 
   """
   def create_clock(attrs \\ %{}) do
+    IO.inspect("inside create clock")
     %Clock{}
     |> Clock.changeset(attrs)
     |> Repo.insert()
@@ -221,6 +221,12 @@ defmodule Gotham.Times do
 
   """
   def create_workingtime(%User{} = user, attrs \\ %{}) do
+    IO.inspect("inside create_workingtime")
+
+    # Converts all key to string, since this function is used by API access and by clock score
+    # API access gives key as string, but clock score gives them as atoms
+    attrs = for {k, v} <- attrs, do: {to_string(k), v}, into: %{}
+
     attrs = Map.put(attrs, "user", user.id)
 
     %Workingtime{}
