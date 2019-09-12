@@ -36,7 +36,8 @@ defmodule GothamWeb.WorkingtimeController do
     
   
     def show(conn, %{"userID" => userId, "workingtimeID" => workingtimeId}) do
-      workingtime = Times.get_workingtime!(workingtimeId)
+      workingtime = Times.get_workingtimeUser!(workingtimeId, userId)
+
       render(conn, "show.json", workingtime: workingtime)
     end
   

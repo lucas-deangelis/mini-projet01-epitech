@@ -171,7 +171,13 @@ defmodule Gotham.Times do
       ** (Ecto.NoResultsError)
 
   """
-  def get_workingtime!(id), do: Repo.get!(Workingtime, id)
+  def get_workingtimeUser!(workingtimeId, userId) do
+    query = from w in Workingtime,
+      where: w.id == ^workingtimeId,
+      where: w.user == ^userId
+  
+    Repo.one(query)
+  end
 
   @doc """
   Gets a single workingtime by its attributes start and end.
