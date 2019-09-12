@@ -23,16 +23,24 @@ defmodule GothamWeb.WorkingtimeController do
     render(conn, "show.json", workingtime: workingtime)
   end
 
-  def show_by_attr(conn, %{"userID" => id}) do
+  def show_by_attr(conn, %{"userID" => id, "start" => start, "end" => endTime}) do
     params = conn.query_params
 
-'''
     # check that there a start and a end params
     if Map.has_key?(params, "start") and Map.has_key?(params, "end") do
-      workingtime = Times.get_workingtime_by_attr(id, Map.get(params, "start"), Map.get(params, "end")) # get the working time by attributes
-      render(conn, "show.json", workingtime: workingtime)
+        # Converting start parameter from iso to naivedatetime
+        startTime = Map.get(params, "start")
+        |> NaiveDateTime.from_iso8601!()
+
+        # Converting end parameter from iso to naivedatetime
+        endTime = Map.get(params, "end")
+        |> NaiveDateTime.from_iso8601!()
+
+         # get the working time by attributes
+        workingtime = Times.get_workingtime_by_attr(id, startTime, endTime)
+        render(conn, "index.json", workingtime: workingtime)
     end
-'''
+
   end
 
   def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
