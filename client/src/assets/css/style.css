@@ -7,6 +7,12 @@
 .navbar .navbar-brand {
   font-family: 'Righteous', cursive;
 }
+.navbar #dropdown-user {
+  width: 20vw;
+}
+.navbar #dropdown-user ul {
+  width: inherit;
+}
 #main-content {
   display: flex;
   flex-direction: column;
