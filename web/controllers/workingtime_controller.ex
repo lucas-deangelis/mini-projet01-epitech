@@ -7,7 +7,7 @@ defmodule GothamWeb.WorkingtimeController do
 
   action_fallback GothamWeb.FallbackController
 
-  def create(conn, %{"userID" => id, "workingtime" => workingtime_params}) do
+  def createUsrId(conn, %{"userID" => id, "workingtime" => workingtime_params}) do
     user = Accounts.get_user!(id)
 
     with {:ok, %Workingtime{} = workingtime} <- Times.create_workingtime(user, workingtime_params) do
@@ -19,7 +19,7 @@ defmodule GothamWeb.WorkingtimeController do
   end
 
   def show(conn, %{"userID" => userId, "workingtimeID" => workingtimeId}) do
-    workingtime = Times.get_workingtime!(workingtimeId)
+    workingtime = Times.get_workingtime!(workingtimeId, userId)
     render(conn, "show.json", workingtime: workingtime)
   end
 
