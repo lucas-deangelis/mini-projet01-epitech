@@ -23,4 +23,11 @@ Vue.use(BootstrapVue)
 // Instantiate the VUE and attach it to #app
 const app = new Vue({
   render: h => h(App),
+  data: {
+    user: {
+      id: null,
+      username: null,
+      email: null
+    }
+  }
 }).$mount('#app')
