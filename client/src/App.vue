@@ -26,7 +26,7 @@
         <ClockManagerComponent></ClockManagerComponent>
 
         <!-- Working time module -->
-        <WorkingTimesComponent></WorkingTimesComponent>
+        <WorkingTimesComponent :key="reRender"></WorkingTimesComponent>
       </div>
 
       <div class="content">
@@ -45,11 +45,21 @@ import ChartManagerComponent from './components/ChartManagerComponent.vue'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      reRender: 0
+    };
+  },
   components: {
     UserComponent,
     ClockManagerComponent,
     WorkingTimesComponent,
     ChartManagerComponent
+  },
+  methods: {
+    refreshWorkingTimesComponent() {
+      this.reRender += 1;
+    }
   }
 }
 </script>
