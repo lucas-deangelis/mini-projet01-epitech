@@ -23,6 +23,7 @@ export default {
 
     data() {
         return {
+            'userId': 1,
             'user' : {
                 'id': null,
                 'username': null,
@@ -44,7 +45,7 @@ export default {
     methods: {
         // getUser from the api and assign it to our client User
         getUser() {
-            let url = window.apiUrl + '/api/users/1'; //this.userID;
+            let url = window.apiUrl + '/api/users/' + this.userId;
             
             window.axios.get(url)
             .then(response => {

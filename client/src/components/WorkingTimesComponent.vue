@@ -36,6 +36,7 @@ export default {
 
     data() {
         return {
+            userId: 1,
             fields: ['id', 'start', 'end', 'action'],
             workingtimes: [
             ]
@@ -52,7 +53,7 @@ export default {
 
     methods: {
         getWorkingTimes() {
-            let url = window.apiUrl + '/api/workingtimes/' + '1' + '?start=' + '' + '&end=' + '';  //+ this.$root.user.id;
+            let url = window.apiUrl + '/api/workingtimes/' + this.userId + '?start=' + '' + '&end=' + '';  //+ this.$root.user.id;
 
             window.axios.get(url)
             .then(response => {
@@ -61,7 +62,6 @@ export default {
                 let parsedWorkingTimes = [];
 
                 for (const item of workingTimesDatas) {
-                    console.log(item);
                     parsedWorkingTimes.push({
                         'id': item.id,
                         'start': item.start.replace('T', ' '),
