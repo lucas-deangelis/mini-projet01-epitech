@@ -1,10 +1,10 @@
 <template>
     <b-dropdown id="dropdown-user" right variant="dark" text="User" class="m-2">
-        <b-dropdown-text>Id : 1</b-dropdown-text>
-        <b-dropdown-text>Username : Username</b-dropdown-text>
-        <b-dropdown-text>Email : test@email.com</b-dropdown-text>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item variant="danger" href="#">Logout</b-dropdown-item>
+        <b-dropdown-text><label class="font-weight-bold">Id :</label> {{ user.id }} </b-dropdown-text>
+        <b-dropdown-text><label class="font-weight-bold">Username :</label> {{ user.username }} </b-dropdown-text>
+        <b-dropdown-text><label class="font-weight-bold">Email :</label> {{ user.email }} </b-dropdown-text>
+        <!-- <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item variant="danger" href="#">Logout</b-dropdown-item> -->
     </b-dropdown>
 
 </template>
@@ -18,14 +18,17 @@ export default {
     name: 'User',
 
     props: [
-        'user'
+        
     ],
 
     data() {
         return {
-            id: '',
-            username: '',
-            email: ''
+            'userId': 1,
+            'user' : {
+                'id': null,
+                'username': null,
+                'email': null
+            }
         }
     },
 
@@ -34,23 +37,36 @@ export default {
     },
 
     mounted() {
-        getUser: {
-            let url = window.apiUrl + '/api/users/' + 1;//this.userID;
-
-            window.axios.get(url)
-            .then(response => {
-                this.user = response.data;
-                console.print(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        }
+        // call getUser
+        this.getUser();
 
     },
 
     methods: {
+        // getUser from the api and assign it to our client User
+        getUser() {
+            let url = window.apiUrl + '/api/users/' + this.userId;
+            
+            window.axios.get(url)
+            .then(response => {
+                this.user = JSON.parse(JSON.stringify(response.data.data));
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        },
 
+        createUser() {
+
+        },
+
+        updateUser() {
+
+        },
+
+        deleteUser() {
+
+        }
     }
 }
 

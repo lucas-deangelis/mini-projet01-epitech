@@ -78,8 +78,17 @@ Repo.query("ALTER SEQUENCE workingtimes_id_seq RESTART")
 }
 |> Repo.insert!()
 
-%Workingtime{
-    start: NaiveDateTime.from_iso8601("2019-09-20 09:30:00"),
-    end: NaiveDateTime.from_iso8601("2019-09-20 12:30:00"),
+
+%Clock{
+    time: ~N[2019-09-12 09:30:00],
+    status: true,
+    user: 1
+}
+|> Repo.insert!()
+
+%Clock{
+    time: ~N[2019-09-11 17:30:00],
+    status: false,
     user: 3
 }
+|> Repo.insert!()

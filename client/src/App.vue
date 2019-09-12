@@ -1,11 +1,5 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
-    <UserComponent/>
-    <ClockManagerComponent/>
-    <WorkingTimesComponent/>
-    <WorkingTimeComponent/>
     <!-- Navbar -->
     <div id="navbar">
       <b-navbar toggleable="lg" type="dark" variant="dark" sticky>
@@ -32,7 +26,7 @@
         <ClockManagerComponent></ClockManagerComponent>
 
         <!-- Working time module -->
-        <WorkingTimesComponent></WorkingTimesComponent>
+        <WorkingTimesComponent :key="reRender"></WorkingTimesComponent>
       </div>
 
       <div class="content">
@@ -51,11 +45,21 @@ import ChartManagerComponent from './components/ChartManagerComponent.vue'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      reRender: 0
+    };
+  },
   components: {
     UserComponent,
     ClockManagerComponent,
     WorkingTimesComponent,
     ChartManagerComponent
+  },
+  methods: {
+    refreshWorkingTimesComponent() {
+      this.reRender += 1;
+    }
   }
 }
 </script>
