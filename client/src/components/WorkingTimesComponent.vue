@@ -60,7 +60,7 @@ export default {
                 this.workingtimes = response.data;
             })
             .catch(error => {
-                console.error(error);
+                //console.error(error);
             });
         }
     },

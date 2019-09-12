@@ -13,6 +13,7 @@ defmodule GothamWeb.UserController do
 
   def show(conn, %{"userID" => id}) do
     user = Accounts.get_user!(id)
+    IO.inspect user
     render(conn, "show.json", user: user)
   end
 

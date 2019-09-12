@@ -1,3 +1,13 @@
+defmodule GothamWeb.CORS do
+  use Corsica.Router,
+    origins: ["http://localhost", ~r{^https?://(.*\.?)foo\.com$}],
+    allow_credentials: true,
+    max_age: 600
+
+  resource "/public/*", origins: "*"
+  resource "/*"
+end
+
 defmodule GothamWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :miniprojet
 
@@ -39,6 +49,8 @@ defmodule GothamWeb.Endpoint do
     store: :cookie,
     key: "_miniprojet_key",
     signing_salt: "oLn/bR8s"
+
+  plug GothamWeb.CORS
 
   plug GothamWeb.Router
 end
