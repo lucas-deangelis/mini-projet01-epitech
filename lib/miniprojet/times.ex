@@ -171,7 +171,12 @@ defmodule Gotham.Times do
       ** (Ecto.NoResultsError)
 
   """
-  def get_workingtime!(workingtimeId, userId) do
+  def get_workingtime!(workingtimeId) do
+    Repo.get(Workingtime, workingtimeId)
+  end
+
+
+  def get_workingtimeUser!(workingtimeId, userId) do
     query = from w in Workingtime,
       where: w.id == ^workingtimeId,
       where: w.user == ^userId
@@ -235,10 +240,11 @@ defmodule Gotham.Times do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_workingtime(%Workingtime{} = workingtime, attrs) do
+  def update_workingtime(%Workingtime{} = workingtime, attrs \\ %{}) do
+    IO.inspect("inside update")
     workingtime
     |> Workingtime.changeset(attrs)
-    |> Repo.update()
+    |> Repo.update()  
   end
 
   @doc """

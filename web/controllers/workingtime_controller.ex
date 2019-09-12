@@ -18,8 +18,17 @@ defmodule GothamWeb.WorkingtimeController do
     end
   end
 
+  def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
+    workingtime = Times.get_workingtime!(id)
+    IO.inspect("before with ")
+
+    with {:ok, %Workingtime{} = workingtime} <- Times.update_workingtime(workingtime, workingtime_params) do
+      render(conn, "show.json", workingtime: workingtime)
+    end
+  end
+
   def show(conn, %{"userID" => userId, "workingtimeID" => workingtimeId}) do
-    workingtime = Times.get_workingtime!(workingtimeId, userId)
+    workingtime = Times.get_workingtimeUser!(workingtimeId, userId)
     render(conn, "show.json", workingtime: workingtime)
   end
 
@@ -43,13 +52,6 @@ defmodule GothamWeb.WorkingtimeController do
 
   end
 
-  def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
-    workingtime = Times.get_workingtime!(id)
-
-    with {:ok, %Workingtime{} = workingtime} <- Times.update_workingtime(workingtime, workingtime_params) do
-      render(conn, "show.json", workingtime: workingtime)
-    end
-  end
 
   def delete(conn, %{"id" => id}) do
     workingtime = Times.get_workingtime!(id)
