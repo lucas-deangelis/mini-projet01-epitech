@@ -1,12 +1,11 @@
 <template>
-    <b-nav-item-dropdown right>
-        <!-- Using 'button-content' slot -->
-        <template v-slot:button-content>
-            <span>Username</span>
-        </template>
-        <b-dropdown-item href="#">Profile</b-dropdown-item>
-        <!-- <b-dropdown-item href="#">Sign Out</b-dropdown-item> -->
-    </b-nav-item-dropdown>
+    <b-dropdown id="dropdown-user" right variant="dark" text="User" class="m-2">
+        <b-dropdown-text>Id : 1</b-dropdown-text>
+        <b-dropdown-text>Username : Username</b-dropdown-text>
+        <b-dropdown-text>Email : test@email.com</b-dropdown-text>
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item variant="danger" href="#">Logout</b-dropdown-item>
+    </b-dropdown>
 
 </template>
 
@@ -36,14 +35,15 @@ export default {
 
     mounted() {
         getUser: {
-            let url = window.apiUrl + '/api/users/' + this.userID;
+            let url = window.apiUrl + '/api/users/' + 1;//this.userID;
 
             window.axios.get(url)
             .then(response => {
                 this.user = response.data;
+                console.print(response.data);
             })
             .catch(error => {
-                print(error);
+                console.error(error);
             });
         }
 

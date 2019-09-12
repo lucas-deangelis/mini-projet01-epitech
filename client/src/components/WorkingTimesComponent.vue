@@ -32,6 +32,7 @@ export default {
     name: 'WorkingTimes',
 
     props: [
+        'workingtimes'
     ],
 
     data() {
@@ -51,7 +52,17 @@ export default {
     },
 
     mounted() {
+        getWorkingTimes: {
+            let url = window.apiUrl + '/api/workingtimes/' + this.userID;
 
+            window.axios.get(url)
+            .then(response => {
+                this.workingtimes = response.data;
+            })
+            .catch(error => {
+                print(error);
+            });
+        }
     },
 
     methods: {

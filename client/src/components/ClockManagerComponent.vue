@@ -23,6 +23,7 @@ export default {
     name: 'ClockManager',
 
     props: [
+        'clockmanager'
     ],
 
     data() {
@@ -37,7 +38,17 @@ export default {
     },
 
     mounted() {
+        clockManager: {
+            let url = window.apiUrl + '/api/clock/' + this.userID;
 
+            window.axios.get(url)
+            .then(response => {
+                this.clockmanager = response.data;
+            })
+            .catch(error => {
+                print(error);
+            });
+        }
     },
 
     methods: {
