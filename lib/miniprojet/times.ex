@@ -210,7 +210,9 @@ defmodule Gotham.Times do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_workingtime(attrs \\ %{}) do
+  def create_workingtime(%User{} = user, attrs \\ %{}) do
+    attrs = Map.put(attrs, "user", user.id)
+
     %Workingtime{}
     |> Workingtime.changeset(attrs)
     |> Repo.insert()
