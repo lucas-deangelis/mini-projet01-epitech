@@ -40,7 +40,7 @@ export default {
             window.axios.get(url)
             .then(response => {
                 this.user = response.data;
-                console.print(response.data);
+                console.log(response.data);
             })
             .catch(error => {
                 console.error(error);
