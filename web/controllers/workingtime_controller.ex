@@ -20,7 +20,6 @@ defmodule GothamWeb.WorkingtimeController do
 
   def update(conn, %{"id" => id, "workingtime" => workingtime_params}) do
     workingtime = Times.get_workingtime!(id)
-    IO.inspect("before with ")
 
     with {:ok, %Workingtime{} = workingtime} <- Times.update_workingtime(workingtime, workingtime_params) do
       render(conn, "show.json", workingtime: workingtime)

@@ -241,7 +241,6 @@ defmodule Gotham.Times do
 
   """
   def update_workingtime(%Workingtime{} = workingtime, attrs \\ %{}) do
-    IO.inspect("inside update")
     workingtime
     |> Workingtime.changeset(attrs)
     |> Repo.update()  
