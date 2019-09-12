@@ -198,12 +198,23 @@ defmodule Gotham.Times do
 
   """
   def get_workingtime_by_attr(id, starttime, endtime) do
+
+
     query = from w in Workingtime,
       join: u in User,
       on: w.user == u.id,
-      where: w.start >= ^starttime,
-      where: w.end <= ^endtime,
       where: u.id == ^id
+
+    # filter working time by starttime if not null
+    if !is_nil(starttime) do
+      query = from [w, u] in query,
+        where: w.start >= ^starttime
+    end
+    #filter working time by endtime if not null
+    if !is_nil(endtime) do
+      query = from [w, u] in query,
+        where: w.end <= ^endtime
+    end
 
     Repo.all(query)
   end
@@ -249,7 +260,7 @@ defmodule Gotham.Times do
   def update_workingtime(%Workingtime{} = workingtime, attrs \\ %{}) do
     workingtime
     |> Workingtime.changeset(attrs)
-    |> Repo.update()  
+    |> Repo.update()
   end
 
   @doc """

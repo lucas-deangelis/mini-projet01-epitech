@@ -2,10 +2,10 @@
     <div id="workingtime" class="div-content">
         <div class="sub sub-header">
             <span><h2>Working Times</h2></span>
-            <b-button variant="dark" v-b-modal.modal-add>ADD</b-button>
+            <!-- <b-button variant="dark" v-b-modal.modal-add>ADD</b-button> -->
         </div>
         <div class="sub sub-content">
-            <b-table sticky-header head-variant="light" :items="items" id="workingtimes-table">
+            <b-table sticky-header head-variant="light" :items="workingtimes" id="workingtimes-table">
                 <template v-slot:cell(action)="row">
                     <b-button variant="primary" size="sm" @click="row.showDetails" class="mr-2" v-b-tooltip.hover title="Show">
                         <i class="fas fa-eye"></i>
@@ -32,17 +32,13 @@ export default {
     name: 'WorkingTimes',
 
     props: [
-        'workingtimes'
     ],
 
     data() {
         return {
+            userId: 1,
             fields: ['id', 'start', 'end', 'action'],
-            items: [
-                { id: 40, start: '2019-12-09 12:00:10', end: '2019-12-09 12:00:10', action: "" },
-                { id: 21, start: '2019-11-25 10:50:00', end: '2019-11-25 10:50:00', action: "" },
-                { id: 89, start: '2019-10-01 08:25:10', end: '2019-10-01 08:25:10', action: "" },
-                { id: 38, start: '2019-08-07 19:00:10', end: '2019-08-07 19:00:10', action: "" }
+            workingtimes: [
             ]
         }
     },
@@ -52,21 +48,34 @@ export default {
     },
 
     mounted() {
-        getWorkingTimes: {
-            let url = window.apiUrl + '/api/workingtimes/' + this.userID;
+        this.getWorkingTimes();
+    },
+
+    methods: {
+        getWorkingTimes() {
+            let url = window.apiUrl + '/api/workingtimes/' + this.userId + '?start=' + '' + '&end=' + '';  //+ this.$root.user.id;
 
             window.axios.get(url)
             .then(response => {
-                this.workingtimes = response.data;
+                // parse the data
+                let workingTimesDatas = JSON.parse(JSON.stringify(response.data.data));
+                let parsedWorkingTimes = [];
+
+                for (const item of workingTimesDatas) {
+                    parsedWorkingTimes.push({
+                        'id': item.id,
+                        'start': item.start.replace('T', ' '),
+                        'end': item.end.replace('T', ' ')
+                    });
+                }
+
+                // assign the parsed datas to our workingtimes
+                this.workingtimes = parsedWorkingTimes;
             })
             .catch(error => {
                 console.error(error);
             });
         }
-    },
-
-    methods: {
-
     }
 }
 
