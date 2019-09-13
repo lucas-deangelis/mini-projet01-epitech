@@ -15,6 +15,7 @@ function addStyleResource (rule) {
     .options({
       patterns: [
         path.resolve(__dirname, './src/assets/css/style.styl'),
+        path.resolve(__dirname, './src/assets/css/transition.styl'),
       ],
     })
 }
