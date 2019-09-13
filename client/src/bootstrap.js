@@ -25,3 +25,9 @@ if (token) {
 } else {
     console.error('CSRF token not found');
 }*/
+
+
+/**
+ * jQuery
+ */
+window.$ = window.jQuery = window.jquery = require("jquery");

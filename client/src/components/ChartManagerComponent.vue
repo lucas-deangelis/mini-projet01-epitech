@@ -58,28 +58,25 @@
 <script>
 // This component defines many Charts.
 
+//import Raphael from 'raphael/raphael'
+//global.Raphael = Raphael
+
+//import { LineChart } from 'vue-morris'
+// import { DonutChart, BarChart, LineChart, AreaChart } from 'vue-morris'
+
+import { mapState, mapActions } from 'vuex'
+
 export default {
     name: 'ChartManager',
 
-    props: [
-    ],
-
-    data() {
-        return {
-        }
-    },
-
     components: {
-
+       // LineChart
     },
 
-    mounted() {
-
-    },
-
-    methods: {
-
-    }
+    computed:
+        mapState({
+            lineData: state => state.workingtime.workingTimes
+        }),
 }
 
 </script>
