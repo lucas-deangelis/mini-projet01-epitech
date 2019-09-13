@@ -26,7 +26,7 @@
         <ClockManagerComponent></ClockManagerComponent>
 
         <!-- Working time module -->
-        <WorkingTimesComponent :key="reRender"></WorkingTimesComponent>
+        <WorkingTimesComponent></WorkingTimesComponent>
       </div>
 
       <div class="content">
@@ -38,33 +38,24 @@
 </template>
 
 <script>
-import UserComponent from './components/UserComponent.vue'
-import ClockManagerComponent from './components/ClockManagerComponent.vue'
-import WorkingTimesComponent from './components/WorkingTimesComponent.vue'
-import ChartManagerComponent from './components/ChartManagerComponent.vue'
+import UserComponent from './UserComponent.vue'
+import ClockManagerComponent from './ClockManagerComponent.vue'
+import WorkingTimesComponent from './WorkingTimesComponent.vue'
+import ChartManagerComponent from './ChartManagerComponent.vue'
 
 export default {
   name: 'app',
-  data() {
-    return {
-      reRender: 0
-    };
-  },
   components: {
     UserComponent,
     ClockManagerComponent,
     WorkingTimesComponent,
     ChartManagerComponent
-  },
-  methods: {
-    refreshWorkingTimesComponent() {
-      this.reRender += 1;
-    }
   }
 }
 </script>
 
 <style>
-@import url('assets/fontawesome/css/all.css');
-@import url('assets/css/style.css');
+@import url('../assets/fontawesome/css/all.css');
+@import url('../assets/css/style.css');
+@import url('../assets/css/transition.css');
 </style>

@@ -7,7 +7,7 @@
             </div>
             <div class="sub sub-content">
                 <b-table sticky-header head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-      sort-icon-left :items="workingtimes" id="workingtimes-table">
+        sort-icon-left :items="workingtimes" id="workingtimes-table">
                     <template v-slot:cell(action)="row">
                         <b-button variant="primary" size="sm" @click="row.showDetails" class="mr-2" v-b-tooltip.hover title="Show">
                             <i class="fas fa-eye"></i>
@@ -30,12 +30,10 @@
 
 <script>
 // This component defines many WorkingTimes.
+import { mapState, mapActions } from 'vuex'
 
 export default {
     name: 'WorkingTimes',
-
-    props: [
-    ],
 
     data() {
         return {
@@ -48,44 +46,20 @@ export default {
                 { key: 'end', sortable: true },
                 { key: 'action', sortable: false }
             ],
-            workingtimes: [
-            ]
         }
     },
 
-    components: {
-
-    },
+    computed: 
+        mapState({
+            workingtimes: state => state.workingtime.workingTimes
+        }),
 
     mounted() {
-        this.getWorkingTimes(this.userId);
+        this.$store.dispatch('getWorkingTimes', this.userId);
     },
 
     methods: {
-        getWorkingTimes(userId) {
-            let url = window.apiUrl + '/api/workingtimes/' + userId + '?start=' + '' + '&end=' + '';  //+ this.$root.user.id;
-
-            window.axios.get(url)
-            .then(response => {
-                // parse the data
-                let workingTimesDatas = JSON.parse(JSON.stringify(response.data.data));
-                let parsedWorkingTimes = [];
-
-                for (const item of workingTimesDatas) {
-                    parsedWorkingTimes.push({
-                        'id': item.id,
-                        'start': item.start.replace('T', ' '),
-                        'end': item.end.replace('T', ' ')
-                    });
-                }
-
-                // assign the parsed datas to our workingtimes
-                this.workingtimes = parsedWorkingTimes;
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        }
+        
     }
 }
 

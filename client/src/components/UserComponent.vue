@@ -12,61 +12,22 @@
 
 <script>
 // This component defines an User.
-// The user data is fetched from the api.
+import { mapState, mapActions } from 'vuex'
 
 export default {
     name: 'User',
 
-    props: [
-        
-    ],
-
-    data() {
-        return {
-            'userId': 1,
-            'user' : {
-                'id': null,
-                'username': null,
-                'email': null
-            }
-        }
-    },
-
-    components: {
-
-    },
+    computed:
+        mapState({
+            user: state => state.user.user
+        }),
 
     mounted() {
-        // call getUser
-        this.getUser();
-
+        this.$store.dispatch('getUser', 1);
     },
 
     methods: {
-        // getUser from the api and assign it to our client User
-        getUser() {
-            let url = window.apiUrl + '/api/users/' + this.userId;
-            
-            window.axios.get(url)
-            .then(response => {
-                this.user = JSON.parse(JSON.stringify(response.data.data));
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        },
 
-        createUser() {
-
-        },
-
-        updateUser() {
-
-        },
-
-        deleteUser() {
-
-        }
     }
 }
 

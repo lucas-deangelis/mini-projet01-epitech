@@ -1,5 +1,7 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './components/App.vue'
+
+import store from './store'
 
 // Bootstrap file for axios
 require('./bootstrap');
@@ -15,5 +17,6 @@ Vue.config.productionTip = false
   
 // Instantiate the VUE and attach it to #app
 const app = new Vue({
-  render: h => h(App)
+  store,
+  render: h => h(App),
 }).$mount('#app')

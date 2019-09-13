@@ -21,58 +21,24 @@
 
 <script>
 // This component defines the Clock manager.
+import { mapState, mapActions } from 'vuex'
 
 export default {
     name: 'ClockManager',
 
-    props: [
-        'clockmanager'
-    ],
-
-    data() {
-        return {
-            'userId': 1,
-            'startDateTime': null,
-            'clockInProgress': false
-        }
-    },
-
-    components: {
-    },
+    computed:
+        mapState({
+            startDateTime: state => state.clock.startDateTime,
+            clockInProgress: state => state.clock.clockInProgress
+        }),
 
     mounted() {
-        
+        this.$store.dispatch('clock')
     },
 
     methods: {
-        // clock in - clock out
         clock() {
-            let url = window.apiUrl + '/api/clocks/' + this.userId;
-
-            window.axios.post(url)
-            .then(response => {
-                let data = JSON.parse(JSON.stringify(response.data.data));
-                
-                if (data.status == false) {
-                    // update clockInProgress var
-                    this.clockInProgress = false;
-
-                    this.refresh();
-                } else {
-                    // update startDateTime and clockInProgress var
-                    this.startDateTime = data.time.replace('T', ' ');
-                    this.clockInProgress = true;
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        },
-
-        // Refresh the workingtimes component
-        refresh() {
-            // call parent app method to refresh the working times component
-            this.$parent.refreshWorkingTimesComponent();
+            this.$store.dispatch('clock')
         }
     }
 }
