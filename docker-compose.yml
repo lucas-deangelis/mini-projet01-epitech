@@ -9,6 +9,9 @@ services:
     build:
       # Here we define that it should build from the current directory
       context: .
+    # Name the container
+    container_name: backend
+    image: bloodbee/gotham-timemanager:backend
     environment:
       # Variables to connect to our Postgres server
       PGUSER: postgres
@@ -27,6 +30,9 @@ services:
   frontend:
     build:
       context: ./client
+    # Name the container
+    container_name: frontend
+    image: bloodbee/gotham-timemanager:frontend
     ports:
       - "8080:8080"
     depends_on:
@@ -35,6 +41,9 @@ services:
   db:
     # We use the predefined Postgres image
     image: postgres:9.6
+    # Name the container
+    container_name: db
+    image: bloodbee/gotham-timemanager:db
     environment:
       # Set user/password for Postgres
       POSTGRES_USER: postgres
