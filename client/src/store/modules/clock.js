@@ -29,7 +29,7 @@ const actions = {
             // update clockInProgress var
             commit('setClock', false)
 
-            this.refresh()
+            // this.refresh()
         } else {
             // update startDateTime and clockInProgress var
             commit('setStart', data.time.replace('T', ' '))
