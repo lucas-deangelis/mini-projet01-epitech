@@ -3,8 +3,15 @@
         <b-dropdown-text><label class="font-weight-bold">Id :</label> {{ user.id }} </b-dropdown-text>
         <b-dropdown-text><label class="font-weight-bold">Username :</label> {{ user.username }} </b-dropdown-text>
         <b-dropdown-text><label class="font-weight-bold">Email :</label> {{ user.email }} </b-dropdown-text>
-        <!-- <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item variant="danger" href="#">Logout</b-dropdown-item> -->
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item variant="primary" href="#" v-b-modal.modal-edit>Edit</b-dropdown-item>
+        <!-- <b-dropdown-item variant="danger" href="#">Logout</b-dropdown-item> -->
+
+
+        <!-- MODALS -->
+        <b-modal id="modal-edit" title="Add a working time">
+            <p class="my-4">Hello from modal!</p>
+        </b-modal>
     </b-dropdown>
 
 </template>
