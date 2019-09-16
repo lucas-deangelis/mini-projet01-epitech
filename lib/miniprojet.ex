@@ -7,3 +7,6 @@ defmodule Gotham do
   if it comes from the database, an external API or others.
   """
 end
+
+import EctoEnum
+defenum RolesEnum, :roles, [:employee, :manager, :admin]
