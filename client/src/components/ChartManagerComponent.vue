@@ -144,7 +144,6 @@ export default {
             }
 
             this.chartWorkingTimesData = chartWKTDatas
-            console.log(this.chartWorkingTimesData)
         }
     }
 

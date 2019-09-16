@@ -42,9 +42,20 @@ const actions = {
 
   // },
 
-  // updateUser({ commit, state }) {
+  updateUser({ commit, state }, user) {
+    let url = window.apiUrl + '/api/users/' + user.userId;
 
-  // },
+    window.axios.put(url, {
+      email: user.email,
+      username: user.username
+    })
+    .then(response => {
+        commit('setUser', JSON.parse(JSON.stringify(response.data.data)))
+    })
+    .catch(error => {
+        console.error(error)
+    })
+  },
 
   // deleteUser({ commit, state }) {
 

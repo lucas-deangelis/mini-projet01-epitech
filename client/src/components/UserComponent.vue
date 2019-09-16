@@ -9,8 +9,16 @@
 
 
         <!-- MODALS -->
-        <b-modal id="modal-edit" title="Add a working time">
-            <p class="my-4">Hello from modal!</p>
+        <b-modal id="modal-edit" title="Edit my informations" hide-footer>
+            <b-form @submit="onSubmit">
+                <b-form-group id="input-group-1" label="Your username:" label-for="input-1">
+                    <b-form-input id="input-1" v-model="form.username" required placeholder="Enter username"></b-form-input>
+                </b-form-group>
+                <b-form-group id="input-group-2" label="Your email address:" label-for="input-2" description="We'll never share your email with anyone else.">
+                    <b-form-input id="input-2" v-model="form.email" type="email" required placeholder="Enter email"></b-form-input>
+                </b-form-group>
+                <b-button type="submit" variant="primary">Submit</b-button>
+            </b-form>
         </b-modal>
     </b-dropdown>
 
@@ -24,6 +32,15 @@ import { mapState, mapActions } from 'vuex'
 export default {
     name: 'User',
 
+    data() {
+        return {
+            form: {
+                username: '',
+                email: ''
+            }
+        }
+    },
+
     computed:
         mapState({
             user: state => state.user.user
@@ -31,10 +48,24 @@ export default {
 
     mounted() {
         this.$store.dispatch('getUser', 1);
+
+        this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
+            this.form.username = this.$store.state.user.user.username;
+            this.form.email = this.$store.state.user.user.email;
+            $('#input-1').text(this.$store.state.user.user.username)
+            $('#input-2').text(this.$store.state.user.user.email)
+            $('#input-1').val(this.$store.state.user.user.username)
+            $('#input-2').val(this.$store.state.user.user.email)
+        })
     },
 
     methods: {
-
+        onSubmit(evt) {
+            evt.preventDefault()
+            let data = JSON.parse(JSON.stringify(this.form))
+            console.log(data)
+            this.$store.dispatch('updateUser', { userId: this.$store.state.user.user.id, email: data.email, username: data.username })
+        },
     }
 }
 
