@@ -35,7 +35,8 @@ defmodule GothamWeb.UserController do
     end
   end
 
-  def update(conn, %{"userID" => id, "user" => user_params}) do
+  def update(conn, %{"userID" => id}) do
+    user_params = conn.body_params
     user = Accounts.get_user!(id)
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do

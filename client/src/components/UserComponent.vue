@@ -63,8 +63,10 @@ export default {
         onSubmit(evt) {
             evt.preventDefault()
             let data = JSON.parse(JSON.stringify(this.form))
-            console.log(data)
             this.$store.dispatch('updateUser', { userId: this.$store.state.user.user.id, email: data.email, username: data.username })
+
+            // close the modal
+            this.$root.$emit('bv::hide::modal', 'modal-edit');
         },
     }
 }
