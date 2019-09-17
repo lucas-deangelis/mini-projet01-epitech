@@ -57,9 +57,21 @@ const actions = {
     })
   },
 
-  // deleteUser({ commit, state }) {
+  deleteUser({ commit, state }, user) {
+    let url = window.apiUrl + '/api/users/' + user.userId;
 
-  // }
+    window.axios.delete(url)
+    .then(response => {
+        commit('setUser', {
+          id: null,
+          username: null,
+          email: null
+        })
+    })
+    .catch(error => {
+        console.error(error)
+    })
+  }
 }
 
 // mutations

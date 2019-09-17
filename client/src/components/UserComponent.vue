@@ -1,16 +1,24 @@
 <template>
     <b-dropdown id="dropdown-user" right variant="dark" text="User" class="m-2">
+        <b-dropdown-header id="dropdown-header-label-account-zone">
+            ACCOUNT INFORMATIONS
+        </b-dropdown-header>
         <b-dropdown-text><label class="font-weight-bold">Id :</label> {{ user.id }} </b-dropdown-text>
         <b-dropdown-text><label class="font-weight-bold">Username :</label> {{ user.username }} </b-dropdown-text>
         <b-dropdown-text><label class="font-weight-bold">Email :</label> {{ user.email }} </b-dropdown-text>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item variant="primary" href="#" v-b-modal.modal-edit>Edit</b-dropdown-item>
+        <!-- <b-dropdown-divider></b-dropdown-divider> -->
         <!-- <b-dropdown-item variant="danger" href="#">Logout</b-dropdown-item> -->
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-header id="dropdown-header-label-danger-zone">
+            DANGER ZONE
+        </b-dropdown-header>
+        <b-dropdown-item variant="primary" href="#" v-b-modal.modal-edit>Edit account</b-dropdown-item>
+        <b-dropdown-item variant="danger" href="#" v-b-modal.modal-delete>Delete account</b-dropdown-item>
 
 
         <!-- MODALS -->
         <b-modal id="modal-edit" title="Edit my informations" hide-footer>
-            <b-form @submit="onSubmit">
+            <b-form @submit="onSubmitUpdate">
                 <b-form-group id="input-group-1" label="Your username:" label-for="input-1">
                     <b-form-input id="input-1" v-model="form.username" required placeholder="Enter username"></b-form-input>
                 </b-form-group>
@@ -18,6 +26,12 @@
                     <b-form-input id="input-2" v-model="form.email" type="email" required placeholder="Enter email"></b-form-input>
                 </b-form-group>
                 <b-button type="submit" variant="primary">Submit</b-button>
+            </b-form>
+        </b-modal>
+        <b-modal id="modal-delete" title="Delete my account" hide-footer>
+            <b-form @submit="onSubmitDelete">
+                <h3 class="text-danger">DANGER ! You are about to delete your account, this action is irreversible ! Are you sure you want to continue ?</h3>
+                <b-button type="submit" variant="danger">Yes delete my account</b-button>
             </b-form>
         </b-modal>
     </b-dropdown>
@@ -60,13 +74,25 @@ export default {
     },
 
     methods: {
-        onSubmit(evt) {
+        // update user when form submitted
+        onSubmitUpdate(evt) {
             evt.preventDefault()
             let data = JSON.parse(JSON.stringify(this.form))
             this.$store.dispatch('updateUser', { userId: this.$store.state.user.user.id, email: data.email, username: data.username })
 
             // close the modal
-            this.$root.$emit('bv::hide::modal', 'modal-edit');
+            this.$root.$emit('bv::hide::modal', 'modal-edit')
+        },
+        // delete user when form submitted
+        onSubmitDelete(evt) {
+            evt.preventDefault()
+            this.$store.dispatch('deleteUser', { userId: this.$store.state.user.user.id})
+
+            // close the modal
+            this.$root.$emit('bv::hide::modal', 'modal-delete')
+
+            // call logout action
+            
         },
     }
 }
