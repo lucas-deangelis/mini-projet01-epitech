@@ -1,13 +1,17 @@
 defmodule Gotham.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  import EctoEnum
+
+  defenum RolesEnum, :role, [:employee, :manager, :admin]
 
   schema "users" do
     field :email, :string
     field :username, :string
-    has_one :clocks, Gotham.Times.Clock
+    field :role, RolesEnum
+    has_one :clock, Gotham.Times.Clock
     has_many :workingtimes, Gotham.Times.Workingtime
-    has_many :teams, Gotham.Accounts.Team
+    many_to_many :teams, Gotham.Accounts.Team, join_through: "users_teams"
 
     timestamps()
   end

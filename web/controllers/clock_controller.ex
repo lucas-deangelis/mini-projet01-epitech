@@ -10,7 +10,6 @@ defmodule GothamWeb.ClockController do
 
   def score(conn, %{"userID" => id}) do
     clock = Times.get_clock_by_user(id)
-    IO.inspect(clock)
     user = Repo.get!(User, id)
 
     if !is_nil(clock) do
@@ -32,7 +31,6 @@ defmodule GothamWeb.ClockController do
       end
     # if clock doesn't exists, create clock
     else
-      IO.inspect("inside is nil")
       clock_params = %{time: NaiveDateTime.utc_now(), status: true, user: id}
       with {:ok, %Clock{}} <- Times.create_clock(clock_params) do
         conn

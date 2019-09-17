@@ -4,8 +4,9 @@ defmodule Gotham.Accounts.Team do
 
   schema "teams" do
     field :name, :string
-    field :manager, :id
-    field :users, :id
+    field :manager_id, :id
+    many_to_many :users, Gotham.Accounts.User, join_through: "users_teams"
+
 
     timestamps()
   end
@@ -13,7 +14,7 @@ defmodule Gotham.Accounts.Team do
   @doc false
   def changeset(team, attrs) do
     team
-    |> cast(attrs, [:name, :manager])
-    |> validate_required([:name, :manager])
+    |> cast(attrs, [:name, :manager_id])
+    |> validate_required([:name, :manager_id])
   end
 end

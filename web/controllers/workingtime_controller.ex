@@ -37,7 +37,6 @@ defmodule GothamWeb.WorkingtimeController do
     startTime = nil
     endTime = nil
 
-    IO.inspect Map.get(params, "start")
     # check that there a start params that is not null and not empty
     if Map.has_key?(params, "start") and !is_nil(Map.get(params, "start")) and !String.equivalent?(Map.get(params, "start"), '')  do
       # Converting start parameter from iso to naivedatetime

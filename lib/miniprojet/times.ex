@@ -70,7 +70,7 @@ defmodule Gotham.Times do
 
     query = from c in Clock,
       join: u in User,
-      on: c.user == u.id,
+      on: c.user_id == u.id,
       where: u.id == ^id
 
     Repo.one(query)
@@ -89,7 +89,6 @@ defmodule Gotham.Times do
 
   """
   def create_clock(attrs \\ %{}) do
-    IO.inspect("inside create clock")
     %Clock{}
     |> Clock.changeset(attrs)
     |> Repo.insert()
@@ -144,7 +143,7 @@ defmodule Gotham.Times do
   def delete_clock_all_by_user(id) do
     query = from c in Clock,
       join: u in User,
-      on: c.user == u.id,
+      on: c.user_id == u.id,
       where: u.id == ^id
 
     Ecto.Multi.new()
@@ -201,7 +200,7 @@ defmodule Gotham.Times do
   def get_workingtimeUser!(workingtimeId, userId) do
     query = from w in Workingtime,
       where: w.id == ^workingtimeId,
-      where: w.user == ^userId
+      where: w.user_id == ^userId
 
     Repo.one(query)
   end
@@ -225,18 +224,18 @@ defmodule Gotham.Times do
 
     query = from w in Workingtime,
       join: u in User,
-      on: w.user == u.id,
+      on: w.user_id == u.id,
       where: u.id == ^id
 
     # filter working time by starttime if not null
     if !is_nil(starttime) do
       query = from [w, u] in query,
-        where: w.start >= ^starttime
+      where: w.start >= ^starttime
     end
     #filter working time by endtime if not null
     if !is_nil(endtime) do
       query = from [w, u] in query,
-        where: w.end <= ^endtime
+      where: w.end <= ^endtime
     end
 
     Repo.all(query)
@@ -261,7 +260,7 @@ defmodule Gotham.Times do
     # API access gives key as string, but clock score gives them as atoms
     attrs = for {k, v} <- attrs, do: {to_string(k), v}, into: %{}
 
-    attrs = Map.put(attrs, "user", user.id)
+    attrs = Map.put(attrs, "user_id", user.id)
 
     %Workingtime{}
     |> Workingtime.changeset(attrs)
@@ -317,7 +316,7 @@ defmodule Gotham.Times do
   def delete_workingtime_all_by_user(id) do
     query = from w in Workingtime,
       join: u in User,
-      on: w.user == u.id,
+      on: w.user_id == u.id,
       where: u.id == ^id
 
     Ecto.Multi.new()
