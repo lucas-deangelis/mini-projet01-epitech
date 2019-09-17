@@ -6,6 +6,7 @@ defmodule Gotham.Times.Clock do
     field :status, :boolean, default: false
     field :time, :naive_datetime
     field :user, :id
+    belongs_to :users, Gotham.Accounts.User
 
     timestamps()
   end

@@ -5,6 +5,9 @@ defmodule Gotham.Accounts.User do
   schema "users" do
     field :email, :string
     field :username, :string
+    has_one :clocks, Gotham.Times.Clock
+    has_many :workingtimes, Gotham.Times.Workingtime
+    has_many :teams, Gotham.Accounts.Team
 
     timestamps()
   end

@@ -6,6 +6,7 @@ defmodule Gotham.Times.Workingtime do
     field :end, :naive_datetime
     field :start, :naive_datetime
     field :user, :id
+    belongs_to :users, Gotham.Accounts.User
 
     timestamps()
   end
