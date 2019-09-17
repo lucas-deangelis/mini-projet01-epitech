@@ -24,12 +24,34 @@ const getters = {
 const actions = {
   // get user from the api and assign it to the state
   getUser({ commit, state }, userId) {
-    let url = window.apiUrl + '/api/users/' + userId;
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/users/' + userId;
+      
+      // empty the user
+      commit('setUser', {})
+      
+      window.axios.get(url)
+      .then(response => {
+        commit('setUser', JSON.parse(JSON.stringify(response.data.data)))
+      })
+      .catch(error => {
+        console.error(error)
+      })
+      resolve()
+    })
+  },
 
-    // empty the user
-    commit('setUser', {})
-    
-    window.axios.get(url)
+  // createUser({ commit, state }) {
+
+  // },
+
+  updateUser({ commit, state }, user) {
+    let url = window.apiUrl + '/api/users/' + user.userId;
+
+    window.axios.put(url, {
+      email: user.email,
+      username: user.username
+    })
     .then(response => {
         commit('setUser', JSON.parse(JSON.stringify(response.data.data)))
     })
@@ -38,17 +60,21 @@ const actions = {
     })
   },
 
-  // createUser({ commit, state }) {
+  deleteUser({ commit, state }, user) {
+    let url = window.apiUrl + '/api/users/' + user.userId;
 
-  // },
-
-  // updateUser({ commit, state }) {
-
-  // },
-
-  // deleteUser({ commit, state }) {
-
-  // }
+    window.axios.delete(url)
+    .then(response => {
+        commit('setUser', {
+          id: null,
+          username: null,
+          email: null
+        })
+    })
+    .catch(error => {
+        console.error(error)
+    })
+  }
 }
 
 // mutations
@@ -73,7 +99,7 @@ const mutations = {
 }
 
 export default {
-  // namespaced: true,
+  namespaced: true,
   state,
   getters,
   actions,

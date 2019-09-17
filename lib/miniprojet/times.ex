@@ -130,6 +130,29 @@ defmodule Gotham.Times do
   end
 
   @doc """
+  Deletes User's clocks.
+
+  ## Examples
+
+      iex> delete_clock_all_by_user(id)
+      {:ok, ""}
+
+      iex> delete_clock_all_by_user(id)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_clock_all_by_user(id) do
+    query = from c in Clock,
+      join: u in User,
+      on: c.user == u.id,
+      where: u.id == ^id
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.delete_all(:delete_all, query)
+    |> Repo.transaction()
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking clock changes.
 
   ## Examples
@@ -277,6 +300,29 @@ defmodule Gotham.Times do
   """
   def delete_workingtime(%Workingtime{} = workingtime) do
     Repo.delete(workingtime)
+  end
+
+  @doc """
+  Deletes User's Workingtime.
+
+  ## Examples
+
+      iex> delete_workingtime_all_by_user(workingtime)
+      {:ok, %Workingtime{}}
+
+      iex> delete_workingtime_all_by_user(workingtime)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_workingtime_all_by_user(id) do
+    query = from w in Workingtime,
+      join: u in User,
+      on: w.user == u.id,
+      where: u.id == ^id
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.delete_all(:delete_all, query)
+    |> Repo.transaction()
   end
 
   @doc """

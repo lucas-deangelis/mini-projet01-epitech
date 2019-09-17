@@ -11,7 +11,7 @@
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
-              <UserComponent></UserComponent>
+              <UserComponent @userLoggedIn="setUserLoggedIn"></UserComponent>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
@@ -21,7 +21,7 @@
 
     <div id="main-content">
 
-      <div class="content">
+      <div class="content" v-if="userLoggedIn">
         <!-- Clock module -->
         <ClockManagerComponent></ClockManagerComponent>
 
@@ -29,7 +29,7 @@
         <WorkingTimesComponent></WorkingTimesComponent>
       </div>
 
-      <div class="content">
+      <div class="content" v-if="userLoggedIn">
         <ChartManagerComponent></ChartManagerComponent>
       </div>
 
@@ -45,11 +45,21 @@ import ChartManagerComponent from './ChartManagerComponent.vue'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      'userLoggedIn': false
+    }
+  },
   components: {
     UserComponent,
     ClockManagerComponent,
     WorkingTimesComponent,
     ChartManagerComponent
+  },
+  methods: {
+      setUserLoggedIn(loggedIn) {
+          this.userLoggedIn = loggedIn;
+      }
   }
 }
 </script>

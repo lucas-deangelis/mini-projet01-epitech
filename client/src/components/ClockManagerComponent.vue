@@ -26,19 +26,23 @@ import { mapState, mapActions } from 'vuex'
 export default {
     name: 'ClockManager',
 
-    computed:
-        mapState({
-            startDateTime: state => state.clock.startDateTime,
-            clockInProgress: state => state.clock.clockInProgress
+    computed: {
+        ...mapState('clock', {
+            startDateTime: state => state.startDateTime,
+            clockInProgress: state => state.clockInProgress,
         }),
+        ...mapState('user', {
+            userId: state => state.user.id,
+        }),
+    },
 
     mounted() {
-        this.$store.dispatch('clock')
+        this.$store.dispatch('clock/clock', this.userId )
     },
 
     methods: {
         clock() {
-            this.$store.dispatch('clock')
+            this.$store.dispatch('clock/clock', this.userId )
         }
     }
 }
