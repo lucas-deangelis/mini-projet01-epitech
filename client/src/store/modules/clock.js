@@ -17,9 +17,8 @@ const getters = {
 // actions
 const actions = {
   // clock in - clock out
-  clock({ commit, state, rootState }) {
-    console.log(rootState.user.user.id)
-    let url = window.apiUrl + '/api/clocks/' + 1
+  clock({ commit, state, dispatch }, userId) {
+    let url = window.apiUrl + '/api/clocks/' + userId
 
     window.axios.post(url)
     .then(response => {
@@ -29,7 +28,7 @@ const actions = {
             // update clockInProgress var
             commit('setClock', false)
 
-            // this.refresh()
+            dispatch('refresh', userId)
         } else {
             // update startDateTime and clockInProgress var
             commit('setStart', data.time.replace('T', ' '))
@@ -41,10 +40,13 @@ const actions = {
     });
   },
 
-  // // Refresh the workingtimes component
-  // refresh({ commit, state }) {
-  //   // refresh the workingtimes component
-  // }
+  // Refresh the workingtimes component
+  refresh({ dispatch, commit, state }, userId) {
+    // refresh the workingtimes component
+    // call working time action to get action
+    dispatch('getWorkingTimes', { userId: userId, start: '', end: '' }, {root:true})
+    
+  }
 }
 
 // mutations
@@ -61,7 +63,7 @@ const mutations = {
 }
 
 export default {
-  // namespaced: true,
+  namespaced: true,
   state,
   getters,
   actions,

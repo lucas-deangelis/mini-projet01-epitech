@@ -56,20 +56,27 @@ export default {
     },
 
     computed:
-        mapState({
-            user: state => state.user.user
+        mapState('user', {
+            user: state => state.user
         }),
 
     mounted() {
-        this.$store.dispatch('getUser', 1);
+        this.$store.dispatch('user/getUser', 2).then(() => {
+            // wait 1 sec to allow propagation state
+            let myInterval = setInterval(() => {
+                // set user logged in at true
+                this.$emit("userLoggedIn", true)
+                clearInterval(myInterval)
+            }, 1000);
+        });
 
         this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
-            this.form.username = this.$store.state.user.user.username;
-            this.form.email = this.$store.state.user.user.email;
-            $('#input-1').text(this.$store.state.user.user.username)
-            $('#input-2').text(this.$store.state.user.user.email)
-            $('#input-1').val(this.$store.state.user.user.username)
-            $('#input-2').val(this.$store.state.user.user.email)
+            this.form.username = this.user.username;
+            this.form.email = this.user.email;
+            $('#input-1').text(this.user.username)
+            $('#input-2').text(this.user.email)
+            $('#input-1').val(this.user.username)
+            $('#input-2').val(this.user.email)
         })
     },
 
@@ -78,7 +85,7 @@ export default {
         onSubmitUpdate(evt) {
             evt.preventDefault()
             let data = JSON.parse(JSON.stringify(this.form))
-            this.$store.dispatch('updateUser', { userId: this.$store.state.user.user.id, email: data.email, username: data.username })
+            this.$store.dispatch('user/updateUser', { userId: this.user.id, email: data.email, username: data.username })
 
             // close the modal
             this.$root.$emit('bv::hide::modal', 'modal-edit')
@@ -86,13 +93,13 @@ export default {
         // delete user when form submitted
         onSubmitDelete(evt) {
             evt.preventDefault()
-            this.$store.dispatch('deleteUser', { userId: this.$store.state.user.user.id})
+            this.$store.dispatch('user/deleteUser', { userId: this.user.id})
 
             // close the modal
             this.$root.$emit('bv::hide::modal', 'modal-delete')
 
             // call logout action
-            
+
         },
     }
 }

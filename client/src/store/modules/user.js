@@ -24,17 +24,20 @@ const getters = {
 const actions = {
   // get user from the api and assign it to the state
   getUser({ commit, state }, userId) {
-    let url = window.apiUrl + '/api/users/' + userId;
-
-    // empty the user
-    commit('setUser', {})
-    
-    window.axios.get(url)
-    .then(response => {
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/users/' + userId;
+      
+      // empty the user
+      commit('setUser', {})
+      
+      window.axios.get(url)
+      .then(response => {
         commit('setUser', JSON.parse(JSON.stringify(response.data.data)))
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error(error)
+      })
+      resolve()
     })
   },
 
@@ -96,7 +99,7 @@ const mutations = {
 }
 
 export default {
-  // namespaced: true,
+  namespaced: true,
   state,
   getters,
   actions,
