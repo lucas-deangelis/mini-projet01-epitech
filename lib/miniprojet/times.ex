@@ -90,6 +90,7 @@ defmodule Gotham.Times do
   """
   def create_clock(attrs \\ %{}) do
     %Clock{}
+    |> Repo.preload(:user)
     |> Clock.changeset(attrs)
     |> Repo.insert()
   end
@@ -108,6 +109,7 @@ defmodule Gotham.Times do
   """
   def update_clock(%Clock{} = clock, attrs) do
     clock
+    |> Repo.preload(:user)
     |> Clock.changeset(attrs)
     |> Repo.update()
   end
@@ -253,16 +255,9 @@ defmodule Gotham.Times do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_workingtime(%User{} = user, attrs \\ %{}) do
-    IO.inspect("inside create_workingtime")
-
-    # Converts all key to string, since this function is used by API access and by clock score
-    # API access gives key as string, but clock score gives them as atoms
-    attrs = for {k, v} <- attrs, do: {to_string(k), v}, into: %{}
-
-    attrs = Map.put(attrs, "user_id", user.id)
-
+  def create_workingtime(attrs \\ %{}) do
     %Workingtime{}
+    |> Repo.preload(:user)
     |> Workingtime.changeset(attrs)
     |> Repo.insert()
   end

@@ -20,8 +20,12 @@ defmodule Gotham.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:username, :email])
+    # |> cast_assoc(:clock, attrs.clock)
+    # |> cast_assoc(:workingtimes, attrs.workingtimes)
+    # |> cast_assoc(:teams, attrs.teams)
     |> validate_required([:username, :email])
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
   end
+
 end

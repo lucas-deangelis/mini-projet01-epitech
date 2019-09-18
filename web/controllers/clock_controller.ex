@@ -15,27 +15,25 @@ defmodule GothamWeb.ClockController do
     if !is_nil(clock) do
       # if clock.status is true (user is working), clock out (status = false) and record the work session
       if clock.status do
-        IO.inspect("in clock status true")
         endTime = NaiveDateTime.utc_now()
-        Times.create_workingtime(user, %{start: clock.time, end: endTime})
-        IO.inspect("passed worktime creation")
+        Times.create_workingtime(%{start: clock.time, end: endTime, user: user})
 
-        clock_params = %{time: endTime, status: false, user: id}
+        clock_params = %{time: endTime, status: false, user: user}
         Times.update_clock(clock, clock_params)
 
       # else initialise the work session and keep in memory the time of start
       else
-        IO.inspect("in clock status false")
-        clock_params = %{time: NaiveDateTime.utc_now(), status: true, user: id}
+        clock_params = %{time: NaiveDateTime.utc_now(), status: true, user: user}
         Times.update_clock(clock, clock_params)
       end
     # if clock doesn't exists, create clock
     else
-      clock_params = %{time: NaiveDateTime.utc_now(), status: true, user: id}
-      with {:ok, %Clock{}} <- Times.create_clock(clock_params) do
+      clock_params = %{time: NaiveDateTime.utc_now(), status: true, user: user}
+      with {:ok, %Clock{} = clock} <- Times.create_clock(clock_params) do
         conn
         |> put_status(:created)
         |> put_resp_header("location", Routes.clock_path(conn, :show, id))
+        |> render("show.json", clock: clock)
       end
     end
 

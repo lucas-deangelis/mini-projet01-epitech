@@ -15,6 +15,7 @@ defmodule Gotham.Accounts.Team do
   def changeset(team, attrs) do
     team
     |> cast(attrs, [:name, :manager_id])
+    |> cast_assoc(:users, attrs.users)
     |> validate_required([:name, :manager_id])
   end
 end
