@@ -4,7 +4,7 @@ defmodule Gotham.Accounts.Team do
 
   schema "teams" do
     field :name, :string
-    field :manager_id, :id
+    belongs_to :manager, Gotham.Accounts.User, on_replace: :update
     many_to_many :users, Gotham.Accounts.User, join_through: "users_teams"
 
 
@@ -15,7 +15,8 @@ defmodule Gotham.Accounts.Team do
   def changeset(team, attrs) do
     team
     |> cast(attrs, [:name, :manager_id])
-    |> cast_assoc(:users, attrs.users)
+    |> put_assoc(:users, attrs.users)
+    |> put_assoc(:manager, attrs.manager)
     |> validate_required([:name, :manager_id])
   end
 end

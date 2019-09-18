@@ -10,13 +10,12 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Gotham.Accounts.User
-alias Gotham.Accounts.Team
+alias Gotham.Accounts.{User, Team}
 alias Gotham.Times.{Clock, Workingtime}
 alias Gotham.Repo
 
 # On vide les tables de leur contenu pour repartir de 0 pour les tests
-# Le cascade permet de viser les deux autres tables qui référencent users
+# Le cascade permet de viser les autres tables qui référencent users
 Repo.query("TRUNCATE TABLE users CASCADE", [])
 
 # Ici on remet à zéro les sequences (compteurs utilisés pour les IDs)
@@ -25,7 +24,7 @@ Repo.query("ALTER SEQUENCE clocks_id_seq RESTART")
 Repo.query("ALTER SEQUENCE workingtimes_id_seq RESTART")
 Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
 
-
+# Insert some users
 %User{
     username: "joerogan",
     email: "joe.rogan@email.com",
@@ -75,7 +74,7 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
 }
 |> Repo.insert!()
 
-
+# Insert some working times
 %Workingtime{
     start: ~N[2019-09-09 09:30:00],
     end: ~N[2019-09-09 12:30:00],
@@ -111,7 +110,7 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
 }
 |> Repo.insert!()
 
-
+# Insert some clocks
 %Clock{
     time: ~N[2019-09-12 09:30:00],
     status: true,
@@ -125,3 +124,27 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
     user_id: 3
 }
 |> Repo.insert!()
+
+# Insert some teams
+%Team{
+    name: "Accountant",
+    manager_id: 2
+}
+|> Repo.insert!()
+
+Repo.insert_all("users_teams", [
+    [user_id: 3, team_id: 1],
+    [user_id: 4, team_id: 1],
+    [user_id: 5, team_id: 1],
+])
+
+%Team{
+    name: "Devs",
+    manager_id: 2
+}
+|> Repo.insert!()
+
+Repo.insert_all("users_teams", [
+    [user_id: 6, team_id: 2],
+    [user_id: 7, team_id: 2],
+])

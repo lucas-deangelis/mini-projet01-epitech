@@ -11,7 +11,11 @@ defmodule GothamWeb.TeamController do
     render(conn, "index.json", teams: teams)
   end
 
-  def create(conn, %{"team" => team_params}) do
+  def create(conn, %{"managerID" => managerId, "team" => team_params}) do
+    manager = Accounts.get_user!(managerId)
+
+    Map.put(team_params, :manager, manager)
+
     with {:ok, %Team{} = team} <- Accounts.create_team(team_params) do
       conn
       |> put_status(:created)
@@ -20,13 +24,21 @@ defmodule GothamWeb.TeamController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"managerID" => managerId, "id" => id}) do
     team = Accounts.get_team!(id)
     render(conn, "show.json", team: team)
   end
 
-  def update(conn, %{"id" => id, "team" => team_params}) do
+  def show_manager_teams(conn, %{"managerID" => managerId}) do
+    team = Accounts.get_teams_by_manager(managerId)
+    render(conn, "show.json", team: team)
+  end
+
+  def update(conn, %{"managerID" => managerId, "id" => id, "team" => team_params}) do
+    manager = Accounts.get_user!(managerId)
     team = Accounts.get_team!(id)
+
+    Map.put(team_params, :manager, manager)
 
     with {:ok, %Team{} = team} <- Accounts.update_team(team, team_params) do
       render(conn, "show.json", team: team)

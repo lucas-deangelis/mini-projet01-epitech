@@ -154,6 +154,30 @@ defmodule Gotham.Accounts do
   def get_team!(id), do: Repo.get!(Team, id)
 
   @doc """
+  Gets a manager's teams.
+
+  Raises `Ecto.NoResultsError` if the Team does not exist.
+
+  ## Examples
+
+      iex> get_teams_by_manager!(123)
+      %Team{}
+
+      iex> get_teams_by_manager!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_teams_by_manager(id) do
+    query = from t in Team,
+      join: u in User,
+      on: t.manager_id == u.id,
+      where: u.id == ^id
+
+    Repo.all(query)
+
+  end
+
+  @doc """
   Creates a team.
 
   ## Examples
@@ -167,6 +191,7 @@ defmodule Gotham.Accounts do
   """
   def create_team(attrs \\ %{}) do
     %Team{}
+    |> Repo.preload(:manager)
     |> Team.changeset(attrs)
     |> Repo.insert()
   end
@@ -176,15 +201,17 @@ defmodule Gotham.Accounts do
 
   ## Examples
 
-      iex> update_team(team, %{field: new_value})
-      {:ok, %Team{}}
+  iex> update_team(team, %{field: new_value})
+  {:ok, %Team{}}
 
-      iex> update_team(team, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
+  iex> update_team(team, %{field: bad_value})
+  {:error, %Ecto.Changeset{}}
 
   """
   def update_team(%Team{} = team, attrs) do
     team
+    |> Repo.preload(:manager)
+    |> Repo.preload(:users)
     |> Team.changeset(attrs)
     |> Repo.update()
   end
