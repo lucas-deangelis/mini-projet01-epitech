@@ -5,6 +5,7 @@ defmodule Gotham.Accounts.User do
 
   defenum RolesEnum, :role, [:employee, :manager, :admin]
 
+  # @derive {Poison.Encoder, except: [:clock, :workingtimes]}
   schema "users" do
     field :email, :string
     field :username, :string
@@ -19,11 +20,11 @@ defmodule Gotham.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email])
-    # |> cast_assoc(:clock, attrs.clock)
-    # |> cast_assoc(:workingtimes, attrs.workingtimes)
-    # |> cast_assoc(:teams, attrs.teams)
-    |> validate_required([:username, :email])
+    |> cast(attrs, [:username, :email, :role])
+    |> cast_assoc(:clock, with: &Gotham.Times.Clock.changeset/2)
+    |> cast_assoc(:workingtimes, with: &Gotham.Times.Workingtime.changeset/2)
+    |> cast_assoc(:teams, with: &Gotham.Accounts.Team.changeset/2)
+    |> validate_required([:username, :email, :role])
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
   end

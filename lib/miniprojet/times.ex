@@ -88,9 +88,9 @@ defmodule Gotham.Times do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_clock(attrs \\ %{}) do
-    %Clock{}
-    |> Repo.preload(:user)
+  def create_clock(attrs \\ %{}, user) do
+    %Clock{user: user}
+    |> Ecto.Changeset.change()
     |> Clock.changeset(attrs)
     |> Repo.insert()
   end
@@ -255,9 +255,9 @@ defmodule Gotham.Times do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_workingtime(attrs \\ %{}) do
-    %Workingtime{}
-    |> Repo.preload(:user)
+  def create_workingtime(attrs \\ %{}, user) do
+    %Workingtime{user: user}
+    |> Ecto.Changeset.change()
     |> Workingtime.changeset(attrs)
     |> Repo.insert()
   end

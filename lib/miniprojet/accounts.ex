@@ -7,6 +7,7 @@ defmodule Gotham.Accounts do
   alias Gotham.Repo
 
   alias Gotham.Accounts.User
+  alias Gotham.Accounts.Team
 
   @doc """
   Returns the list of users.
@@ -17,9 +18,9 @@ defmodule Gotham.Accounts do
       [%User{}, ...]
 
   """
-  # def list_users do
-  #   Repo.all(User)
-  # end
+  def list_users do
+    Repo.all(User)
+  end
 
   @doc """
   Gets a single user.
@@ -37,6 +38,24 @@ defmodule Gotham.Accounts do
   """
   def get_user!(id) do
     Repo.get!(User, id)
+  end
+
+  @doc """
+  Gets a single user with his associations.
+
+  Raises `Ecto.NoResultsError` if the User does not exist.
+
+  ## Examples
+
+      iex> get_user_preloaded!(123)
+      %User{}
+
+      iex> get_user_preloaded!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user_preloaded!(id) do
+    Repo.get!(User, id) |> Repo.preload(:clock) |> Repo.preload(:teams) |> Repo.preload(:workingtimes)
   end
 
   @doc """
@@ -122,8 +141,6 @@ defmodule Gotham.Accounts do
     User.changeset(user, %{})
   end
 
-  alias Gotham.Accounts.Team
-
   @doc """
   Returns the list of teams.
 
@@ -134,7 +151,7 @@ defmodule Gotham.Accounts do
 
   """
   def list_teams do
-    Repo.all(Team)
+    Repo.all(Team) |> Repo.preload(:manager) |> Repo.preload(:users)
   end
 
   @doc """
@@ -151,7 +168,30 @@ defmodule Gotham.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_team!(id), do: Repo.get!(Team, id)
+  def get_team!(id), do: Repo.get!(Team, id) |> Repo.preload(:manager) |> Repo.preload(:users)
+
+  @doc """
+  Gets a manager's teams.
+
+  Raises `Ecto.NoResultsError` if the Team does not exist.
+
+  ## Examples
+
+      iex> get_teams_by_manager!(123)
+      %Team{}
+
+      iex> get_teams_by_manager!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_teams_by_manager(id) do
+    query = from t in Team,
+      where: t.manager_id == ^id,
+      preload: [:manager, :users]
+
+    Repo.all(query)
+
+  end
 
   @doc """
   Creates a team.
@@ -165,8 +205,9 @@ defmodule Gotham.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_team(attrs \\ %{}) do
-    %Team{}
+  def create_team(attrs \\ %{}, manager) do
+    %Team{manager: manager}
+    |> Ecto.Changeset.change()
     |> Team.changeset(attrs)
     |> Repo.insert()
   end
@@ -176,15 +217,17 @@ defmodule Gotham.Accounts do
 
   ## Examples
 
-      iex> update_team(team, %{field: new_value})
-      {:ok, %Team{}}
+  iex> update_team(team, %{field: new_value})
+  {:ok, %Team{}}
 
-      iex> update_team(team, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
+  iex> update_team(team, %{field: bad_value})
+  {:error, %Ecto.Changeset{}}
 
   """
   def update_team(%Team{} = team, attrs) do
     team
+    |> Repo.preload(:manager)
+    |> Repo.preload(:users)
     |> Team.changeset(attrs)
     |> Repo.update()
   end

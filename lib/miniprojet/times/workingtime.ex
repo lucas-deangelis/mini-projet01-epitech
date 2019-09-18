@@ -15,7 +15,7 @@ defmodule Gotham.Times.Workingtime do
   def changeset(workingtime, attrs) do
     workingtime
     |> cast(attrs, [:start, :end])
-    |> put_assoc(:user, attrs.user)
+    |> cast_assoc(:user, with: &Gotham.Accounts.User.changeset/2)
     |> validate_required([:start, :end, :user])
     #|> validate_format(~N[:end], ~r/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
     #|> validate_format(~N[:start], ~r/(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/)
