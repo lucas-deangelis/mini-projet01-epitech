@@ -95,7 +95,7 @@ export default {
 
             let chartWKTDatas = []
             let daysTab = []
-
+            console.log(workingTimesData)
             for (const item of workingTimesData) {
                 // split start and end and get the date and time
                 let startDatetime = moment(item.start)

@@ -11,7 +11,10 @@ defmodule GothamWeb.TeamView do
   end
 
   def render("team.json", %{team: team}) do
-    %{id: team.id,
-      name: team.name}
+    %{
+      name: team.name,
+      manager: team.manager,
+      users: team.users
+    }
   end
 end

@@ -15,7 +15,7 @@ defmodule Gotham.Times.Clock do
   def changeset(clock, attrs) do
     clock
     |> cast(attrs, [:time, :status])
-    |> put_assoc(:user, attrs.user)
+    |> cast_assoc(:user, with: &Gotham.Accounts.User.changeset/2)
     |> validate_required([:time, :status, :user])
   end
 end

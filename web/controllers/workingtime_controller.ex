@@ -10,7 +10,7 @@ defmodule GothamWeb.WorkingtimeController do
   def createUsrId(conn, %{"userID" => id, "workingtime" => workingtime_params}) do
     user = Accounts.get_user!(id)
 
-    with {:ok, %Workingtime{} = workingtime} <- Times.create_workingtime(user, workingtime_params) do
+    with {:ok, %Workingtime{} = workingtime} <- Times.create_workingtime(workingtime_params, user) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.workingtime_path(conn, :show, id, workingtime))
