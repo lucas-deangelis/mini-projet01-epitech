@@ -42,11 +42,9 @@ const actions = {
           // assign the parsed datas to our state.workingtimes
           commit('setWorkingTimes', parsedWorkingTimes)
           commit('setReceived', true)
-          return parsedWorkingTimes
       })
       .catch(error => {
           console.error(error)
-          return []
       });
     }
   },

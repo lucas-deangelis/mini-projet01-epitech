@@ -75,10 +75,10 @@ export default {
 
     mounted () {
 
-        let interval = setInterval(() => {
+        let myInterval = setInterval(() => {
             if (this.chartWorkingTimesData.length == 0) {
                 this.getChartWorkingTimes()
-                window.clearInterval(interval)
+                clearInterval(myInterval)
             }
         }, 1000);
 
@@ -119,7 +119,7 @@ export default {
                         }
 
                         // add 1 day to tempDate
-                        tempDate = startDateTime.add(1, 'd')
+                        tempDate = startDatetime.add(1, 'd')
                     }
                 } else { // the user worked on the same day
                     // get numbers of hours worked

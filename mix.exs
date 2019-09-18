@@ -41,7 +41,7 @@ defmodule Gotham.MixProject do
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
+      {:poison, "~> 3.1"},
       {:corsica, "~> 1.0"},
       {:ecto_enum, "~> 1.3"},
       {:plug_cowboy, "~> 2.0"}

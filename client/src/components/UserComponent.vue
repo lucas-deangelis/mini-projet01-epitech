@@ -61,7 +61,7 @@ export default {
         }),
 
     mounted() {
-        this.$store.dispatch('user/getUser', 2).then(() => {
+        this.$store.dispatch('user/getUser', 1).then(() => {
             // wait 1 sec to allow propagation state
             let myInterval = setInterval(() => {
                 // set user logged in at true
