@@ -34,7 +34,8 @@ defmodule GothamWeb.Router do
 
     # Team - User nested routes
     scope "/users/:managerID/teams" do
-      get "/", TeamController, :show
+      get "/", TeamController, :show_manager_teams
+      get "/:id", TeamController, :show
       post "/", TeamController, :create
     end
 
