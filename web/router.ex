@@ -23,11 +23,28 @@ defmodule GothamWeb.Router do
     pipe_through :api
 
     # User routes
-	  get "/users", UserController, :show_by_attr
-    get "/users/:userID", UserController, :show
-    post "/users", UserController, :create
-    put "/users/:userID", UserController, :update
-    delete "/users/:userID", UserController, :delete
+    scope "/users" do
+      get "/", UserController, :show_by_attr
+      get "/:userID", UserController, :show
+      post "/", UserController, :create
+      put "/:userID", UserController, :update
+      delete "/:userID", UserController, :delete
+
+    end
+
+    # Team - User nested routes
+    scope "/users/:managerID/teams" do
+      get "/", TeamController, :show_manager_teams
+      get "/:id", TeamController, :show
+      post "/", TeamController, :create
+    end
+
+    # Teams routes
+    scope "/teams" do
+      get "/", TeamController, :index
+      put "/:id", TeamController, :update
+      delete "/:id", TeamController, :delete
+    end
 
     # Working Time routes
     get "/workingtimes/:userID", WorkingtimeController, :show_by_attr
@@ -40,5 +57,6 @@ defmodule GothamWeb.Router do
     # Clocking routes
     get "/clocks/:userID", ClockController, :show
     post "/clocks/:userID", ClockController, :score # Manage departures and arrivals
+
   end
 end
