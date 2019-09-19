@@ -15,8 +15,8 @@ RUN npm install --log-level=error
 # copie les fichiers et dossiers du projet dans le dossier de travail (par exemple : le dossier 'app')
 COPY . .
 
-RUN npm run serve
+# RUN npm run serve&
 
 EXPOSE 8080
 
-
+CMD ["npm", "run", "serve"]
