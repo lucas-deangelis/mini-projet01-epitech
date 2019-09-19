@@ -32,6 +32,9 @@
       <div class="content" v-if="userLoggedIn">
         <ChartManagerComponent></ChartManagerComponent>
       </div>
+      <div class="content" v-if="userLoggedIn">
+        <AdminComponent></AdminComponent>
+      </div>
 
     </div>
   </div>
@@ -42,6 +45,8 @@ import UserComponent from './UserComponent.vue'
 import ClockManagerComponent from './ClockManagerComponent.vue'
 import WorkingTimesComponent from './WorkingTimesComponent.vue'
 import ChartManagerComponent from './ChartManagerComponent.vue'
+
+import AdminComponent from './AdminComponent.vue'
 
 export default {
   name: 'app',
@@ -54,7 +59,8 @@ export default {
     UserComponent,
     ClockManagerComponent,
     WorkingTimesComponent,
-    ChartManagerComponent
+    ChartManagerComponent,
+    AdminComponent
   },
   methods: {
       setUserLoggedIn(loggedIn) {

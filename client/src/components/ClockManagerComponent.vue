@@ -37,12 +37,12 @@ export default {
     },
 
     mounted() {
-        this.$store.dispatch('clock/clock', this.userId )
+        this.$store.dispatch('clock/clock', this.userId)
     },
 
     methods: {
         clock() {
-            this.$store.dispatch('clock/clock', this.userId )
+            this.$store.dispatch('clock/clock', this.userId)
         }
     }
 }

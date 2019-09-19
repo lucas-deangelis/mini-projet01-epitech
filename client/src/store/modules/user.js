@@ -4,7 +4,8 @@ const state = {
     id: null,
     username: null,
     email: null
-  }
+  },
+  listUsers: []
 }
 
 // getters
@@ -18,6 +19,9 @@ const getters = {
   getUserEmail: state => {
     return state.user.email
   },
+  getListUsers: state => {
+    return state.listUsers
+  }
 }
 
 // actions
@@ -74,6 +78,21 @@ const actions = {
     .catch(error => {
         console.error(error)
     })
+  },
+
+  getAllUsers({commit, state}) {
+    let url = window.apiUrl + '/api/users/all';
+      
+    // empty the users list
+    commit('setListUsers', [])
+    
+    window.axios.get(url)
+    .then(response => {
+      commit('setListUsers', JSON.parse(JSON.stringify(response.data.data)))
+    })
+    .catch(error => {
+      console.error(error)
+    })
   }
 }
 
@@ -95,6 +114,10 @@ const mutations = {
   setUser (state, user) {
     state.user = user
   },
+  // set the state.listUsers
+  setListUsers (state, listUsers) {
+    state.listUsers = listUsers
+  }
 
 }
 

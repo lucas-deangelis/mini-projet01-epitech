@@ -70,6 +70,8 @@ export default {
             }, 1000);
         });
 
+        this.$store.dispatch('user/getAllUsers')
+
         this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
             this.form.username = this.user.username;
             this.form.email = this.user.email;

@@ -7,10 +7,10 @@ defmodule GothamWeb.UserController do
 
   action_fallback GothamWeb.FallbackController
 
-  # def index(conn, _params) do
-  #   users = Accounts.list_users()
-  #   render(conn, "index.json", users: users)
-  # end
+  def index(conn, _params) do
+    users = Accounts.list_users()
+    render(conn, "index.json", users: users)
+  end
 
   def show(conn, %{"userID" => id}) do
     user = Accounts.get_user!(id)
