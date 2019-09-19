@@ -7,6 +7,9 @@
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
+        <router-link to="/"><b-button>Home</b-button></router-link>
+        <router-link to="/team"><b-button>Team</b-button></router-link>
+
         <b-collapse id="nav-collapse" is-nav>
 
           <!-- Right aligned nav items -->
@@ -18,30 +21,13 @@
     </div>
 
     <!-- Content -->
-
-    <div id="main-content">
-
-      <div class="content" v-if="userLoggedIn">
-        <!-- Clock module -->
-        <ClockManagerComponent></ClockManagerComponent>
-
-        <!-- Working time module -->
-        <WorkingTimesComponent></WorkingTimesComponent>
-      </div>
-
-      <div class="content" v-if="userLoggedIn">
-        <ChartManagerComponent></ChartManagerComponent>
-      </div>
-
-    </div>
+    <router-view></router-view>
+    
   </div>
 </template>
 
 <script>
 import UserComponent from './UserComponent.vue'
-import ClockManagerComponent from './ClockManagerComponent.vue'
-import WorkingTimesComponent from './WorkingTimesComponent.vue'
-import ChartManagerComponent from './ChartManagerComponent.vue'
 
 export default {
   name: 'app',
@@ -51,10 +37,7 @@ export default {
     }
   },
   components: {
-    UserComponent,
-    ClockManagerComponent,
-    WorkingTimesComponent,
-    ChartManagerComponent
+    UserComponent
   },
   methods: {
       setUserLoggedIn(loggedIn) {
