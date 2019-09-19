@@ -14,12 +14,12 @@
                         </b-button>
                       </template>
                       <template v-if="row.item.role == 'manager'">
-                        <b-button variant="warning" size="sm" v-b-modal.modal-demote-user class="mr-2" v-b-tooltip.hover title="Demote">
+                        <b-button variant="warning" size="sm" @click="userDemote(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Demote">
                             <i class="fas fa-hand-point-down"></i>
                         </b-button>
                       </template>
                       <template v-if="row.item.id != userId">
-                        <b-button variant="danger" size="sm" v-b-modal.modal-delete-user class="mr-2" v-b-tooltip.hover title="Delete">
+                        <b-button variant="danger" size="sm" @click="userDelete(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Delete">
                             <i class="fas fa-trash-alt"></i>
                         </b-button>
                       </template>
@@ -33,20 +33,26 @@
                 </b-table>
             </div>
 
-            <!-- Info modal -->
+            <!-- promote modal -->
             <b-modal :id="promoteModal.id" :title="promoteModal.title" hide-footer @hide="resetPromoteModal">
               <b-form @submit="onSubmitPromote">
                     <h3>{{ promoteModal.content }}</h3>
                     <b-button type="submit" variant="success">Yes promote this user</b-button>
                 </b-form>
             </b-modal>
-
-            <b-modal id="modal-demote-user" title="Demote user">
-                <p class="my-4">Are you sure you want to demote this user ?</p>
+            <!-- demote modal -->
+            <b-modal :id="demoteModal.id" :title="demoteModal.title" hide-footer @hide="resetDemoteModal">
+              <b-form @submit="onSubmitDemote">
+                    <h3>{{ demoteModal.content }}</h3>
+                    <b-button type="submit" variant="warning">Yes demote this user</b-button>
+                </b-form>
             </b-modal>
-
-            <b-modal id="modal-delete-user" title="Delete user">
-                <p class="my-4">Are you sure you want to delete this user ?</p>
+            <!-- delete user modal -->
+            <b-modal :id="deleteModal.id" :title="deleteModal.title" hide-footer @hide="resetDeleteModal">
+              <b-form @submit="onSubmitDelete">
+                    <h3>{{ deleteModal.content }}</h3>
+                    <b-button type="submit" variant="danger">Yes delete this user</b-button>
+                </b-form>
             </b-modal>
         </div>
     </transition>
@@ -63,8 +69,8 @@ export default {
 
     data() {
         return {
-            sortBy: 'end',
-            sortDesc: true,
+            sortBy: 'id',
+            sortDesc: false,
             fields: [
                 { key: 'id', sortable: true },
                 { key: 'email', sortable: true },
@@ -75,6 +81,18 @@ export default {
             promoteModal: {
               id: 'promote-modal',
               title: 'Promote an user',
+              content: '',
+              userId : null
+            },
+            demoteModal: {
+              id: 'demote-modal',
+              title: 'Demote an user',
+              content: '',
+              userId : null
+            },
+            deleteModal: {
+              id: 'delete-modal',
+              title: 'Delete an user',
               content: '',
               userId : null
             }
@@ -109,10 +127,55 @@ export default {
       },
       onSubmitPromote(evt) {
           evt.preventDefault()
-          this.$store.dispatch('user/updateUser', { userId: this.promoteModal.userId, role: 'manager' })
+          this.$store.dispatch('user/updateUser', { id: this.promoteModal.userId, role: 'manager' }).then(() => {
+            this.$store.dispatch('user/getAllUsers')
+          })
 
           // close the modal
+          this.resetPromoteModal()
           this.$root.$emit('bv::hide::modal', this.promoteModal.id)
+      },
+      // methods for demote modal
+      userDemote(item, index, button) {
+        let rowUser = JSON.parse(JSON.stringify(item))
+        this.demoteModal.content = 'Are you sure you want to demote ' + rowUser.username + ' - ' + rowUser.email + ' ?'
+        this.demoteModal.userId = rowUser.id
+        this.$root.$emit('bv::show::modal', this.demoteModal.id, button)
+      },
+      resetDemoteModal() {
+        this.demoteModal.content = ''
+        this.demoteModal.userId = null
+      },
+      onSubmitDemote(evt) {
+          evt.preventDefault()
+          this.$store.dispatch('user/updateUser', { id: this.demoteModal.userId, role: 'employee' }).then(() => {
+            this.$store.dispatch('user/getAllUsers')
+          })
+
+          // close the modal
+          this.resetDemoteModal()
+          this.$root.$emit('bv::hide::modal', this.demoteModal.id)
+      },
+      // methods for delete modal
+      userDelete(item, index, button) {
+        let rowUser = JSON.parse(JSON.stringify(item))
+        this.deleteModal.content = 'Are you sure you want to delete ' + rowUser.username + ' - ' + rowUser.email + ' ?'
+        this.deleteModal.userId = rowUser.id
+        this.$root.$emit('bv::show::modal', this.deleteModal.id, button)
+      },
+      resetDeleteModal() {
+        this.deleteModal.content = ''
+        this.deleteModal.userId = null
+      },
+      onSubmitDelete(evt) {
+          evt.preventDefault()
+          this.$store.dispatch('user/deleteUser', { id: this.deleteModal.userId }).then(() => {
+            this.$store.dispatch('user/getAllUsers')
+          })
+
+          // close the modal
+          this.resetDeleteModal()
+          this.$root.$emit('bv::hide::modal', this.deleteModal.id)
       },
     }
 }
