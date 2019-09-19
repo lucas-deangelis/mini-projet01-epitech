@@ -13,14 +13,24 @@ defmodule GothamWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", GothamWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
+  pipeline :jwt_authenticated do
+    plug GothamWeb.AuthPipeline
   end
 
   scope "/api", GothamWeb do
     pipe_through :api
+
+    # Auth routes
+    post "/register", UserController, :register
+    post "/sign_in", UserController, :sign_in
+
+  end
+
+  scope "/api", GothamWeb do
+    pipe_through [:api, :jwt_authenticated]
+
+    # Authenticated user routes
+    get "/authenticated", UserController, :authenticated_user
 
     # User routes
     scope "/users" do
