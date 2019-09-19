@@ -16,3 +16,5 @@ RUN mix local.hex --force
 RUN mix do compile
 
 CMD ["chmod", "+x", "/app/entrypoint.sh"]
+
+ENTRYPOINT ["/app/entrypoint.sh"]
