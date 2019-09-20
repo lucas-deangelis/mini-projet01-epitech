@@ -37,7 +37,7 @@ export default {
     },
 
     mounted() {
-        this.$store.dispatch('clock/clock', this.userId )
+        this.$store.dispatch('clock/get', this.userId )
     },
 
     methods: {
