@@ -39,6 +39,7 @@ export default {
       'userLoggedIn': false
     }
   },
+
   components: {
     UserComponent
   },

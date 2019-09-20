@@ -3,7 +3,8 @@ const state = {
   user: {
     id: null,
     username: null,
-    email: null
+    email: null,
+    role: null
   },
   listUsers: []
 }
@@ -21,6 +22,9 @@ const getters = {
   },
   getListUsers: state => {
     return state.listUsers
+  },
+  getUserRole: state => {
+    return state.user.role
   }
 }
 
@@ -124,6 +128,9 @@ const mutations = {
   // set the state.listUsers
   setListUsers (state, listUsers) {
     state.listUsers = listUsers
+  },
+  setUserRole(state, userRole) {
+    state.user.role = userRole
   }
 
 }

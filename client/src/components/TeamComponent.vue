@@ -20,6 +20,7 @@
                 </b-table>
             </div>
         </div>
+        <p>Role de l'utilisateuuuuuuuuuuuuuuuuuuur : {{userRole}}</p>
       </div>
     </transition>
 
@@ -30,13 +31,18 @@
 
 <!-- Script -->
 <script>
+
+import { mapGetters, mapState, mapActions } from 'vuex';
+
 export default {
-  name: 'app',
-  data() {
-      return {
-          'userIsManagerOrAdmin': false
-      }
+  name: 'Team',
+  
+  computed:{
+    ...mapGetters({
+        userRole: 'user/getUserRole'
+    })
   },
+
   components: {
       
   },
