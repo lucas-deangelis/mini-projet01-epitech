@@ -1,8 +1,7 @@
 <!-- Template -->
 
 <template>
-    <transition appear name="fade">
-      <div id="main-content">
+    <div id="main-content">
         <div id="teams" class="div-content table-content">
             <div class="sub sub-header">
                 <span><h2>Teams</h2></span>
@@ -20,8 +19,7 @@
                 </b-table>
             </div>
         </div>
-      </div>
-    </transition>
+    </div>
 
     <!-- <b-button v-if="userIsManagerOrAdmin">Créer une team</b-button> -->
     
