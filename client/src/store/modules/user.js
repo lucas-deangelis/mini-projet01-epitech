@@ -43,7 +43,6 @@ const actions = {
         console.error(error)
         reject(error)
       })
-      resolve()
     })
   },
 

@@ -1,6 +1,8 @@
 <template>
     <transition appear name="fade">
-        <div id="users" class="div-content">
+      <div id="main-content">
+
+        <div id="users" class="div-content table-content">
             <div class="sub sub-header">
                 <span><h2>Users</h2></span>
             </div>
@@ -55,6 +57,7 @@
                 </b-form>
             </b-modal>
         </div>
+      </div>
     </transition>
 </template>
 
@@ -101,11 +104,9 @@ export default {
 
     computed: {
       ...mapGetters({
-          users: 'user/getListUsers'
-      }),
-      ...mapState('user', {
-          userId: state => state.user.id
-      }),
+          users: 'user/getListUsers',
+          userId: 'user/getUserId'
+      })
     },
 
     mounted() {

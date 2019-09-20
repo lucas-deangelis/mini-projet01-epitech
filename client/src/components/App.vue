@@ -7,13 +7,16 @@
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-        <router-link to="/"><b-button>Home</b-button></router-link>
-        <router-link to="/team"><b-button>Team</b-button></router-link>
 
         <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav class="navbar-links mr-auto ml-auto">
+            <router-link to="/" class="nav-link">Home</router-link>
+            <router-link to="/team" class="nav-link">Team</router-link>
+            <router-link to="/users" class="nav-link">Users</router-link>
+          </b-navbar-nav>
 
           <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto">
+          <b-navbar-nav>
               <UserComponent @userLoggedIn="setUserLoggedIn"></UserComponent>
           </b-navbar-nav>
         </b-collapse>

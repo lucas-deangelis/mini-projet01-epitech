@@ -7,6 +7,13 @@
 .navbar .navbar-brand {
   font-family: 'Righteous', cursive;
 }
+.navbar #nav-collapse {
+  justify-content: center;
+}
+.navbar #nav-collapse .navbar-links {
+  width: 50%;
+  justify-content: space-around;
+}
 .navbar #dropdown-user {
   width: 20vw;
 }
@@ -24,8 +31,11 @@
   display: flex;
   justify-content: space-between;
 }
-#main-content .content .div-content {
+.div-content {
   padding: 40px;
+}
+.table-content .b-table-sticky-header {
+  max-height: 80vh;
 }
 #workingtime {
   flex-grow: 2;

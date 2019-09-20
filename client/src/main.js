@@ -25,6 +25,6 @@ const router = new VueRouter({routes})
 // Instantiate the VUE and attach it to #app
 const app = new Vue({
   store,
-  render: h => h(App),
-  router
+  router,
+  render: h => h(App)
 }).$mount('#app')

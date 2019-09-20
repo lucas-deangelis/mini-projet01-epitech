@@ -64,7 +64,9 @@ export default {
     },
 
     mounted() {
-        this.$store.dispatch('getWorkingTimes', { userId: this.userId, start: '', end: '' });
+        setTimeout(() => {
+            this.$store.dispatch('getWorkingTimes', { userId: this.userId, start: '', end: '' });
+        }, 1000);
     },
 
     methods: {

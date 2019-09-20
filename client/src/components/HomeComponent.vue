@@ -1,14 +1,14 @@
 <template>
-  <!--<div class="content" v-if="userLoggedIn">-->
-    <div>
+    <div id="main-content">
+
+      <div class="content">
         <!-- Clock module -->
         <ClockManagerComponent></ClockManagerComponent>
 
         <!-- Working time module -->
         <WorkingTimesComponent></WorkingTimesComponent>
-
-      <!--<div class="content" v-if="userLoggedIn">-->
-      <div>
+      </div>
+      <div class="content">
         <ChartManagerComponent></ChartManagerComponent>
       </div>
 
@@ -23,20 +23,10 @@ import ChartManagerComponent from './ChartManagerComponent.vue'
 
 export default {
   name: 'app',
-  data() {
-    return {
-      'userLoggedIn': false
-    }
-  },
   components: {
     ClockManagerComponent,
     WorkingTimesComponent,
     ChartManagerComponent
-  },
-  methods: {
-      setUserLoggedIn(loggedIn) {
-          this.userLoggedIn = loggedIn;
-      }
   }
 }
 </script>

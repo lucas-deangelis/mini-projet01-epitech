@@ -23,7 +23,6 @@ const actions = {
     window.axios.post(url)
     .then(response => {
         let data = JSON.parse(JSON.stringify(response.data.data))
-        console.log(data)
         
         if (data.status == false) {
           // update startDateTime and clockInProgress var
@@ -48,7 +47,6 @@ const actions = {
     window.axios.get(url)
     .then(response => {
         let data = JSON.parse(JSON.stringify(response.data.data))
-        console.log(data)
 
         if (data.status == false) {
             // update clockInProgress var
