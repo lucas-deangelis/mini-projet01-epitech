@@ -2,12 +2,12 @@
 
 To start your Phoenix server:
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install assets package with `cd assets && npm install && node node_modules/webpack/bin/webpack.js --mode development`
-  * Install client module with `cd client && npm install`
-  * Run the client module in client/ folder with `npm run serve`
-  * Start Phoenix endpoint at the root of your project with `mix phx.server`
+* Install dependencies with `mix deps.get`
+* Create and migrate your database with `mix ecto.setup`
+* Install assets package with `cd assets && npm install && node node_modules/webpack/bin/webpack.js --mode development`
+* Install client module with `cd client && npm install`
+* Run the client module in client/ folder with `npm run serve`
+* Start Phoenix endpoint at the root of your project with `mix phx.server`
 
 Please use a postgreSql database with user = postgres and password = password.
 
@@ -37,8 +37,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Learn more
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+* Official website: <http://www.phoenixframework.org/>
+* Guides: <https://hexdocs.pm/phoenix/overview.html>
+* Docs: <https://hexdocs.pm/phoenix>
+* Mailing list: <http://groups.google.com/group/phoenix-talk>
+* Source: <https://github.com/phoenixframework/phoenix>
