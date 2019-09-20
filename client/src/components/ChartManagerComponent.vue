@@ -4,7 +4,7 @@
             <!-- Chart 1 -->
             <div class="chart-view">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Hours / day worked</h3>
+                    <h2 class="box-title">Hours / day worked</h2>
                 </div>
                 <div class="box-body chart-responsive">
                     <div v-if="chartWorkingTimesData.length != 0">
