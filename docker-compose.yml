@@ -11,7 +11,11 @@ services:
       context: .
     # Name the container
     container_name: backend
+<<<<<<< HEAD
     image: bloodbee/gotham-timemanager:backend 
+=======
+    image: bloodbee/gotham-timemanager:backend
+>>>>>>> dce9bc3b1cddc28f00fb49190b8316b52bc40000
     environment:
       # Variables to connect to our Postgres server
       PGUSER: postgres

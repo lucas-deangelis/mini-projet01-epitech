@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 #!/bin/bash
 # Docker entrypoint script.
 echo "docker starting"
+=======
+# entrypoint.sh
+
+#!/bin/bash
+# Docker entrypoint script.
+>>>>>>> dce9bc3b1cddc28f00fb49190b8316b52bc40000
 
 # Wait until Postgres is ready
 while ! pg_isready -q -h $PGHOST -p $PGPORT -U $PGUSER
