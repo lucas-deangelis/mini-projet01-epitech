@@ -20,6 +20,9 @@
 .navbar #dropdown-user ul {
   width: inherit;
 }
+.navbar #user-links-collapsed {
+  display: none;
+}
 #main-content {
   display: flex;
   flex-direction: column;
@@ -67,4 +70,15 @@
 }
 #charts .chart-group .chart-view svg {
   width: 100% !important;
+}
+@media (max-width: 767.98px) {
+  body {
+    overflow-x: hidden;
+  }
+  #user-links {
+    display: none;
+  }
+  #user-links-collapsed {
+    display: block !important;
+  }
 }

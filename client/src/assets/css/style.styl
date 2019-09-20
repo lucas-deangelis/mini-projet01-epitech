@@ -27,6 +27,9 @@
 
         ul
             width inherit
+    
+    #user-links-collapsed
+        display none
 
 
 
@@ -84,3 +87,19 @@
             width 80vw
             svg
                 width 100% !important
+
+
+
+
+// RESPONSIVE
+
+// breakpoint for small device between 0 and 576px
+@media (max-width: 767.98px)
+    body
+        overflow-x hidden
+    
+    #user-links
+        display none
+    
+    #user-links-collapsed
+        display block !important

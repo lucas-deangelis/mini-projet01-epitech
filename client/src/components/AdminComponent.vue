@@ -7,7 +7,7 @@
                 <span><h2>Users</h2></span>
             </div>
             <div class="sub sub-content">
-                <b-table sticky-header head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
+                <b-table responsive sticky-header head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
         sort-icon-right :items="users" :fields="fields" show-empty id="users-table">
                     <template v-slot:cell(action)="row">
                       <template v-if="row.item.role == 'employee'">
