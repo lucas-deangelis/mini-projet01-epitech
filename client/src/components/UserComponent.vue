@@ -1,6 +1,5 @@
 <template>
     <b-dropdown id="dropdown-user" right variant="dark" text="User" class="m-2">
-<<<<<<< HEAD
         <b-dropdown-header id="dropdown-header-label-account-zone">
             ACCOUNT INFORMATIONS
         </b-dropdown-header>
@@ -35,15 +34,7 @@
                 <b-button type="submit" variant="danger">Yes delete my account</b-button>
             </b-form>
         </b-modal>
-=======
-        <b-dropdown-text><label class="font-weight-bold">Id :</label> {{user.id}} </b-dropdown-text>
-        <b-dropdown-text><label class="font-weight-bold">Username :</label> {{user.username}} </b-dropdown-text>
-        <b-dropdown-text><label class="font-weight-bold">Email :</label> {{user.email}} </b-dropdown-text>
-        <!-- <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item variant="danger" href="#">Logout</b-dropdown-item> -->
->>>>>>> dce9bc3b1cddc28f00fb49190b8316b52bc40000
     </b-dropdown>
-
 </template>
 
 
