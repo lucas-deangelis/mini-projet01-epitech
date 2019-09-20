@@ -1,19 +1,37 @@
+<!-- Template -->
+
 <template>
     <div>
         <h1>Team</h1>
 
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, doloribus eius labore, pariatur quaerat perferendis velit, dolore accusamus eum dicta tempore molestias! Nulla fuga recusandae, repellat corporis quasi rem earum?
-        </p>    
+        <b-button v-if="userIsManagerOrAdmin">Créer une team</b-button>
     </div>
 </template>
 
+
+<!-- Script -->
 <script>
 export default {
+  name: 'app',
+  data() {
+      return {
+          'userIsManagerOrAdmin': false
+      }
+  },
+  components: {
+      
+  },
+  methods: {
+      getIsUserManagerOrArdmin(isManagerOrAdmin){
+          this.userIsManagerOrAdmin = isManagerOrAdmin;
+      }
+  }
 
 }
 </script>
 
+
+<!--Style-->
 <style>
 
 </style>
