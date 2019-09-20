@@ -61,16 +61,6 @@ export default {
         ...mapState('user', {
             userId: state => state.user.id
         }),
-    },
-
-    mounted() {
-        setTimeout(() => {
-            this.$store.dispatch('getWorkingTimes', { userId: this.userId, start: '', end: '' });
-        }, 1000);
-    },
-
-    methods: {
-        
     }
 }
 

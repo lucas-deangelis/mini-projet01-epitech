@@ -36,12 +36,6 @@ export default {
         }),
     },
 
-    mounted() {
-        setTimeout(() => {
-            this.$store.dispatch('clock/get', this.userId )
-        }, 1000);
-    },
-
     methods: {
         clock() {
             this.$store.dispatch('clock/clock', this.userId)

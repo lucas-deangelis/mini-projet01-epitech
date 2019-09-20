@@ -128,9 +128,7 @@ export default {
       },
       onSubmitPromote(evt) {
           evt.preventDefault()
-          this.$store.dispatch('user/updateUser', { id: this.promoteModal.userId, role: 'manager' }).then(() => {
-            this.$store.dispatch('user/getAllUsers')
-          })
+          this.$store.dispatch('user/updateUser', { id: this.promoteModal.userId, role: 'manager' })
 
           // close the modal
           this.resetPromoteModal()
@@ -149,9 +147,7 @@ export default {
       },
       onSubmitDemote(evt) {
           evt.preventDefault()
-          this.$store.dispatch('user/updateUser', { id: this.demoteModal.userId, role: 'employee' }).then(() => {
-            this.$store.dispatch('user/getAllUsers')
-          })
+          this.$store.dispatch('user/updateUser', { id: this.demoteModal.userId, role: 'employee' })
 
           // close the modal
           this.resetDemoteModal()
@@ -170,9 +166,7 @@ export default {
       },
       onSubmitDelete(evt) {
           evt.preventDefault()
-          this.$store.dispatch('user/deleteUser', { id: this.deleteModal.userId }).then(() => {
-            this.$store.dispatch('user/getAllUsers')
-          })
+          this.$store.dispatch('user/deleteUser', { id: this.deleteModal.userId })
 
           // close the modal
           this.resetDeleteModal()

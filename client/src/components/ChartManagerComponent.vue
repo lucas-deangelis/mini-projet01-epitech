@@ -80,12 +80,9 @@ export default {
     },
 
     mounted () {
-
         setTimeout(() => {
             this.getChartWorkingTimes()
         }, 2000);
-
-
     },
 
     components: {
