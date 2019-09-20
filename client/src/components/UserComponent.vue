@@ -70,6 +70,8 @@ export default {
             }, 1000);
         });
 
+        this.$store.dispatch('user/getAllUsers')
+
         this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
             this.form.username = this.user.username;
             this.form.email = this.user.email;
@@ -85,7 +87,7 @@ export default {
         onSubmitUpdate(evt) {
             evt.preventDefault()
             let data = JSON.parse(JSON.stringify(this.form))
-            this.$store.dispatch('user/updateUser', { userId: this.user.id, email: data.email, username: data.username })
+            this.$store.dispatch('user/updateUser', { id: this.user.id, email: data.email, username: data.username })
 
             // close the modal
             this.$root.$emit('bv::hide::modal', 'modal-edit')
@@ -93,7 +95,7 @@ export default {
         // delete user when form submitted
         onSubmitDelete(evt) {
             evt.preventDefault()
-            this.$store.dispatch('user/deleteUser', { userId: this.user.id})
+            this.$store.dispatch('user/deleteUser', { id: this.user.id})
 
             // close the modal
             this.$root.$emit('bv::hide::modal', 'modal-delete')

@@ -42,7 +42,7 @@ export default {
 
     methods: {
         clock() {
-            this.$store.dispatch('clock/clock', this.userId )
+            this.$store.dispatch('clock/clock', this.userId)
         }
     }
 }
