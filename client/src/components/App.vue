@@ -3,16 +3,16 @@
     <!-- Navbar -->
     <div id="navbar">
       <b-navbar toggleable="md" type="dark" variant="dark" sticky>
-        <b-navbar-brand href="#">Gotham - A Time Manager</b-navbar-brand>
+        <b-navbar-brand class="text-yellow" href="#">Gotham - A Time Manager</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
 
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="navbar-links mr-auto ml-auto">
-            <router-link to="/" class="nav-link">Home</router-link>
-            <router-link to="/team" class="nav-link">Team</router-link>
-            <router-link to="/users" class="nav-link">Users</router-link>
+            <router-link to="/" class="nav-link text-yellow">Home</router-link>
+            <router-link to="/team" class="nav-link text-yellow">Teams</router-link>
+            <router-link to="/users" class="nav-link text-yellow">Users</router-link>
 
             <div id="user-links-collapsed">
               <li class="nav-item">

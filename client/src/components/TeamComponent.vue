@@ -6,9 +6,9 @@
             <span><h2>Teams</h2></span>
         </div>
         <div class="sub sub-content">
-            <!-- <b-table sticky-header head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
+            <!-- <b-table sticky-header :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
     sort-icon-right :items="users" :fields="fields" show-empty id="users-table"> -->
-            <b-table sticky-header head-variant="light" show-empty id="teams-table">
+            <b-table sticky-header show-empty id="teams-table">
                 <template v-slot:empty="scope">
                     <h4>{{ scope.emptyText }}</h4>
                 </template>

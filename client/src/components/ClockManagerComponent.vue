@@ -11,7 +11,7 @@
                             You are actually not clocked in.
                         </b-card-text>
                         <transition appear name="fade" mode="out-in">
-                            <b-button variant="success" v-on:click="clock">Do you want to clock IN ?</b-button>
+                            <b-button variant="outline-success" v-on:click="clock">Do you want to clock IN ?</b-button>
                         </transition>
                     </div>
                     <div v-else>
@@ -22,7 +22,7 @@
                             <b>{{ clockedInSince }}</b>
                         </b-card-text>
                         <transition appear name="fade" mode="out-in">
-                            <b-button variant="danger" v-on:click="clock">Do you want to clock OUT ?</b-button>
+                            <b-button variant="outline-danger" v-on:click="clock">Do you want to clock OUT ?</b-button>
                         </transition>
                     </div>
                 </b-card>
