@@ -42,6 +42,7 @@ body {
 }
 .table-content .b-table-sticky-header {
   max-height: 80vh;
+  border-radius: 0.25rem;
 }
 #workingtime {
   flex-grow: 2;
@@ -56,6 +57,13 @@ body {
   text-align: center;
 }
 #workingtimes-table tbody tr {
+  text-align: center;
+}
+#clock .card .card-body div {
+  display: flex;
+  flex-direction: column;
+}
+#clock .card .card-body div .card-text {
   text-align: center;
 }
 #charts {

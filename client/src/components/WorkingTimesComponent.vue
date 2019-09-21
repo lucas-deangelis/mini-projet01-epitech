@@ -1,11 +1,11 @@
 <template>
-    <div id="workingtime" class="div-content">
+    <div id="workingtime" class="div-content table-content">
         <div class="sub sub-header">
             <span><h2>Working Times</h2></span>
             <!-- <b-button variant="dark" v-b-modal.modal-add>ADD</b-button> -->
         </div>
         <div class="sub sub-content">
-            <b-table responsive sticky-header head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
+            <b-table responsive sticky-header outlined head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
     sort-icon-right :items="workingtimes" :fields="fields" show-empty id="workingtimes-table">
                 <!-- <template v-slot:cell(action)="row">
                     <b-button variant="primary" size="sm" @click="row.showDetails" class="mr-2" v-b-tooltip.hover title="Show">
