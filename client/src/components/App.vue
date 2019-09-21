@@ -33,7 +33,9 @@
     </div>
 
     <!-- Content -->
-    <router-view></router-view>
+    <div id="main-content" class="container-fluid">
+      <router-view></router-view>
+    </div>
     
   </div>
 </template>

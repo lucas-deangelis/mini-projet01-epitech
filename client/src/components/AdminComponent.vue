@@ -1,6 +1,4 @@
 <template>
-  <div id="main-content">
-
     <div id="users" class="div-content table-content">
         <div class="sub sub-header">
             <span><h2>Users</h2></span>
@@ -56,7 +54,6 @@
             </b-form>
         </b-modal>
     </div>
-  </div>
 </template>
 
 

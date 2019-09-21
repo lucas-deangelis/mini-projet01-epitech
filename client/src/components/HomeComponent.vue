@@ -1,6 +1,5 @@
 <template>
-    <div id="main-content" class="container-fluid">
-
+  <div>
       <div class="row content">
         <!-- Clock module -->
         <div class="col-md-4">
@@ -16,8 +15,7 @@
           <ChartManagerComponent></ChartManagerComponent>
         </div>
       </div>
-
-    </div>
+  </div>
 
 </template>
 
