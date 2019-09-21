@@ -1,18 +1,21 @@
 <template>
-    <div id="main-content">
-
-      <div class="content">
+  <div>
+      <div class="row content">
         <!-- Clock module -->
-        <ClockManagerComponent></ClockManagerComponent>
-
+        <div class="col-md-4">
+          <ClockManagerComponent></ClockManagerComponent>
+        </div>
         <!-- Working time module -->
-        <WorkingTimesComponent></WorkingTimesComponent>
+        <div class="col-md-8">
+          <WorkingTimesComponent></WorkingTimesComponent>
+        </div>
       </div>
-      <div class="content">
-        <ChartManagerComponent></ChartManagerComponent>
+      <div class="row content">
+        <div class="col-md-4">
+          <ChartManagerComponent></ChartManagerComponent>
+        </div>
       </div>
-
-    </div>
+  </div>
 
 </template>
 

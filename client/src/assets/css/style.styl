@@ -2,7 +2,8 @@
 // IMPORT FONT
 @import url('https://fonts.googleapis.com/css?family=Raleway|Righteous&display=swap');
 
-
+body
+    overflow-x hidden
 #app
     max-width 100vw
     margin 0 0 0 0
@@ -27,6 +28,9 @@
 
         ul
             width inherit
+    
+    #user-links-collapsed
+        display none
 
 
 
@@ -48,16 +52,17 @@
 .table-content
     .b-table-sticky-header
         max-height 80vh
+        border-radius 0.25rem
 
 // WORKING TIME
 #workingtime
     flex-grow 2 
 
-    .sub-header
-        display flex
-        flex-direction row
-        justify-content space-around
-        margin-bottom 10px
+.sub-header
+    display flex
+    flex-direction row
+    justify-content space-around
+    font-family 'Righteous', cursive
     
 #workingtimes-table
     thead 
@@ -67,7 +72,16 @@
         tr
             text-align center
 
-
+// CLOCK
+#clock
+    .card
+        .card-body
+            div
+                display flex
+                flex-direction column
+                
+                .card-text
+                    text-align center
 
 // CHARTS
 #charts
@@ -84,3 +98,22 @@
             width 80vw
             svg
                 width 100% !important
+            
+            .box-header
+                display flex
+                flex-direction row
+                justify-content space-around
+                font-family 'Righteous', cursive
+
+
+
+
+// RESPONSIVE
+
+// breakpoint for small device between 0 and 576px
+@media (max-width: 767.98px)
+    #user-links
+        display none
+    
+    #user-links-collapsed
+        display block !important
