@@ -15,6 +15,9 @@ RUN mix local.hex --force
 # Get dependancies
 RUN mix deps.get
 
+# Getting rebar3
+RUN mix local.rebar --force
+
 # Compile the project
 RUN mix do compile
 
