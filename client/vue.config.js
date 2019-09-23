@@ -17,6 +17,17 @@ module.exports = {
     }])
 
   },
+
+  publicPath: '',
+
+  pluginOptions: {
+    cordovaPath: 'src-cordova'
+  },
+
+  css: {
+    sourceMap: true
+  },
+  productionSourceMap: false
 }
 
 function addStyleResource (rule) {
