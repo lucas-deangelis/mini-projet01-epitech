@@ -1,0 +1,7 @@
+matrix:
+  include:
+    - language: elixir
+        elixir: '1.5'
+    
+    - language: node_js
+        node_js: '10.16'
