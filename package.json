@@ -1,0 +1,8 @@
+{
+    "name": "Gotham-timemanager",
+    "description": "The Gotham app for time management",
+    "version": "1.0.0",
+    "script": {
+        "postinstall": "cd client && npm install"
+     }
+}
