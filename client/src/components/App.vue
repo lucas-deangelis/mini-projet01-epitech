@@ -11,14 +11,9 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="navbar-links mr-auto ml-auto">
             <router-link to="/" class="nav-link">Home</router-link>
-<<<<<<< HEAD
             <router-link to="/team" v-if="isUserAdminOrManager()" class="nav-link">Team</router-link>
             <router-link to="/users" v-if="isUserAdmin()" class="nav-link">Users</router-link>
           </b-navbar-nav>
-=======
-            <router-link to="/team" class="nav-link">Team</router-link>
-            <router-link to="/users" class="nav-link">Users</router-link>
->>>>>>> baf5daabbb71996b1d5ea5564eb707e080433eaf
 
             <div id="user-links-collapsed">
               <li class="nav-item">
@@ -70,12 +65,14 @@ export default {
         if(this.userRole == 'admin' || 'manager'){
           return true;
         }
+        return false;
       },
 
       isUserAdmin(){
         if(this.userRole == 'admin'){
           return true;
         }
+        return false;
       }
 
   },
