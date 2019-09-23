@@ -1,6 +1,10 @@
-matrix:
-  include:
-    - language: elixir
-        elixir: '1.9'
-    - language: node_js
-        node_js: '10.16'
+sudo: required
+services:
+  - docker
+
+env:
+  COMPOSE_VERSION: 1.4.1
+
+script:
+  - docker-compose build
+  - docker-compose run test
