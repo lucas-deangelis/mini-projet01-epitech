@@ -1,64 +1,59 @@
 <template>
-    <transition appear name="fade">
-      <div id="main-content">
-
-        <div id="users" class="div-content table-content">
-            <div class="sub sub-header">
-                <span><h2>Users</h2></span>
-            </div>
-            <div class="sub sub-content">
-                <b-table sticky-header head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-        sort-icon-right :items="users" :fields="fields" show-empty id="users-table">
-                    <template v-slot:cell(action)="row">
-                      <template v-if="row.item.role == 'employee'">
-                        <b-button variant="success" size="sm" @click="userPromote(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Promote">
-                            <i class="fas fa-hand-point-up"></i>
-                        </b-button>
-                      </template>
-                      <template v-if="row.item.role == 'manager'">
-                        <b-button variant="warning" size="sm" @click="userDemote(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Demote">
-                            <i class="fas fa-hand-point-down"></i>
-                        </b-button>
-                      </template>
-                      <template v-if="row.item.id != userId">
-                        <b-button variant="danger" size="sm" @click="userDelete(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Delete">
-                            <i class="fas fa-trash-alt"></i>
-                        </b-button>
-                      </template>
-                    </template>
-                    <template v-slot:empty="scope">
-                        <h4>{{ scope.emptyText }}</h4>
-                    </template>
-                    <template v-slot:emptyfiltered="scope">
-                        <h4>{{ scope.emptyFilteredText }}</h4>
-                    </template>
-                </b-table>
-            </div>
-
-            <!-- promote modal -->
-            <b-modal :id="promoteModal.id" :title="promoteModal.title" hide-footer @hide="resetPromoteModal">
-              <b-form @submit="onSubmitPromote">
-                    <h3>{{ promoteModal.content }}</h3>
-                    <b-button type="submit" variant="success">Yes promote this user</b-button>
-                </b-form>
-            </b-modal>
-            <!-- demote modal -->
-            <b-modal :id="demoteModal.id" :title="demoteModal.title" hide-footer @hide="resetDemoteModal">
-              <b-form @submit="onSubmitDemote">
-                    <h3>{{ demoteModal.content }}</h3>
-                    <b-button type="submit" variant="warning">Yes demote this user</b-button>
-                </b-form>
-            </b-modal>
-            <!-- delete user modal -->
-            <b-modal :id="deleteModal.id" :title="deleteModal.title" hide-footer @hide="resetDeleteModal">
-              <b-form @submit="onSubmitDelete">
-                    <h3>{{ deleteModal.content }}</h3>
-                    <b-button type="submit" variant="danger">Yes delete this user</b-button>
-                </b-form>
-            </b-modal>
+    <div id="users" class="div-content table-content">
+        <div class="sub sub-header">
+            <span><h2>Users</h2></span>
         </div>
-      </div>
-    </transition>
+        <div class="sub sub-content">
+            <b-table responsive sticky-header head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
+    sort-icon-right :items="users" :fields="fields" show-empty id="users-table">
+                <template v-slot:cell(action)="row">
+                  <template v-if="row.item.role == 'employee'">
+                    <b-button variant="success" size="sm" @click="userPromote(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Promote">
+                        <i class="fas fa-hand-point-up"></i>
+                    </b-button>
+                  </template>
+                  <template v-if="row.item.role == 'manager'">
+                    <b-button variant="warning" size="sm" @click="userDemote(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Demote">
+                        <i class="fas fa-hand-point-down"></i>
+                    </b-button>
+                  </template>
+                  <template v-if="row.item.id != userId">
+                    <b-button variant="danger" size="sm" @click="userDelete(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Delete">
+                        <i class="fas fa-trash-alt"></i>
+                    </b-button>
+                  </template>
+                </template>
+                <template v-slot:empty="scope">
+                    <h4>{{ scope.emptyText }}</h4>
+                </template>
+                <template v-slot:emptyfiltered="scope">
+                    <h4>{{ scope.emptyFilteredText }}</h4>
+                </template>
+            </b-table>
+        </div>
+
+        <!-- promote modal -->
+        <b-modal :id="promoteModal.id" :title="promoteModal.title" hide-footer @hide="resetPromoteModal">
+          <b-form @submit="onSubmitPromote">
+                <h3>{{ promoteModal.content }}</h3>
+                <b-button type="submit" variant="success">Yes promote this user</b-button>
+            </b-form>
+        </b-modal>
+        <!-- demote modal -->
+        <b-modal :id="demoteModal.id" :title="demoteModal.title" hide-footer @hide="resetDemoteModal">
+          <b-form @submit="onSubmitDemote">
+                <h3>{{ demoteModal.content }}</h3>
+                <b-button type="submit" variant="warning">Yes demote this user</b-button>
+            </b-form>
+        </b-modal>
+        <!-- delete user modal -->
+        <b-modal :id="deleteModal.id" :title="deleteModal.title" hide-footer @hide="resetDeleteModal">
+          <b-form @submit="onSubmitDelete">
+                <h3>{{ deleteModal.content }}</h3>
+                <b-button type="submit" variant="danger">Yes delete this user</b-button>
+            </b-form>
+        </b-modal>
+    </div>
 </template>
 
 
@@ -128,9 +123,7 @@ export default {
       },
       onSubmitPromote(evt) {
           evt.preventDefault()
-          this.$store.dispatch('user/updateUser', { id: this.promoteModal.userId, role: 'manager' }).then(() => {
-            this.$store.dispatch('user/getAllUsers')
-          })
+          this.$store.dispatch('user/updateUser', { id: this.promoteModal.userId, role: 'manager' })
 
           // close the modal
           this.resetPromoteModal()
@@ -149,9 +142,7 @@ export default {
       },
       onSubmitDemote(evt) {
           evt.preventDefault()
-          this.$store.dispatch('user/updateUser', { id: this.demoteModal.userId, role: 'employee' }).then(() => {
-            this.$store.dispatch('user/getAllUsers')
-          })
+          this.$store.dispatch('user/updateUser', { id: this.demoteModal.userId, role: 'employee' })
 
           // close the modal
           this.resetDemoteModal()
@@ -170,9 +161,7 @@ export default {
       },
       onSubmitDelete(evt) {
           evt.preventDefault()
-          this.$store.dispatch('user/deleteUser', { id: this.deleteModal.userId }).then(() => {
-            this.$store.dispatch('user/getAllUsers')
-          })
+          this.$store.dispatch('user/deleteUser', { id: this.deleteModal.userId })
 
           // close the modal
           this.resetDeleteModal()

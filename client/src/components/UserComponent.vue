@@ -60,12 +60,7 @@ export default {
         }),
 
     mounted() {
-        this.$store.dispatch('user/getUser', 1).then(() => {
-            // set user logged in at true
-            this.$emit("userLoggedIn", true)
-            this.$store.dispatch('user/getAllUsers')
-        })
-
+        this.$store.dispatch('user/getUser', 1)
 
         this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
             this.form.username = this.user.username;

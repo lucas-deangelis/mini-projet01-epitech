@@ -88,17 +88,21 @@ const actions = {
   },
 
   getAllUsers({commit, state}) {
-    let url = window.apiUrl + '/api/users/all';
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/users/all';
+        
+      // empty the users list
+      commit('setListUsers', [])
       
-    // empty the users list
-    commit('setListUsers', [])
-    
-    window.axios.get(url)
-    .then(response => {
-      commit('setListUsers', JSON.parse(JSON.stringify(response.data.data)))
-    })
-    .catch(error => {
-      console.error(error)
+      window.axios.get(url)
+      .then(response => {
+        commit('setListUsers', JSON.parse(JSON.stringify(response.data.data)))
+        resolve()
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
     })
   }
 }
