@@ -42,6 +42,8 @@
 // This component defines an User.
 import { mapState, mapActions } from 'vuex'
 
+import db from "../storage"
+
 export default {
     name: 'User',
 
@@ -81,6 +83,9 @@ export default {
 
             // close the modal
             this.$root.$emit('bv::hide::modal', 'modal-edit')
+
+            // set the actions 
+            // this.$root.$emit('setActionOffline', { name: 'user/updateUser', data: { id: this.user.id, email: data.email, username: data.username }})
         },
         // delete user when form submitted
         onSubmitDelete(evt) {

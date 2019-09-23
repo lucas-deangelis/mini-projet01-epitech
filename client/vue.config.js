@@ -27,7 +27,12 @@ module.exports = {
   css: {
     sourceMap: true
   },
-  productionSourceMap: false
+  productionSourceMap: false,
+
+  devServer: {
+    // host: '127.0.0.1',
+    // disableHostCheck: true
+  }
 }
 
 function addStyleResource (rule) {

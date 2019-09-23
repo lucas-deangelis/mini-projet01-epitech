@@ -41,7 +41,9 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
 import UserComponent from './UserComponent.vue'
+import db from "../storage"
 
 export default {
   name: 'app',
@@ -50,12 +52,72 @@ export default {
       'userLoggedIn': false
     }
   },
+  mounted() {
+    // listen the connectivity of the user
+    document.addEventListener("online", this.onDeviceOnline, false);
+    document.addEventListener("offline", this.onDeviceOffline, false);
+  },
   components: {
     UserComponent
+  },
+  computed: {
+    ...mapState('clock', {
+        startDateTime: state => state.startDateTime,
+        clockInProgress: state => state.clockInProgress,
+    }),
+    ...mapState('user', {
+        user: state => state.user,
+        users: state => state.listUsers
+    }),
+    ...mapState('workingtime', {
+        workingtimes: state => state.workingTimes
+    }),
   },
   methods: {
       setUserLoggedIn(loggedIn) {
           this.userLoggedIn = loggedIn;
+      },
+      onDeviceOnline() {
+        console.log('device online')
+        // check if there is actions to perform on postgres database storage initialized
+        if (localStorage.length != 0 && db.exist('actions')) {
+          // get the actions datas
+          let actions = db.getJson('actions')
+          console.log(actions)
+
+          // Exemple d'actions à réaliser
+          // actions = [
+          //   {
+          //     name: 'user/updateUser',
+          //     data: { id: 'toto', email: 'test@email.com', username: 'test' }
+          //   },
+          //   {
+          //     name: 'clock/clock',
+          //     data: userId
+          //   },
+          //   ...
+          // ]
+
+          actions.forEach(element => this.$store.dispatch(element['name'], element['data']))
+
+          // clear actions local storage
+          db.remove('actions')
+        }
+      },
+      onDeviceOffline() {
+        console.log('device offline')
+        // save the states in local storage
+        db.store('user', this.user)
+        db.store('users', this.users)
+        db.store('startDateTime', this.startDateTime)
+        db.store('clockInProgress', this.clockInProgress)
+        db.store('workingtimes', this.workingtimes)
+        db.store('actions', [])
+      },
+      setActionOffline(e) {
+        console.log('action offline to set')
+        console.log(e.name, e.data)
+        db.storeAction(e.name, e.data)
       }
   }
 }

@@ -19,6 +19,9 @@ const getters = {
   getUserEmail: state => {
     return state.user.email
   },
+  getUserUser: state => {
+    return state.user
+  },
   getListUsers: state => {
     return state.listUsers
   }
