@@ -47,9 +47,6 @@ export default {
       
   },
   methods: {
-      getIsUserManagerOrArdmin(isManagerOrAdmin){
-          this.userIsManagerOrAdmin = isManagerOrAdmin;
-      }
   }
 
 }

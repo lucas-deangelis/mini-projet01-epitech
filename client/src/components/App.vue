@@ -11,8 +11,8 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="navbar-links mr-auto ml-auto">
             <router-link to="/" class="nav-link">Home</router-link>
-            <router-link to="/team" class="nav-link">Team</router-link>
-            <router-link to="/users" class="nav-link">Users</router-link>
+            <router-link to="/team" v-if="isUserAdminOrManager()" class="nav-link">Team</router-link>
+            <router-link to="/users" v-if="isUserAdmin()" class="nav-link">Users</router-link>
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
@@ -31,12 +31,13 @@
 
 <script>
 import UserComponent from './UserComponent.vue'
+import { mapGetters, mapState, mapActions } from 'vuex'
 
 export default {
   name: 'app',
   data() {
     return {
-      'userLoggedIn': false
+      'userLoggedIn': false,
     }
   },
 
@@ -46,8 +47,29 @@ export default {
   methods: {
       setUserLoggedIn(loggedIn) {
           this.userLoggedIn = loggedIn;
+      },
+
+      isUserAdminOrManager(){
+        if(this.userRole == 'admin' || 'manager'){
+          return true;
+        }
+      },
+
+      isUserAdmin(){
+        if(this.userRole == 'admin'){
+          return true;
+        }
       }
+
+  },
+
+  computed:{
+    ...mapGetters({
+        userRole: 'user/getUserRole'
+    })
+
   }
+
 }
 </script>
 
