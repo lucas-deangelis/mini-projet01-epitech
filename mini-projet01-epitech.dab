@@ -1,0 +1,47 @@
+{
+  "Services": {
+    "backend": {
+      "Env": [
+        "PGUSER=postgres",
+        "PGPASSWORD=postgres",
+        "PGDATABASE=miniprojet_dev",
+        "PGPORT=5432",
+        "PGHOST=db"
+      ],
+      "Image": "bloodbee/gotham-timemanager@sha256:573f530dc6335391f29a496a3cdc51bdad5e4a6809e31abc4b34fcda58aad1da",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 4000,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    "db": {
+      "Env": [
+        "POSTGRES_USER=postgres",
+        "POSTGRES_PASSWORD=postgres",
+        "PGDATA=/var/lib/postgresql/data/pgdata"
+      ],
+      "Image": "bloodbee/gotham-timemanager@sha256:ecc40248fdd97f2a99f2a93ffb0cef2518e79e65e0014d62a5777c35a24f24b8",
+      "Networks": [
+        "default"
+      ]
+    },
+    "frontend": {
+      "Image": "bloodbee/gotham-timemanager@sha256:77dc0dbc8fb903b4dce4adf572ffc0a5ab5827989d8dc8f294aeae629c607c2f",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 8080,
+          "Protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "Version": "0.1"
+}

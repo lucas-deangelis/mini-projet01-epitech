@@ -1,21 +1,45 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway|Righteous&display=swap");
+body {
+  overflow-x: hidden;
+}
 #app {
   max-width: 100vw;
   margin: 0 0 0 0;
   font-family: 'Raleway', sans-serif;
 }
+.text-yellow {
+  color: #ffc107 !important;
+}
 .navbar .navbar-brand {
   font-family: 'Righteous', cursive;
+}
+.navbar #nav-collapse {
+  justify-content: center;
+}
+.navbar #nav-collapse .navbar-links {
+  width: 50%;
+  justify-content: space-around;
 }
 .navbar #dropdown-user {
   width: 20vw;
 }
+.navbar #dropdown-user > button {
+  color: #ffc107 !important;
+}
+.navbar #dropdown-user .dropdown-header {
+  color: #ffc107 !important;
+  font-weight: bolder;
+}
 .navbar #dropdown-user ul {
   width: inherit;
+}
+.navbar #user-links-collapsed {
+  display: none;
 }
 #main-content {
   display: flex;
   flex-direction: column;
+  margin-bottom: 10vw;
 }
 #main-content .content {
   width: 100vw;
@@ -23,22 +47,36 @@
   display: flex;
   justify-content: space-between;
 }
-#main-content .content .div-content {
+.div-content {
   padding: 40px;
+}
+.table-content .b-table-sticky-header {
+  max-height: 80vh;
+  border-radius: 0.25rem;
+}
+.table-content .b-table-sticky-header thead th {
+  background-color: #ffc107 !important;
 }
 #workingtime {
   flex-grow: 2;
 }
-#workingtime .sub-header {
+.sub-header {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-bottom: 10px;
+  font-family: 'Righteous', cursive;
 }
 #workingtimes-table thead th {
   text-align: center;
 }
 #workingtimes-table tbody tr {
+  text-align: center;
+}
+#clock .card .card-body div {
+  display: flex;
+  flex-direction: column;
+}
+#clock .card .card-body div .card-text {
   text-align: center;
 }
 #charts {
@@ -50,4 +88,24 @@
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
+}
+#charts .chart-group .chart-view {
+  width: 80vw;
+}
+#charts .chart-group .chart-view svg {
+  width: 100% !important;
+}
+#charts .chart-group .chart-view .box-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-family: 'Righteous', cursive;
+}
+@media (max-width: 767.98px) {
+  #user-links {
+    display: none;
+  }
+  #user-links-collapsed {
+    display: block !important;
+  }
 }

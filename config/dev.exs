@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :miniprojet, Gotham.Repo,
   username: "postgres",
-  password: "password",
+  password: "postgres",
   database: "miniprojet_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

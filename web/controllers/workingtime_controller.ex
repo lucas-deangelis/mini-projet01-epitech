@@ -10,7 +10,7 @@ defmodule GothamWeb.WorkingtimeController do
   def createUsrId(conn, %{"userID" => id, "workingtime" => workingtime_params}) do
     user = Accounts.get_user!(id)
 
-    with {:ok, %Workingtime{} = workingtime} <- Times.create_workingtime(user, workingtime_params) do
+    with {:ok, %Workingtime{} = workingtime} <- Times.create_workingtime(workingtime_params, user) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.workingtime_path(conn, :show, id, workingtime))
@@ -37,7 +37,6 @@ defmodule GothamWeb.WorkingtimeController do
     startTime = nil
     endTime = nil
 
-    IO.inspect Map.get(params, "start")
     # check that there a start params that is not null and not empty
     if Map.has_key?(params, "start") and !is_nil(Map.get(params, "start")) and !String.equivalent?(Map.get(params, "start"), '')  do
       # Converting start parameter from iso to naivedatetime

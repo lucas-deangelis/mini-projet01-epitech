@@ -2,14 +2,15 @@ defmodule GothamWeb.UserController do
   use GothamWeb, :controller
 
   alias Gotham.Accounts
+  alias Gotham.Times
   alias Gotham.Accounts.User
 
   action_fallback GothamWeb.FallbackController
 
-  # def index(conn, _params) do
-  #   users = Accounts.list_users()
-  #   render(conn, "index.json", users: users)
-  # end
+  def index(conn, _params) do
+    users = Accounts.list_users()
+    render(conn, "index.json", users: users)
+  end
 
   def show(conn, %{"userID" => id}) do
     user = Accounts.get_user!(id)
@@ -35,7 +36,8 @@ defmodule GothamWeb.UserController do
     end
   end
 
-  def update(conn, %{"userID" => id, "user" => user_params}) do
+  def update(conn, %{"userID" => id}) do
+    user_params = conn.body_params
     user = Accounts.get_user!(id)
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
@@ -46,6 +48,11 @@ defmodule GothamWeb.UserController do
   def delete(conn, %{"userID" => id}) do
     user = Accounts.get_user!(id)
 
+    # call delete_all clocks and delete_all workingtimes
+    Times.delete_clock_all_by_user(id)
+    Times.delete_workingtime_all_by_user(id)
+
+    # delete user
     with {:ok, %User{}} <- Accounts.delete_user(user) do
       send_resp(conn, :no_content, "")
     end

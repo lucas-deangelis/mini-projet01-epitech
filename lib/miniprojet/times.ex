@@ -70,7 +70,7 @@ defmodule Gotham.Times do
 
     query = from c in Clock,
       join: u in User,
-      on: c.user == u.id,
+      on: c.user_id == u.id,
       where: u.id == ^id
 
     Repo.one(query)
@@ -88,9 +88,9 @@ defmodule Gotham.Times do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_clock(attrs \\ %{}) do
-    IO.inspect("inside create clock")
-    %Clock{}
+  def create_clock(attrs \\ %{}, user) do
+    %Clock{user: user}
+    |> Ecto.Changeset.change()
     |> Clock.changeset(attrs)
     |> Repo.insert()
   end
@@ -109,6 +109,7 @@ defmodule Gotham.Times do
   """
   def update_clock(%Clock{} = clock, attrs) do
     clock
+    |> Repo.preload(:user)
     |> Clock.changeset(attrs)
     |> Repo.update()
   end
@@ -127,6 +128,29 @@ defmodule Gotham.Times do
   """
   def delete_clock(%Clock{} = clock) do
     Repo.delete(clock)
+  end
+
+  @doc """
+  Deletes User's clocks.
+
+  ## Examples
+
+      iex> delete_clock_all_by_user(id)
+      {:ok, ""}
+
+      iex> delete_clock_all_by_user(id)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_clock_all_by_user(id) do
+    query = from c in Clock,
+      join: u in User,
+      on: c.user_id == u.id,
+      where: u.id == ^id
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.delete_all(:delete_all, query)
+    |> Repo.transaction()
   end
 
   @doc """
@@ -178,7 +202,7 @@ defmodule Gotham.Times do
   def get_workingtimeUser!(workingtimeId, userId) do
     query = from w in Workingtime,
       where: w.id == ^workingtimeId,
-      where: w.user == ^userId
+      where: w.user_id == ^userId
 
     Repo.one(query)
   end
@@ -202,18 +226,18 @@ defmodule Gotham.Times do
 
     query = from w in Workingtime,
       join: u in User,
-      on: w.user == u.id,
+      on: w.user_id == u.id,
       where: u.id == ^id
 
     # filter working time by starttime if not null
     if !is_nil(starttime) do
       query = from [w, u] in query,
-        where: w.start >= ^starttime
+      where: w.start >= ^starttime
     end
     #filter working time by endtime if not null
     if !is_nil(endtime) do
       query = from [w, u] in query,
-        where: w.end <= ^endtime
+      where: w.end <= ^endtime
     end
 
     Repo.all(query)
@@ -231,16 +255,9 @@ defmodule Gotham.Times do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_workingtime(%User{} = user, attrs \\ %{}) do
-    IO.inspect("inside create_workingtime")
-
-    # Converts all key to string, since this function is used by API access and by clock score
-    # API access gives key as string, but clock score gives them as atoms
-    attrs = for {k, v} <- attrs, do: {to_string(k), v}, into: %{}
-
-    attrs = Map.put(attrs, "user", user.id)
-
-    %Workingtime{}
+  def create_workingtime(attrs \\ %{}, user) do
+    %Workingtime{user: user}
+    |> Ecto.Changeset.change()
     |> Workingtime.changeset(attrs)
     |> Repo.insert()
   end
@@ -277,6 +294,29 @@ defmodule Gotham.Times do
   """
   def delete_workingtime(%Workingtime{} = workingtime) do
     Repo.delete(workingtime)
+  end
+
+  @doc """
+  Deletes User's Workingtime.
+
+  ## Examples
+
+      iex> delete_workingtime_all_by_user(workingtime)
+      {:ok, %Workingtime{}}
+
+      iex> delete_workingtime_all_by_user(workingtime)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_workingtime_all_by_user(id) do
+    query = from w in Workingtime,
+      join: u in User,
+      on: w.user_id == u.id,
+      where: u.id == ^id
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.delete_all(:delete_all, query)
+    |> Repo.transaction()
   end
 
   @doc """

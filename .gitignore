@@ -33,3 +33,7 @@ miniprojet-*.tar
 
 #node module
 node_modules
+/assets/node_modules
+
+# Docker
+notes docker
