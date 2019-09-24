@@ -141,17 +141,21 @@ const actions = {
 
   /* Login */
 
-  login({commit, state}, email, password) {
+  login({commit, state}, user) {
     return new Promise((resolve, reject) => {
       let url = window.apiUrl + '/api/sign_in';
       let params = {};
 
-      params["email"] = email;
-      params["password"] = password;
+      for (const key in user) {
+        if (user.hasOwnProperty(key)) {
+          params[key] = user[key];
+        }
+      }
       window.axios.post(url, params)
       .then(response => {
-        let data = response.data.data;
+        let data = response.data;
 
+        console.log(data);
         if (data) {
           commit('setJwt', data.JWToken);
           commit('setIsAuthenticated', true);

@@ -5,6 +5,9 @@
 		</div>
 		<div class="sub sub-content col-6 ml-auto mr-auto">
 			<b-form @submit.prevent="handleLoginSubmit">
+				<div class="form-row justify-content-around mt-3 text-danger" v-if="login.error">
+					Incorrect email/password.
+				</div>
 				<b-form-group id="input-group-1" label="Email" label-for="input-1">
 					<b-form-input type="email" v-model="login.email" name="email" required placeholder="Email..."/>
 				</b-form-group>
@@ -33,6 +36,7 @@ export default {
 				email: '',
 				password: ''
 			},
+			error: ''
 		}
 	},
 	computed: {
@@ -43,9 +47,14 @@ export default {
 	components: {},
 	methods: {
 		handleLoginSubmit(e) {
-			this.$store.dispatch('user/login', this.login.email, this.login.password);
-			if (this.isAuthenticated === true)
+			this.$store.dispatch('user/login', this.login);
+			console.log(this.isAuthenticated);
+			if (this.isAuthenticated === true) {
 				this.$router.push("/");
+				this.login.error = false;
+			} else {
+				this.login.error = true;
+			}
 		},
 	}
 }
