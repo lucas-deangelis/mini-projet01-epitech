@@ -2,8 +2,8 @@ defmodule GothamWeb.UserView do
   use GothamWeb, :view
   alias GothamWeb.UserView
 
-  def render("index.json", %{users: users}) do
-    %{data: render_many(users, UserView, "user.json")}
+  def render("index.json", %{users: users}) d
+    %{data: render_many(users, UserView, "user_preloaded.json")}
   end
 
   def render("show.json", %{user: user}) do
@@ -14,7 +14,19 @@ defmodule GothamWeb.UserView do
     %{id: user.id,
       username: user.username,
       email: user.email,
-      role: user.role
+      role: user.role,
+    }
+  end
+
+  def render("user_preloaded.json", %{user: user}) do
+    %{
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      teams: user.teams,
+      clock: user.clock,
+      workingtimes: user.workingtimes
     }
   end
 

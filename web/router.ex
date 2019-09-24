@@ -34,6 +34,7 @@ defmodule GothamWeb.Router do
 
     # User routes
     scope "/users" do
+      get "/all", UserController, :index
       get "/", UserController, :show_by_attr
       get "/:userID", UserController, :show
       post "/", UserController, :create

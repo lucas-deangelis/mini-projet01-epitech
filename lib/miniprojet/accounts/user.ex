@@ -5,7 +5,6 @@ defmodule Gotham.Accounts.User do
 
   defenum RolesEnum, :role, [:employee, :manager, :admin]
 
-  # @derive {Poison.Encoder, except: [:clock, :workingtimes]}
   schema "users" do
     # Base fields
     field :email, :string

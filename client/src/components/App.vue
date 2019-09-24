@@ -2,46 +2,46 @@
   <div id="app">
     <!-- Navbar -->
     <div id="navbar">
-      <b-navbar toggleable="lg" type="dark" variant="dark" sticky>
-        <b-navbar-brand href="#">Gotham - A Time Manager</b-navbar-brand>
+      <b-navbar toggleable="md" type="dark" variant="dark" sticky>
+        <b-navbar-brand class="text-yellow" href="#">Gotham - A Time Manager</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-        <b-collapse id="nav-collapse" is-nav>
 
-          <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto">
-              <UserComponent @userLoggedIn="setUserLoggedIn"></UserComponent>
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav class="navbar-links mr-auto ml-auto">
+            <router-link to="/" class="nav-link text-yellow">Home</router-link>
+            <router-link to="/team" class="nav-link text-yellow">Teams</router-link>
+            <router-link to="/users" class="nav-link text-yellow">Users</router-link>
+
+            <div id="user-links-collapsed">
+              <li class="nav-item">
+                <a class="nav-link text-primary" href="#" v-b-modal.modal-edit>Edit account</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-danger" href="#" v-b-modal.modal-delete>Delete account</a>
+              </li>
+            </div>
           </b-navbar-nav>
+
         </b-collapse>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav id="user-links">
+            <UserComponent @userLoggedIn="setUserLoggedIn"></UserComponent>
+        </b-navbar-nav>
       </b-navbar>
     </div>
 
     <!-- Content -->
-
-    <div id="main-content">
-
-      <div class="content" v-if="userLoggedIn">
-        <!-- Clock module -->
-        <ClockManagerComponent></ClockManagerComponent>
-
-        <!-- Working time module -->
-        <WorkingTimesComponent></WorkingTimesComponent>
-      </div>
-
-      <div class="content" v-if="userLoggedIn">
-        <ChartManagerComponent></ChartManagerComponent>
-      </div>
-
+    <div id="main-content" class="container-fluid">
+      <router-view></router-view>
     </div>
+    
   </div>
 </template>
 
 <script>
 import UserComponent from './UserComponent.vue'
-import ClockManagerComponent from './ClockManagerComponent.vue'
-import WorkingTimesComponent from './WorkingTimesComponent.vue'
-import ChartManagerComponent from './ChartManagerComponent.vue'
 
 export default {
   name: 'app',
@@ -51,10 +51,7 @@ export default {
     }
   },
   components: {
-    UserComponent,
-    ClockManagerComponent,
-    WorkingTimesComponent,
-    ChartManagerComponent
+    UserComponent
   },
   methods: {
       setUserLoggedIn(loggedIn) {

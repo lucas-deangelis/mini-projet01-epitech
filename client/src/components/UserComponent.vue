@@ -35,7 +35,6 @@
             </b-form>
         </b-modal>
     </b-dropdown>
-
 </template>
 
 
@@ -61,14 +60,7 @@ export default {
         }),
 
     mounted() {
-        this.$store.dispatch('user/getUser', 1).then(() => {
-            // wait 1 sec to allow propagation state
-            let myInterval = setInterval(() => {
-                // set user logged in at true
-                this.$emit("userLoggedIn", true)
-                clearInterval(myInterval)
-            }, 1000);
-        });
+        this.$store.dispatch('user/getUser', 1)
 
         this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
             this.form.username = this.user.username;
@@ -85,7 +77,7 @@ export default {
         onSubmitUpdate(evt) {
             evt.preventDefault()
             let data = JSON.parse(JSON.stringify(this.form))
-            this.$store.dispatch('user/updateUser', { userId: this.user.id, email: data.email, username: data.username })
+            this.$store.dispatch('user/updateUser', { id: this.user.id, email: data.email, username: data.username })
 
             // close the modal
             this.$root.$emit('bv::hide::modal', 'modal-edit')
@@ -93,7 +85,7 @@ export default {
         // delete user when form submitted
         onSubmitDelete(evt) {
             evt.preventDefault()
-            this.$store.dispatch('user/deleteUser', { userId: this.user.id})
+            this.$store.dispatch('user/deleteUser', { id: this.user.id})
 
             // close the modal
             this.$root.$emit('bv::hide::modal', 'modal-delete')

@@ -25,19 +25,41 @@ const actions = {
         let data = JSON.parse(JSON.stringify(response.data.data))
         
         if (data.status == false) {
-            // update clockInProgress var
-            commit('setClock', false)
-
-            dispatch('refresh', userId)
+          // update startDateTime and clockInProgress var
+          commit('setStart', data.time.replace('T', ' '))
+          commit('setClock', true)
+          
         } else {
-            // update startDateTime and clockInProgress var
-            commit('setStart', data.time.replace('T', ' '))
-            commit('setClock', true)
+          // update clockInProgress var
+          commit('setStart', null)
+          commit('setClock', false)
         }
+          dispatch('refresh', userId)
     })
     .catch(error => {
         console.error(error)
     });
+  },
+
+  get({commit, state, dispatch}, userId) {
+    let url = window.apiUrl + '/api/clocks/' + userId
+
+    window.axios.get(url)
+    .then(response => {
+        let data = JSON.parse(JSON.stringify(response.data.data))
+
+        if (data.status == false) {
+            // update clockInProgress var
+            commit('setClock', false)
+        } else {
+            // update startDateTime and clockInProgress var
+            commit('setClock', true)
+          }
+          commit('setStart', data.time.replace('T', ' '))
+    })
+    .catch(error => {
+        console.error(error)
+    })
   },
 
   // Refresh the workingtimes component

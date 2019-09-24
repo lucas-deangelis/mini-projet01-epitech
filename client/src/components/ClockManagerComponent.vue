@@ -4,16 +4,28 @@
                 <h2>Clock Manager</h2>
             </div>
             <div class="sub sub-content">
-                <div v-if="!clockInProgress">
-                    <transition appear name="fade" mode="out-in">
-                        <b-button variant="success" v-on:click="clock">Do you want to clock IN ?</b-button>
-                    </transition>
-                </div>
-                <div v-else>
-                    <transition appear name="fade" mode="out-in">
-                        <b-button variant="danger" v-on:click="clock">Do you want to clock OUT ?</b-button>
-                    </transition>
-                </div>
+                <b-card bg-variant="light">
+
+                    <div v-if="!clockInProgress">
+                        <b-card-text>
+                            You are actually not clocked in.
+                        </b-card-text>
+                        <transition appear name="fade" mode="out-in">
+                            <b-button variant="outline-success" v-on:click="clock">Do you want to clock IN ?</b-button>
+                        </transition>
+                    </div>
+                    <div v-else>
+                        <b-card-text>
+                            You are clocked in since :
+                        </b-card-text>
+                        <b-card-text>
+                            <b>{{ clockedInSince }}</b>
+                        </b-card-text>
+                        <transition appear name="fade" mode="out-in">
+                            <b-button variant="outline-danger" v-on:click="clock">Do you want to clock OUT ?</b-button>
+                        </transition>
+                    </div>
+                </b-card>
             </div>
         </div>
 </template>
@@ -34,15 +46,15 @@ export default {
         ...mapState('user', {
             userId: state => state.user.id,
         }),
-    },
 
-    mounted() {
-        this.$store.dispatch('clock/clock', this.userId )
+        clockedInSince() {
+            return this.startDateTime
+        }
     },
 
     methods: {
         clock() {
-            this.$store.dispatch('clock/clock', this.userId )
+            this.$store.dispatch('clock/clock', this.userId)
         }
     }
 }

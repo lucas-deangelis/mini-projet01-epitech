@@ -4,7 +4,8 @@ const state = {
     id: null,
     username: null,
     email: null
-  }
+  },
+  listUsers: []
 }
 
 // getters
@@ -18,14 +19,17 @@ const getters = {
   getUserEmail: state => {
     return state.user.email
   },
+  getListUsers: state => {
+    return state.listUsers
+  }
 }
 
 // actions
 const actions = {
   // get user from the api and assign it to the state
-  getUser({ commit, state }, userId) {
+  getUser({ commit, state }, id) {
     return new Promise((resolve, reject) => {
-      let url = window.apiUrl + '/api/users/' + userId;
+      let url = window.apiUrl + '/api/users/' + id;
       
       // empty the user
       commit('setUser', {})
@@ -33,11 +37,12 @@ const actions = {
       window.axios.get(url)
       .then(response => {
         commit('setUser', JSON.parse(JSON.stringify(response.data.data)))
+        resolve()
       })
       .catch(error => {
         console.error(error)
+        reject(error)
       })
-      resolve()
     })
   },
 
@@ -46,33 +51,58 @@ const actions = {
   // },
 
   updateUser({ commit, state }, user) {
-    let url = window.apiUrl + '/api/users/' + user.userId;
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/users/' + user.id;
 
-    window.axios.put(url, {
-      email: user.email,
-      username: user.username
-    })
-    .then(response => {
-        commit('setUser', JSON.parse(JSON.stringify(response.data.data)))
-    })
-    .catch(error => {
-        console.error(error)
+      let params = {};
+      for (const key in user) {
+        if (user.hasOwnProperty(key)) {
+          params[key] = user[key];
+        }
+      }
+
+      window.axios.put(url, params)
+      .then(response => {
+          resolve()
+      })
+      .catch(error => {
+          console.error(error)
+          reject(error)
+      })
     })
   },
 
   deleteUser({ commit, state }, user) {
-    let url = window.apiUrl + '/api/users/' + user.userId;
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/users/' + user.id;
 
-    window.axios.delete(url)
-    .then(response => {
-        commit('setUser', {
-          id: null,
-          username: null,
-          email: null
-        })
-    })
-    .catch(error => {
+      window.axios.delete(url)
+      .then(response => {
+        resolve()
+      })
+      .catch(error => {
         console.error(error)
+        reject(error)
+      })
+    })
+  },
+
+  getAllUsers({commit, state}) {
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/users/all';
+        
+      // empty the users list
+      commit('setListUsers', [])
+      
+      window.axios.get(url)
+      .then(response => {
+        commit('setListUsers', JSON.parse(JSON.stringify(response.data.data)))
+        resolve()
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
     })
   }
 }
@@ -95,6 +125,10 @@ const mutations = {
   setUser (state, user) {
     state.user = user
   },
+  // set the state.listUsers
+  setListUsers (state, listUsers) {
+    state.listUsers = listUsers
+  }
 
 }
 
