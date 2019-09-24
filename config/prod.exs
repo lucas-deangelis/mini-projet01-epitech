@@ -14,9 +14,8 @@ config :miniprojet, GothamWeb.Endpoint,
   url: [host: "gotham-timemanager.heroku.com", port: 80],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
-  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
-  nager.herokuapp.com request_id=fb6bbee8-e171-464e-94cf-702b252e82dc fwd="163.5.10"
-
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"
+  
 config :miniprojet, Gotham.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
