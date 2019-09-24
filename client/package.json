@@ -15,10 +15,14 @@
     "cordova-build-only-www-osx": "cross-env CORDOVA_PLATFORM=osx vue-cli-service cordova-build-only-www-osx",
     "cordova-build-osx": "cross-env CORDOVA_PLATFORM=osx vue-cli-service cordova-build-osx",
     "cordova-prepare": "vue-cli-service cordova-prepare",
-    "cordova-serve-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-serve-android",
-    "cordova-serve-browser": "cross-env CORDOVA_PLATFORM=browser vue-cli-service cordova-serve-browser",
-    "cordova-serve-ios": "cross-env CORDOVA_PLATFORM=ios vue-cli-service cordova-serve-ios",
-    "cordova-serve-osx": "cross-env CORDOVA_PLATFORM=osx vue-cli-service cordova-serve-osx"
+    "cordova-serve-android": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-serve-android --mode development",
+    "cordova-serve-android-production": "cross-env CORDOVA_PLATFORM=android vue-cli-service cordova-serve-android --mode production",
+    "cordova-serve-browser": "cross-env CORDOVA_PLATFORM=browser vue-cli-service cordova-serve-browser --mode development",
+    "cordova-serve-browser-production": "cross-env CORDOVA_PLATFORM=browser vue-cli-service cordova-serve-browser --mode production",
+    "cordova-serve-ios": "cross-env CORDOVA_PLATFORM=ios vue-cli-service cordova-serve-ios --mode development",
+    "cordova-serve-ios-production": "cross-env CORDOVA_PLATFORM=ios vue-cli-service cordova-serve-ios --mode production",
+    "cordova-serve-osx": "cross-env CORDOVA_PLATFORM=osx vue-cli-service cordova-serve-osx --mode development",
+    "cordova-serve-osx-production": "cross-env CORDOVA_PLATFORM=osx vue-cli-service cordova-serve-osx --mode production"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.22",

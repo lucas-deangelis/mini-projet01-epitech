@@ -42,3 +42,25 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 * Docs: <https://hexdocs.pm/phoenix>
 * Mailing list: <http://groups.google.com/group/phoenix-talk>
 * Source: <https://github.com/phoenixframework/phoenix>
+
+
+
+# Gotham Mobile App
+
+You can found the mobile app at this address :
+
+If you just want to test it, please follow those instructions :
+
+* Clone the main repo
+* Install cordova `npm install -g cordova``
+* Install Android Studio (https://developer.android.com/studio/install)
+* In Android Studio, generate a new emulator with API level 29 (Androids 9.0) and adapted engine to your system
+* Launch the new emulator in 'Cold Boot'
+* Go to /client/src-cordova/
+* Run `npm install``
+* Run `cordova platform add browser``
+* Run `cordova platform add android``
+* Go to /client/
+* Run `npm run cordova-prepare``
+* Run `npm run cordova-serve-browser`or `npm run cordova-serve-android``
+* The browser should launch or the android should be emulated.

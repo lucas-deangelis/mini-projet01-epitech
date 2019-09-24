@@ -33,7 +33,6 @@ const actions = {
   getUser({ commit, state }, id) {
     return new Promise((resolve, reject) => {
       let url = window.apiUrl + '/api/users/' + id;
-      
       // empty the user
       commit('setUser', {})
       

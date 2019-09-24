@@ -42,7 +42,7 @@ defmodule GothamWeb.Endpoint do
 
   # Corsica to manage CORS
   plug Corsica,
-    origins: ["http://localhost:8080", "http://127.0.0.1:8080", "*"],
+    origins: ["http://localhost:8080", "http://127.0.0.1:8080"],
     allow_headers: ["content-type", "authorization"]
 
   plug GothamWeb.Router
