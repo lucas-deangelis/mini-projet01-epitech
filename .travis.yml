@@ -8,4 +8,3 @@ env:
 script:
   - docker-compose build
   - docker-compose run test
->>>>>>> 7f3dc66b01c8dbba79870afa8aed4fe650a6662c
