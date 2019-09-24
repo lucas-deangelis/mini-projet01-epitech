@@ -54,9 +54,34 @@ const actions = {
     })
   },
 
-  // createUser({ commit, state }) {
+  createUser({ commit, state }, params) {
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/register';
 
-  // },
+
+      let data = {
+        user: {
+          role: 'employee'
+        }
+      }
+      for (const key in params) {
+        if (params.hasOwnProperty(key)) {
+          data.user[key] = params[key];
+        }
+      }
+
+      console.log(data)
+
+      window.axios.post(url, data)
+      .then(response => {
+          resolve()
+      })
+      .catch(error => {
+          console.error(error)
+          reject(error)
+      })
+    })
+  },
 
   updateUser({ commit, state }, user) {
     return new Promise((resolve, reject) => {

@@ -21,38 +21,6 @@
 					</form>
 				</div>
 			</b-card>
-			<b-card bg-variant="transparent" class="border-0 ml-5">
-				<div class="col-md-8">
-					<div class="sub sub-header col-md-6">
-						<h1 class="text-dark">Register</h1>
-					</div>
-					<form @submit.prevent="handleRegisterSubmit">
-						<div class="form-group">
-							<label for="firstName">First Name</label>
-							<input type="text" v-model="register.firstName" v-validate="'required'" name="firstName"/>
-						</div>
-						<div class="form-group">
-							<label for="lastName">Last Name</label>
-							<input type="text" v-model="register.lastName" v-validate="'required'" name="lastName"/>
-						</div>
-						<div class="form-group">
-							<label for="username">Username</label>
-							<input type="text" v-model="register.username" v-validate="'required'" name="username"/>
-						</div>
-						<div class="form-group">
-							<label for="username">Email</label>
-							<input type="text" v-model="register.email" v-validate="'required'" name="email"/>
-						</div>
-						<div class="form-group">
-							<label htmlFor="password">Password</label>
-							<input type="password" v-model="register.password" v-validate="{ required: true, min: 6 }" name="password"/>
-						</div>
-						<div class="form-group">
-							<button class="btn btn-primary">Register</button>
-						</div>
-					</form>
-				</div>
-			</b-card>
 		</div>
 	</div>
 </template>
@@ -67,13 +35,6 @@ export default {
 				email: '',
 				password: ''
 			},
-			register: {
-				firstName: '',
-				lastName: '',
-				username: '',
-				email: '',
-				password: ''
-			}
 		}
 	},
 	components: {},
@@ -81,9 +42,6 @@ export default {
 		handleLoginSubmit(e) {
 			this.$router.push("/");
 		},
-		handleRegisterSubmit(e) {
-
-		}
 	}
 }
 </script>
