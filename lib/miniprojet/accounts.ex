@@ -9,6 +9,81 @@ defmodule Gotham.Accounts do
   alias Gotham.Accounts.User
   alias Gotham.Accounts.Team
 
+  alias Gotham.Auth.Guardian
+  import Argon2
+
+
+
+
+  @doc """
+  Encode a user authenticated in a JWT token.
+
+  ## Examples
+
+      iex> token_sign_in("myemail", "mypassword")
+      %User{}
+
+  """
+  def token_sign_in(email, password) do
+    case email_password_auth(email, password) do
+      {:ok, user} ->
+        Guardian.encode_and_sign(user)
+      _ ->
+        {:error, :unauthorized}
+    end
+  end
+
+  @doc """
+  Authenticate a user with email and password.
+
+  ## Examples
+
+      iex> email_password_auth("myemail", "mypassword")
+      %User{}
+
+  """
+  defp email_password_auth(email, password) when is_binary(email) and is_binary(password) do
+    with {:ok, user} <- get_by_email(email),
+    do: verify_password(password, user)
+  end
+
+  @doc """
+  Get a user by email.
+
+  ## Examples
+
+      iex> get_by_email("myemail")
+      %User{}
+
+  """
+  defp get_by_email(email) when is_binary(email) do
+    case Repo.get_by(User, email: email) do
+      nil ->
+        no_user_verify()
+        {:error, "Login error."}
+      user ->
+        {:ok, user}
+    end
+  end
+
+  @doc """
+  Check a user with his password.
+
+  ## Examples
+
+      iex> verify_password("mypassword", User)
+      true
+
+  """
+  defp verify_password(password, %User{} = user) when is_binary(password) do
+    if verify_pass(password, user.password_hash) do
+      {:ok, user}
+    else
+      {:error, :invalid_password}
+    end
+  end
+
+
   @doc """
   Returns the list of users.
 

@@ -28,49 +28,62 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
 %User{
     username: "joerogan",
     email: "joe.rogan@email.com",
-    role: "admin"
+    role: "admin",
+    password_hash: Argon2.Base.hash_password("admin", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
 }
 |> Repo.insert!()
 
 %User{
     username: "peterattia",
     email: "peter.attia@email.com",
-    role: "manager"
+    role: "manager",
+    password_hash: Argon2.Base.hash_password("manager", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+
 }
 |> Repo.insert!()
 
 %User{
     username: "timferriss",
     email: "tim.ferriss@email.com",
-    role: "employee"
+    role: "employee",
+    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+
 }
 |> Repo.insert!()
 
 %User{
     username: "toto",
     email: "toto@email.com",
-    role: "employee"
+    role: "employee",
+    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+
 }
 |> Repo.insert!()
 
 %User{
     username: "tutu",
     email: "tutu@email.com",
-    role: "employee"
+    role: "employee",
+    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+
 }
 |> Repo.insert!()
 
 %User{
     username: "tata",
     email: "tata@email.com",
-    role: "employee"
+    role: "employee",
+    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+
 }
 |> Repo.insert!()
 
 %User{
     username: "titi",
     email: "titi@email.com",
-    role: "employee"
+    role: "employee",
+    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+
 }
 |> Repo.insert!()
 
