@@ -5,7 +5,7 @@ const state = {
     username: null,
     email: null,
     jwt: null,
-    authenticated: false
+    isAuthenticated: false
   },
   listUsers: []
 }
@@ -27,8 +27,8 @@ const getters = {
   getJwt: state => {
     return state.jwt;
   },
-  isAuthenticated: state => {
-    return state.authenticated;
+  getIsAuthenticated: state => {
+    return state.isAuthenticated;
   }
 }
 
@@ -154,11 +154,14 @@ const actions = {
 
         if (data) {
           commit('setJwt', data.JWToken);
-          commit('setAuthenticated', true);
+          commit('setIsAuthenticated', true);
         }
+
+        resolve();
       })
       .catch(error => {
-
+        commit('setIsAuthenticated', false);
+        reject(error);
       })
     })
   }
@@ -191,8 +194,8 @@ const mutations = {
     state.jwt = jwt;
   },
 
-  setAuthenticated (state, authenticated) {
-    state.authenticated = authenticated;
+  setIsAuthenticated (state, isAuthenticated) {
+    state.isAuthenticated = isAuthenticated;
   }
 
 }

@@ -25,11 +25,11 @@ const router = new VueRouter({routes})
 
 // Check if user is authenticated and if he can access pages without
 
-/* router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
 
   const publicPages = ['/login', '/register'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('user');
+  const loggedIn = store.state.isAuthenticated;
 
   if (authRequired && !loggedIn) {
     return next('/login');
@@ -37,7 +37,7 @@ const router = new VueRouter({routes})
 
   next();
 })
- */
+
 // Instantiate the VUE and attach it to #app
 const app = new Vue({
   store,

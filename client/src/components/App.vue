@@ -9,7 +9,7 @@
 
 
         <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav class="navbar-links mr-auto ml-auto">
+          <b-navbar-nav class="navbar-links mr-auto ml-auto" v-if="isAuthenticated">
             <router-link to="/" class="nav-link text-yellow">Home</router-link>
             <router-link to="/team" class="nav-link text-yellow">Teams</router-link>
             <router-link to="/users" class="nav-link text-yellow">Users</router-link>
@@ -27,7 +27,7 @@
         </b-collapse>
         <!-- Right aligned nav items -->
         <b-navbar-nav id="user-links">
-            <UserComponent @userLoggedIn="setUserLoggedIn"></UserComponent>
+            <UserComponent v-if="isAuthenticated"></UserComponent>
         </b-navbar-nav>
       </b-navbar>
     </div>
@@ -42,22 +42,22 @@
 
 <script>
 import UserComponent from './UserComponent.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
   data() {
-    return {
-      'userLoggedIn': false
-    }
+    return {}
+  },
+  computed: {
+    ...mapState('user', {
+      isAuthenticated: state => state.isAuthenticated
+    })
   },
   components: {
     UserComponent
   },
-  methods: {
-      setUserLoggedIn(loggedIn) {
-          this.userLoggedIn = loggedIn;
-      }
-  }
+  methods: {}
 }
 </script>
 

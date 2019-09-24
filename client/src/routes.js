@@ -3,7 +3,7 @@
 import HomeComponent from './components/HomeComponent.vue';
 import TeamComponent from './components/TeamComponent.vue';
 import AdminComponent from './components/AdminComponent.vue';
-import LoginComponent from './components/Login.vue';
+import LoginComponent from './components/LoginComponent.vue';
 import RegisterComponent from './components/RegisterComponent.vue';
 
 const routes = [
