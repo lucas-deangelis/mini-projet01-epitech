@@ -37,6 +37,13 @@
 					<b-button type="reset" variant="danger">Reset</b-button>
 					<b-button type="submit" variant="primary">Submit</b-button>
 				</div>
+
+				<div class="d-flex justify-content-center align-items-center mt-5">
+					<p>
+						You already have an account ?
+						<b-link href="/#/login" class="card-link text-yellow">Click here to login.</b-link>
+					</p>
+				</div>
 			</b-form>
 			<b-card title="Congratulation!" v-if="showSubmitted">
 				<b-card-text>
