@@ -1,0 +1,8 @@
+{
+    "name": "gotham-timemanager",
+    "description": "the gotham time manager",
+    "version": "1.0.0",
+    "engines": {
+        "node": "10.16.3"
+    }
+}
