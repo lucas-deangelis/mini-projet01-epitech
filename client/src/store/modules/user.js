@@ -3,7 +3,9 @@ const state = {
   user: {
     id: null,
     username: null,
-    email: null
+    email: null,
+    jwt: null,
+    authenticated: false
   },
   listUsers: []
 }
@@ -21,6 +23,12 @@ const getters = {
   },
   getListUsers: state => {
     return state.listUsers
+  },
+  getJwt: state => {
+    return state.jwt;
+  },
+  isAuthenticated: state => {
+    return state.authenticated;
   }
 }
 
@@ -104,6 +112,30 @@ const actions = {
         reject(error)
       })
     })
+  },
+
+  /* Login */
+
+  login({commit, state}, email, password) {
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/sign_in';
+      let params = {};
+
+      params["email"] = email;
+      params["password"] = password;
+      window.axios.post(url, params)
+      .then(response => {
+        let data = response.data.data;
+
+        if (data) {
+          commit('setJwt', data.JWToken);
+          commit('setAuthenticated', true);
+        }
+      })
+      .catch(error => {
+
+      })
+    })
   }
 }
 
@@ -128,6 +160,14 @@ const mutations = {
   // set the state.listUsers
   setListUsers (state, listUsers) {
     state.listUsers = listUsers
+  },
+
+  setJwt (state, jwt) {
+    state.jwt = jwt;
+  },
+
+  setAuthenticated (state, authenticated) {
+    state.authenticated = authenticated;
   }
 
 }

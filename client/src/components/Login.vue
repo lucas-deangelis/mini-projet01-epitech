@@ -8,8 +8,8 @@
 					</div>
 					<form @submit.prevent="handleLoginSubmit">
 						<div class="form-group">
-							<label for="username" class="text-warning">Username</label>
-							<input type="text" v-model="login.username" name="username"/>
+							<label for="email" class="text-warning">Email</label>
+							<input type="email" v-model="login.email" name="email"/>
 						</div>
 						<div class="form-group">
 							<label htmlFor="password" class="text-warning">Password</label>
@@ -64,7 +64,7 @@ export default {
 	data() {
 		return {
 			login:  {
-				username: '',
+				email: '',
 				password: ''
 			},
 			register: {
