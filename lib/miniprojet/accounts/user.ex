@@ -31,11 +31,22 @@ defmodule Gotham.Accounts.User do
     |> cast_assoc(:workingtimes, with: &Gotham.Times.Workingtime.changeset/2)
     |> cast_assoc(:teams, with: &Gotham.Accounts.Team.changeset/2)
     |> validate_required([:username, :email, :role, :password, :password_confirmation])
-    # |> validate_length(:password, min: 8) # Check that password length is >= 8
+    |> validate_length(:password, min: 6) # Check that password length is >= 6
     |> validate_confirmation(:password) # Check that password === password_confirmation
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
     |> put_password_hash # Add put_password_hash to changeset pipeline
+  end
+
+  def changeset_update(user, attrs) do
+    user
+    |> cast(attrs, [:username, :email, :role])
+    |> cast_assoc(:clock, with: &Gotham.Times.Clock.changeset/2)
+    |> cast_assoc(:workingtimes, with: &Gotham.Times.Workingtime.changeset/2)
+    |> cast_assoc(:teams, with: &Gotham.Accounts.Team.changeset/2)
+    |> validate_required([:username, :email, :role])
+    |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
   end
 
   # Hash the password

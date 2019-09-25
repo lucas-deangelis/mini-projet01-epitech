@@ -20,13 +20,11 @@ const actions = {
   clock({ commit, state, dispatch, rootState }, userId) {
     let url = window.apiUrl + '/api/clocks/' + userId
 
-    let params = {
-      headers: {
-        Authorization: "Bearer " + rootState.userStatus.jwt
-      }
-    }
-
-    window.axios.post(url, params)
+    window.axios({
+      method: 'post',
+      url: url,
+      headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+    })
     .then(response => {
         let data = JSON.parse(JSON.stringify(response.data.data))
         
@@ -50,13 +48,11 @@ const actions = {
   get({commit, state, dispatch, rootState}, userId) {
     let url = window.apiUrl + '/api/clocks/' + userId
 
-    let params = {
-      headers: {
-        Authorization: "Bearer " + rootState.user.userStatus.jwt
-      }
-    }
-
-    window.axios.get(url, params)
+    window.axios({
+      method: 'get',
+      url: url,
+      headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+    })
     .then(response => {
         let data = JSON.parse(JSON.stringify(response.data.data))
 

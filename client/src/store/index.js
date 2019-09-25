@@ -24,11 +24,11 @@ const listeners = store => {
       // called before every action.
       // The action comes in the format of `{ type, payload }`.
     },
-    after: (action, state) => {
+    after: (action, state, rootState) => {
       // console.log(action)
       // called after every action.
       // The action comes in the format of `{ type, payload }`.
-      if (action.type == "user/getUser" || action.type == "user/getAuthenticatedUser") {
+      if (action.type == "user/getUser") {
         store.dispatch('clock/get', action.payload )
         store.dispatch('getWorkingTimes', { userId: action.payload, start: '', end: '' })
         store.dispatch('user/getAllUsers')

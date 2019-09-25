@@ -25,14 +25,12 @@ const actions = {
 
       // get working times
       let url = window.apiUrl + '/api/workingtimes/' + params.userId + '?start=' + '' + '&end=' + ''  //+ this.$root.user.id;
-
-      params = {
-        headers: {
-          Authorization: "Bearer " + rootState.user.userStatus.jwt
-        }
-      }
       
-      window.axios.get(url, params)
+      window.axios({
+        method: 'get',
+        url: url,
+        headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+      })
       .then(response => {
           // parse the data
           let workingTimesDatas = JSON.parse(JSON.stringify(response.data.data))
