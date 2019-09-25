@@ -56,14 +56,16 @@ const actions = {
     .then(response => {
         let data = JSON.parse(JSON.stringify(response.data.data))
 
-        if (data.status == false) {
-            // update clockInProgress var
-            commit('setClock', false)
-        } else {
+        if (data != null) {
+          if (data.status == false) {
+              // update clockInProgress var
+              commit('setClock', false)
+          } else {
             // update startDateTime and clockInProgress var
             commit('setClock', true)
           }
           commit('setStart', data.time.replace('T', ' '))
+        }
     })
     .catch(error => {
         console.error(error)

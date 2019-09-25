@@ -29,7 +29,7 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
     username: "joerogan",
     email: "joe.rogan@email.com",
     role: "admin",
-    password_hash: Argon2.Base.hash_password("admin", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+    password_hash: Argon2.hash_pwd_salt("admin")
 }
 |> Repo.insert!()
 
@@ -37,7 +37,7 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
     username: "peterattia",
     email: "peter.attia@email.com",
     role: "manager",
-    password_hash: Argon2.Base.hash_password("manager", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+    password_hash: Argon2.hash_pwd_salt("manager")
 
 }
 |> Repo.insert!()
@@ -46,7 +46,7 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
     username: "timferriss",
     email: "tim.ferriss@email.com",
     role: "employee",
-    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+    password_hash: Argon2.hash_pwd_salt("employee")
 
 }
 |> Repo.insert!()
@@ -55,7 +55,7 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
     username: "toto",
     email: "toto@email.com",
     role: "employee",
-    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+    password_hash: Argon2.hash_pwd_salt("employee")
 
 }
 |> Repo.insert!()
@@ -64,7 +64,7 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
     username: "tutu",
     email: "tutu@email.com",
     role: "employee",
-    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+    password_hash: Argon2.hash_pwd_salt("employee")
 
 }
 |> Repo.insert!()
@@ -73,7 +73,7 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
     username: "tata",
     email: "tata@email.com",
     role: "employee",
-    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+    password_hash: Argon2.hash_pwd_salt("employee")
 
 }
 |> Repo.insert!()
@@ -82,7 +82,7 @@ Repo.query("ALTER SEQUENCE teams_id_seq RESTART")
     username: "titi",
     email: "titi@email.com",
     role: "employee",
-    password_hash: Argon2.Base.hash_password("employee", Application.get_env(:miniprojet, Gotham.Guardian)[:secret_key])
+    password_hash: Argon2.hash_pwd_salt("employee")
 
 }
 |> Repo.insert!()
