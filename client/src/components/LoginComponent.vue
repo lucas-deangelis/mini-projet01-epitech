@@ -44,12 +44,7 @@ export default {
 	methods: {
 		handleLoginSubmit(e) {
 			this.$store.dispatch('user/login', this.login).then(() => {
-				console.log(this.userStatus.jwt);
-				console.log(this.userStatus.isAuthenticated);
-				if (this.userStatus.isAuthenticated == true) {
-					this.$router.push('/');
-			}
-
+				if (this.userStatus.isAuthenticated == true) this.$router.push('/')
 			})
 		}
 	}

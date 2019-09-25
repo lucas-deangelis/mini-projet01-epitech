@@ -44,10 +44,16 @@ const actions = {
     return new Promise((resolve, reject) => {
       let url = window.apiUrl + '/api/users/' + id;
       
+      let params = {
+        headers: {
+          Authorization: "Bearer " + state.userStatus.jwt
+        }
+      }
+
       // empty the user
       commit('setUser', {})
       
-      window.axios.get(url)
+      window.axios.get(url, params)
       .then(response => {
         commit('setUser', JSON.parse(JSON.stringify(response.data.data)))
         resolve()
@@ -61,10 +67,13 @@ const actions = {
 
   createUser({ commit, state }, params) {
     return new Promise((resolve, reject) => {
-      let url = window.apiUrl + '/api/register';
+      let url = window.apiUrl + '/api/users';
 
 
       let data = {
+        headers: {
+          Authorization: "Bearer " + state.userStatus.jwt
+        },
         user: {
           role: 'employee'
         }
@@ -75,7 +84,6 @@ const actions = {
         }
       }
 
-      console.log(data)
 
       window.axios.post(url, data)
       .then(response => {
@@ -92,7 +100,11 @@ const actions = {
     return new Promise((resolve, reject) => {
       let url = window.apiUrl + '/api/users/' + user.id;
 
-      let params = {};
+      let params = {
+        headers: {
+          Authorization: "Bearer " + state.userStatus.jwt
+        }
+      }
       for (const key in user) {
         if (user.hasOwnProperty(key)) {
           params[key] = user[key];
@@ -114,7 +126,13 @@ const actions = {
     return new Promise((resolve, reject) => {
       let url = window.apiUrl + '/api/users/' + user.id;
 
-      window.axios.delete(url)
+      let params = {
+        headers: {
+          Authorization: "Bearer " + state.userStatus.jwt
+        }
+      }
+
+      window.axios.delete(url, params)
       .then(response => {
         resolve()
       })
@@ -128,11 +146,17 @@ const actions = {
   getAllUsers({commit, state}) {
     return new Promise((resolve, reject) => {
       let url = window.apiUrl + '/api/users/all';
+
+      let params = {
+        headers: {
+          Authorization: "Bearer " + state.userStatus.jwt
+        }
+      }
         
       // empty the users list
       commit('setListUsers', [])
       
-      window.axios.get(url)
+      window.axios.get(url, params)
       .then(response => {
         commit('setListUsers', JSON.parse(JSON.stringify(response.data.data)))
         resolve()
@@ -174,6 +198,33 @@ const actions = {
     })
   },
 
+  register({ commit, state }, params) {
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/register';
+
+
+      let data = {
+        user: {
+          role: 'employee'
+        }
+      }
+      for (const key in params) {
+        if (params.hasOwnProperty(key)) {
+          data.user[key] = params[key];
+        }
+      }
+
+      window.axios.post(url, data)
+      .then(response => {
+          resolve()
+      })
+      .catch(error => {
+          console.error(error)
+          reject(error)
+      })
+    })
+  },
+
   getAuthenticatedUser({commit, state}, jwt) {
     return new Promise((resolve, reject) => {
       let url = window.apiUrl + '/api/authenticated';
@@ -181,7 +232,7 @@ const actions = {
         headers: {
           Authorization: "Bearer " + jwt
         }
-      };
+      }
 
       window.axios.get(url, params)
       .then(response => {
@@ -195,7 +246,7 @@ const actions = {
       .catch(error => {
         commit('setJwt', null);
         commit('setIsAuthenticated', false);
-        console.log(error);
+        console.error(error);
         reject(error);
       })
     })
@@ -225,7 +276,7 @@ const mutations = {
     state.listUsers = listUsers
   },
 
-  setListUsers (state, userStatus) {
+  setUserStatus (state, userStatus) {
     state.userStatus = userStatus
   },
 

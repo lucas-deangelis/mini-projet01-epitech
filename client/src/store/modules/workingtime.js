@@ -16,7 +16,7 @@ const getters = {
 const actions = {
   getWorkingTimes: { 
     root: true,
-    handler ({ commit, state }, params) {
+    handler ({ commit, state, rootState }, params) {
 
       const savedWorkingTimes = [...state.workingTimes]
       // empty working times
@@ -26,7 +26,13 @@ const actions = {
       // get working times
       let url = window.apiUrl + '/api/workingtimes/' + params.userId + '?start=' + '' + '&end=' + ''  //+ this.$root.user.id;
 
-      window.axios.get(url)
+      params = {
+        headers: {
+          Authorization: "Bearer " + rootState.user.userStatus.jwt
+        }
+      }
+      
+      window.axios.get(url, params)
       .then(response => {
           // parse the data
           let workingTimesDatas = JSON.parse(JSON.stringify(response.data.data))

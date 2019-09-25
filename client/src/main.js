@@ -31,8 +31,6 @@ router.beforeEach((to, from, next) => {
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = store.getters['user/getIsAuthenticated'];
 
-  console.log(loggedIn);
-
   if (!authRequired && loggedIn)
     return next('/');
   if (authRequired && !loggedIn) {

@@ -86,7 +86,7 @@ export default {
 		onSubmit(evt) {
 			evt.preventDefault()
 
-			this.$store.dispatch('user/createUser', JSON.parse(JSON.stringify(this.form))).then(() => {
+			this.$store.dispatch('user/register', JSON.parse(JSON.stringify(this.form))).then(() => {
 				this.showSubmitted = true
 				this.showForm = false
 				this.form.reset()

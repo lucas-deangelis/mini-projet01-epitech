@@ -6,8 +6,8 @@
         <b-dropdown-text><label class="font-weight-bold">Id :</label> {{ user.id }} </b-dropdown-text>
         <b-dropdown-text><label class="font-weight-bold">Username :</label> {{ user.username }} </b-dropdown-text>
         <b-dropdown-text><label class="font-weight-bold">Email :</label> {{ user.email }} </b-dropdown-text>
-        <!-- <b-dropdown-divider></b-dropdown-divider> -->
-        <!-- <b-dropdown-item variant="danger" href="#">Logout</b-dropdown-item> -->
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item variant="danger" v-on:click="onClickLogout">Logout</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-header id="dropdown-header-label-danger-zone">
             DANGER ZONE
@@ -93,6 +93,23 @@ export default {
             // call logout action
 
         },
+        // logout the user
+        onClickLogout(evt) {
+            evt.preventDefault()
+
+            // flush all the user state
+            this.$store.commit('user/setUser', {
+                id: null,
+                username: null,
+                email: null
+            })
+            this.$store.commit('user/setListUsers', [])
+            this.$store.commit('user/setIsAuthenticated', false)
+            this.$store.commit('user/setJwt', null)
+
+            // redirect to /login
+            this.$router.push('/login')
+        }
     }
 }
 
