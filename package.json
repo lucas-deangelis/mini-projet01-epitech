@@ -3,8 +3,8 @@
     "description": "the gotham time manager",
     "version": "1.0.0",
     "scripts": {
-        "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build"
+        "serve": "cd client && npm run serve",
+        "build": "cd client && npm run build"
     },
     "engines": {
         "node": "10.16.3"
