@@ -2,7 +2,7 @@
     "name": "gotham-timemanager",
     "description": "the gotham time manager",
     "version": "1.0.0",
-    "script": {
+    "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build"
     },
