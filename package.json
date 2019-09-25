@@ -8,5 +8,8 @@
     },
     "engines": {
         "node": "10.16.3"
+    },
+    "dependencies": {
+        "flatted": "^2.0.1"
     }
 }
