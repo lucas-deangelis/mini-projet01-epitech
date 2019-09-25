@@ -45,6 +45,7 @@ export default {
         }),
         ...mapState('user', {
             userId: state => state.user.id,
+            userStatus: state => state.userStatus
         }),
 
         clockedInSince() {

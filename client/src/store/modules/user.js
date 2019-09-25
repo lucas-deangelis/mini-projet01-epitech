@@ -3,7 +3,9 @@ const state = {
   user: {
     id: null,
     username: null,
-    email: null,
+    email: null
+  },
+  userStatus: {
     jwt: null,
     isAuthenticated: false
   },
@@ -24,11 +26,14 @@ const getters = {
   getListUsers: state => {
     return state.listUsers
   },
+  getUserStatus: state => {
+    return state.userStatus
+  },
   getJwt: state => {
-    return state.jwt;
+    return state.userStatus.jwt;
   },
   getIsAuthenticated: state => {
-    return state.isAuthenticated;
+    return state.userStatus.isAuthenticated;
   }
 }
 
@@ -141,7 +146,7 @@ const actions = {
 
   /* Login */
 
-  login({commit, state}, user) {
+  login({commit, dispatch, state}, user) {
     return new Promise((resolve, reject) => {
       let url = window.apiUrl + '/api/sign_in';
       let params = {};
@@ -151,20 +156,46 @@ const actions = {
           params[key] = user[key];
         }
       }
+
       window.axios.post(url, params)
       .then(response => {
         let data = response.data;
 
-        console.log(data);
         if (data) {
-          commit('setJwt', data.JWToken);
+          commit('setJwt', data.jwt);
           commit('setIsAuthenticated', true);
+          dispatch('getAuthenticatedUser', data.jwt);
         }
-
         resolve();
       })
       .catch(error => {
+        reject(error);
+      })
+    })
+  },
+
+  getAuthenticatedUser({commit, state}, jwt) {
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/authenticated';
+      let params = {
+        headers: {
+          Authorization: "Bearer " + jwt
+        }
+      };
+
+      window.axios.get(url, params)
+      .then(response => {
+        let data = response.data;
+        
+        if (data) {
+          commit('setUser', data);
+        }
+        resolve();
+      })
+      .catch(error => {
+        commit('setJwt', null);
         commit('setIsAuthenticated', false);
+        console.log(error);
         reject(error);
       })
     })
@@ -194,12 +225,16 @@ const mutations = {
     state.listUsers = listUsers
   },
 
+  setListUsers (state, userStatus) {
+    state.userStatus = userStatus
+  },
+
   setJwt (state, jwt) {
-    state.jwt = jwt;
+    state.userStatus.jwt = jwt;
   },
 
   setIsAuthenticated (state, isAuthenticated) {
-    state.isAuthenticated = isAuthenticated;
+    state.userStatus.isAuthenticated = isAuthenticated;
   }
 
 }

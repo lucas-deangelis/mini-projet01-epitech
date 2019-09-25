@@ -9,7 +9,7 @@
 
 
         <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav class="navbar-links mr-auto ml-auto" v-if="isAuthenticated">
+          <b-navbar-nav class="navbar-links mr-auto ml-auto" v-if="userStatus.isAuthenticated">
             <router-link to="/" class="nav-link text-yellow">Home</router-link>
             <router-link to="/team" class="nav-link text-yellow">Teams</router-link>
             <router-link to="/users" class="nav-link text-yellow">Users</router-link>
@@ -26,8 +26,8 @@
 
         </b-collapse>
         <!-- Right aligned nav items -->
-        <b-navbar-nav id="user-links">
-            <UserComponent v-if="isAuthenticated"></UserComponent>
+        <b-navbar-nav v-if="userStatus.isAuthenticated" id="user-links">
+            <UserComponent></UserComponent>
         </b-navbar-nav>
       </b-navbar>
     </div>
@@ -51,7 +51,8 @@ export default {
   },
   computed: {
     ...mapState('user', {
-      isAuthenticated: state => state.isAuthenticated
+      user: state => state.user,
+      userStatus: state => state.userStatus
     })
   },
   components: {

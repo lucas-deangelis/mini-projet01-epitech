@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexPersist from 'vuex-persist'
 import user from './modules/user'
 import workingtime from './modules/workingtime'
 import clock from './modules/clock'
@@ -44,6 +45,11 @@ const listeners = store => {
   })
 }
 
+const vuexPersist = new VuexPersist({
+  key: 'app',
+  storage: window.localStorage,
+})
+
 export default new Vuex.Store({
   modules: {
     user,
@@ -51,5 +57,5 @@ export default new Vuex.Store({
     clock
   },
   strict: debug,
-  plugins: [listeners]
+  plugins: [listeners, vuexPersist.plugin]
 })
