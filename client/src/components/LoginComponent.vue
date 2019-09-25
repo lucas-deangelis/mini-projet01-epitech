@@ -6,16 +6,19 @@
 		<div class="sub sub-content col-6 ml-auto mr-auto">
 			<b-form @submit.prevent="handleLoginSubmit">
 				<b-form-group id="input-group-1" label="Email" label-for="input-1">
-					<b-form-input type="email" v-model="login.email" name="email" required placeholder="Email..."/>
+					<b-form-input type="email" v-model="login.email" name="email" required /></b-form-input>
 				</b-form-group>
 				<b-form-group id="input-group-2" label="Password" label-for="input-2">
-					<b-form-input type="password" v-model="login.password" name="password" required placeholder="********"/>
+					<b-form-input type="password" v-model="login.password" name="password" required /></b-form-input>
 				</b-form-group>
 				<div class="form-row justify-content-around mt-3">
-					<b-button type="submit" class="btn btn-primary rounded-pill btn-warning col-md-6">Login</b-button>
+					<b-button type="submit" variant="warning" class="col-md-6">Login</b-button>
 				</div>
-				<div class="form-row justify-content-around mt-3">
-					<router-link to="/register">Register</router-link>
+				<div class="d-flex justify-content-center align-items-center mt-5">
+					<p>
+						You don't have an account ?
+						<b-link href="/#/register" class="card-link text-yellow">Click here to register.</b-link>
+					</p>
 				</div>
 			</b-form>
 		</div>

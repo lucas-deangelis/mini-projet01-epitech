@@ -34,8 +34,8 @@
 				</b-form-group>
 				
 				<div class="form-row justify-content-around">
-					<b-button type="reset" variant="danger">Reset</b-button>
-					<b-button type="submit" variant="primary">Submit</b-button>
+					<b-button type="reset" variant="secondary" class="col-md-3">Reset</b-button>
+					<b-button type="submit" variant="warning" class="col-md-3">Submit</b-button>
 				</div>
 
 				<div class="d-flex justify-content-center align-items-center mt-5">
