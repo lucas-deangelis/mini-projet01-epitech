@@ -6,7 +6,7 @@ WORKDIR /app/client
 # copie 'package.json' et 'package-lock.json' (si disponible)
 #COPY package*.json ./
 ADD package.json /tmp/package.json
-RUN cd /tmp && npm install && npm install flatted
+RUN cd /tmp && npm install flatted && npm install
 RUN cp -a /tmp/node_modules /app/client
 
 # installe les dépendances du projet
