@@ -1,7 +1,10 @@
 <template>
 	<div id="login" class="div-content content d-flex flex-column justify-content-center">
 		<div class="sub sub-header">
-			<h1 class="text-dark">Login</h1>
+			<h1 class="text-yellow">Gotham - A Time Manager</h1>
+		</div>
+		<div class="sub sub-header">
+			<h2 class="text-dark">Login</h2>
 		</div>
 		<div class="sub sub-content col-6 ml-auto mr-auto">
 			<b-form @submit.prevent="handleLoginSubmit">

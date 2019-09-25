@@ -1,7 +1,10 @@
 <template>
 	<div id="register" class="div-content content d-flex flex-column justify-content-center">
 		<div class="sub sub-header">
-			<h1 class="text-dark">Register</h1>
+			<h1 class="text-yellow">Gotham - A Time Manager</h1>
+		</div>
+		<div class="sub sub-header">
+			<h2 class="text-dark">Register</h2>
 		</div>
 		<div class="sub sub-content col-6 ml-auto mr-auto">
 			<b-form @submit="onSubmit" @reset="onReset" v-if="showForm">
