@@ -7,11 +7,11 @@ import LoginComponent from './components/LoginComponent.vue';
 import RegisterComponent from './components/RegisterComponent.vue';
 
 const routes = [
-    { path: '/', component: HomeComponent },
-    { path: '/team', component: TeamComponent },
-    { path: '/users', component: AdminComponent },
-    { path: '/login', component: LoginComponent },
-    { path: '/register', component: RegisterComponent }
+    { path: '/', name: 'home', component: HomeComponent },
+    { path: '/team', name: 'teams', component: TeamComponent },
+    { path: '/users', name: 'users', component: AdminComponent },
+    { path: '/login', name: 'login', component: LoginComponent },
+    { path: '/register', name: 'register', component: RegisterComponent }
 ];
 
 export default routes;

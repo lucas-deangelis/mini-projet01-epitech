@@ -102,11 +102,13 @@ export default {
                 let endDatetime = moment(item.end)
                 let tempDate = startDatetime
 
-                if (endDatetime.diff(startDatetime, 'days') >= 1) { // the user continuously worked between 2 differents dates
+                let diffDays = endDatetime.diff(startDatetime, 'days')
+
+                if (diffDays >= 1) { // the user continuously worked between 2 differents dates
                     // iterate through the days and get the numbers of hours worked for each day
-                    for (let index = 0; index < endDatetime.diff(startDatetime, 'days'); index++) {
+                    for (let index = 0; index < diffDays; index++) {
                         // get number of hours worked for this day
-                        let numberOfMillisecondsWorked = moment().endOf('day').diff(tempDate)
+                        let numberOfMillisecondsWorked = tempDate.clone().add(1, 'd').startOf('day').diff(tempDate)
                         // check if this date is already present in our tab
                         let pos = chartWKTDatas.map(function(e) { return e.day; }).indexOf(tempDate.format('YYYY-MM-DD'))
                         if (pos == -1) { // this day of work isn't in the tab - insert it
@@ -119,7 +121,7 @@ export default {
                         }
 
                         // add 1 day to tempDate
-                        tempDate = startDatetime.add(1, 'd')
+                        tempDate = tempDate.startOf('day').add(1, 'd')
                     }
                 } else { // the user worked on the same day
                     // get numbers of hours worked
@@ -137,7 +139,7 @@ export default {
                 }
             }
 
-            // iterate through our parsed data cvhart to transform milliseconds to hours.
+            // iterate through our parsed data chart to transform milliseconds to hours.
             for (let i = 0; i < chartWKTDatas.length; i++) {
                 let MS = chartWKTDatas[i].milliseconds
                 chartWKTDatas[i].hours = Math.round(MS / 3600000)

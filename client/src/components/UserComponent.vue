@@ -60,7 +60,9 @@ export default {
         }),
 
     mounted() {
-        this.$store.dispatch('user/getUser', this.user.id)
+        setTimeout(() => {
+            this.$store.dispatch('user/getUser', this.user.id)
+        }, 1000);
 
         this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
             this.form.username = this.user.username;
