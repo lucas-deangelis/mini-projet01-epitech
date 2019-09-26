@@ -2,6 +2,9 @@ defmodule Gotham.TimesTest do
   use Gotham.DataCase
 
   alias Gotham.Times
+  alias Gotham.Accounts
+  alias Gotham.Accounts.User
+  alias Gotham.Repo
 
   describe "clocks" do
     alias Gotham.Times.Clock
@@ -11,10 +14,8 @@ defmodule Gotham.TimesTest do
     @invalid_attrs %{status: nil, time: nil}
 
     def clock_fixture(attrs \\ %{}) do
-      {:ok, clock} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Times.create_clock()
+      user = Repo.one(User)
+      {:ok, clock} = Times.create_clock(@valid_attrs, user)
 
       clock
     end
@@ -30,13 +31,15 @@ defmodule Gotham.TimesTest do
     end
 
     test "create_clock/1 with valid data creates a clock" do
-      assert {:ok, %Clock{} = clock} = Times.create_clock(@valid_attrs)
+      user = Repo.one(User)
+      assert {:ok, %Clock{} = clock} = Times.create_clock(@valid_attrs, user)
       assert clock.status == true
       assert clock.time == ~N[2010-04-17 14:00:00]
     end
 
     test "create_clock/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Times.create_clock(@invalid_attrs)
+      user = Repo.one(User)
+      assert {:error, %Ecto.Changeset{}} = Times.create_clock(@invalid_attrs, user)
     end
 
     test "update_clock/2 with valid data updates the clock" do

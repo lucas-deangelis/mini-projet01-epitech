@@ -3,18 +3,20 @@ defmodule Gotham.Factory do
 
   # Factories
 
-  def build(:generate) do
+  def build(:workingtime) do
     %Gotham.Times.Workingtime{
       start: DateTime.now(),
       end: DateTime.add(DateTime.now(), 25200),
-      user: build(:user, email: "hello#{System.unique_integer()}", username: "hello#{System.unique_integer()}")
+      user: build(:user)
     }
   end
 
   def build(:user) do
     %Gotham.Accounts.User{
       email: "hello#{System.unique_integer()}",
-      username: "hello#{System.unique_integer()}"
+      username: "hello#{System.unique_integer()}",
+      role: "employee",
+      password_hash: Argon2.hash_pwd_salt("employee")
     }
   end
 
@@ -22,7 +24,7 @@ defmodule Gotham.Factory do
     %Gotham.Times.Clock{
       time: DateTime.now(),
       status: true,
-      user: build(:user, email: "hello#{System.unique_integer()}", username: "hello#{System.unique_integer()}")
+      user: build(:user)
     }
   end
 

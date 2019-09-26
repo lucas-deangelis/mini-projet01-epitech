@@ -6,9 +6,9 @@ defmodule Gotham.AccountsTest do
   describe "users" do
     alias Gotham.Accounts.User
 
-    @valid_attrs %{email: "test@yopmail.com", username: "some username"}
-    @update_attrs %{email: "testupdated@yopmail.com", username: "some updated username"}
-    @invalid_attrs %{email: nil, username: nil}
+    @valid_attrs %{email: "test@yopmail.com", username: "some username", role: "employee", password: "aaaaaa", password_confirmation: "aaaaaa"}
+    @update_attrs %{email: "testupdated@yopmail.com", username: "some updated username", role: "manager"}
+    @invalid_attrs %{email: nil, username: nil, role: nil, password: nil, password_confirmation: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
