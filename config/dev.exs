@@ -2,10 +2,10 @@ use Mix.Config
 
 # Configure your database
 config :miniprojet, Gotham.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "miniprojet_dev",
-  hostname: "localhost",
+  username: System.get_env("PGUSER"),
+  password: System.get_env("PGPASSWORD"),
+  database: System.get_env("PGDATABASE"),
+  hostname: System.get_env("PGHOSTNAME"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
@@ -16,7 +16,7 @@ config :miniprojet, Gotham.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :miniprojet, GothamWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: System.get_env("PGPORT")],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
