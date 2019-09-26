@@ -1,7 +1,7 @@
 setup:
   addons:
     - plan: heroku-postgresql
-      as: DATABASE
 build:
   docker:
-    frontend: docker-compose.yml
+    backend: Dockerfile
+    frontend: client/Dockerfile
