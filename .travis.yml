@@ -8,9 +8,8 @@ deploy:
     secure: "5a46fd74-c69b-4d23-9767-369b1fa482ec"
   app: gotham-time-manager
 
-# after_deploy: 
-  # - "cd server && PORT=4000 MIX_ENV=prod mix phx.server&"
-  # - "cd client && npm run serve"
+after_deploy: 
+  - docker run --name web -d nginx backend
 
 script:
   - docker-compose build
