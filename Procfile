@@ -1,1 +1,1 @@
-web: bin/start-nginx-solo
+web: bin/start-nginx bundle exec cd server && PORT=4000 MIX_ENV=prod mix phx.server
