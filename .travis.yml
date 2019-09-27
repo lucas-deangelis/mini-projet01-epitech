@@ -2,9 +2,11 @@ sudo: required
 services:
   - docker
 
-addons:
-  hosts:
-  - gotham-time-manager.herokuapp.com
+deploy:
+  provider: heroku
+  api_key:
+    secure: "5a46fd74-c69b-4d23-9767-369b1fa482ec"
+  app: gotham-time-manager
 
 script:
   - docker-compose build
