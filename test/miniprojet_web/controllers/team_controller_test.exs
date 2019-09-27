@@ -3,6 +3,7 @@ defmodule GothamWeb.TeamControllerTest do
 
   alias Gotham.Accounts
   alias Gotham.Accounts.Team
+  alias GothamWeb.Router
 
   @create_attrs %{
     name: "some name"
@@ -23,17 +24,17 @@ defmodule GothamWeb.TeamControllerTest do
 
   describe "index" do
     test "lists all teams", %{conn: conn} do
-      conn = get(conn, Routes.team_path(conn, :index))
+      conn = get(conn, Router.Helpers.team_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
     end
   end
 
   describe "create team" do
     test "renders team when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.team_path(conn, :create), team: @create_attrs)
+      conn = post(conn, Router.Helpers.team_path(conn, :create), team: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.team_path(conn, :show, id))
+      conn = get(conn, Router.Helpers.team_path(conn, :show, id))
 
       assert %{
                "id" => id,
@@ -42,7 +43,7 @@ defmodule GothamWeb.TeamControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.team_path(conn, :create), team: @invalid_attrs)
+      conn = post(conn, Router.Helpers.team_path(conn, :create), team: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -51,10 +52,10 @@ defmodule GothamWeb.TeamControllerTest do
     setup [:create_team]
 
     test "renders team when data is valid", %{conn: conn, team: %Team{id: id} = team} do
-      conn = put(conn, Routes.team_path(conn, :update, team), team: @update_attrs)
+      conn = put(conn, Router.Helpers.team_path(conn, :update, team), team: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.team_path(conn, :show, id))
+      conn = get(conn, Router.Helpers.team_path(conn, :show, id))
 
       assert %{
                "id" => id,
@@ -63,7 +64,7 @@ defmodule GothamWeb.TeamControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, team: team} do
-      conn = put(conn, Routes.team_path(conn, :update, team), team: @invalid_attrs)
+      conn = put(conn, Router.Helpers.team_path(conn, :update, team), team: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -72,7 +73,7 @@ defmodule GothamWeb.TeamControllerTest do
     setup [:create_team]
 
     test "deletes chosen team", %{conn: conn, team: team} do
-      conn = delete(conn, Routes.team_path(conn, :delete, team))
+      conn = delete(conn, Router.Helpers.team_path(conn, :delete, team))
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->
