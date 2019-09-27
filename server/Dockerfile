@@ -18,15 +18,6 @@ RUN mix deps.get --only prod
 # Getting rebar3
 RUN mix local.rebar --force
 
-# Compile the project
-RUN MIX_ENV=prod mix compile
-
-
-RUN npm run deploy --prefix ./assets
-RUN mix phx.digest
-
-RUN PORT=4000 MIX_ENV=prod mix phx.server
-
 EXPOSE 4000
 
 # CMD ["chmod", "+x", "/app/entrypoint.sh"]
