@@ -3,8 +3,8 @@ services:
   - docker
 
 env:
-  COMPOSE_VERSION: 1.4.1
+  COMPOSE_VERSION: "1.4.1"
 
 script:
   - docker-compose build
-  - docker-compose run frontend
+  - docker-compose run nginx
