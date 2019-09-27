@@ -1,11 +1,11 @@
 # The directory Mix will write compiled artifacts to.
-/_build/
+/server/_build/
 
 # If you run "mix test --cover", coverage assets end up here.
-/cover/
+/server/cover/
 
 # The directory Mix downloads your dependencies sources to.
-/deps/
+/server/deps/
 
 # Where 3rd-party dependencies like ExDoc output generated docs.
 /doc/
@@ -25,8 +25,8 @@ miniprojet-*.tar
 # Since we are building assets from assets/,
 # we ignore priv/static. You may want to comment
 # this depending on your deployment strategy.
-/priv/static/
-/priv/repo/structure.sql
+/server/priv/static/
+/server/priv/repo/structure.sql
 
 # For Mac only
 .DS_STORE
