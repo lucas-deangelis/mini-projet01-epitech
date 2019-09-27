@@ -8,5 +8,7 @@ deploy:
     secure: "5a46fd74-c69b-4d23-9767-369b1fa482ec"
   app: gotham-time-manager
 
+after_deploy: "cd server && mix ecto.setup"
+
 script:
   - docker-compose build
