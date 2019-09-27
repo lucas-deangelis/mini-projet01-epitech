@@ -1,0 +1,10 @@
+{
+  "swagger": "2.0",
+  "paths": {},
+  "info": {
+    "version": "1.0",
+    "title": "Gotham - A Time Manager"
+  },
+  "host": "localhost:4000",
+  "definitions": {}
+}

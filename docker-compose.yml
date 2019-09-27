@@ -8,52 +8,65 @@ services:
     # The build parameters for this container.
     build:
       # Here we define that it should build from the current directory
-      context: .
+      context: ./server
+      dockerfile: Dockerfile
     # Name the container
     container_name: backend
-    image: bloodbee/gotham-timemanager:backend 
-    environment:
-      # Variables to connect to our Postgres server
-      PGUSER: postgres
-      PGPASSWORD: postgres
-      PGDATABASE: miniprojet_dev
-      PGPORT: 5432
-      # Hostname of our Postgres container
-      PGHOST: db
+    # image: bloodbee/gotham-timemanager:backend 
+    # environment:
+    #   # Variables to connect to our Postgres server
+    #   PGUSER: postgres
+    #   PGPASSWORD: postgres
+    #   PGDATABASE: miniprojet_dev
+    #   PGPORT: 5432
+    #   # Hostname of our Postgres container
+    #   PGHOST: db
     ports:
       # Mapping the port to make the Phoenix app accessible outside of the container
       - "4000:4000"
-    depends_on:
-      # The db container needs to be started before we start this container
-      - db
+    networks:
+      - gotham
   # Our client container
   frontend:
     build:
       context: ./client
+      dockerfile: Dockerfile
     # Name the container
     container_name: frontend
-    image: bloodbee/gotham-timemanager:frontend
+    # image: bloodbee/gotham-timemanager:frontend
     ports: 
       - "8080:8080"
-    depends_on:
-      - backend
-  # Our database container
-  db:
-    # We use the predefined Postgres image
-    image: postgres:9.6
-    # Name the container
-    container_name: db
-    image: bloodbee/gotham-timemanager:db
-    environment:
-      # Set user/password for Postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      # Set a path where Postgres should store the data
-      PGDATA: /var/lib/postgresql/data/pgdata
-    restart: always
+    networks:
+      - gotham
+  # Our Nginx webserver
+  nginx: 
+    image: nginx:latest
+    container_name: nginx
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./nginx/conf.d:/etc/nginx/conf.d/
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - gotham
+  # # Our database container
+  # db:
+  #   # We use the predefined Postgres image
+  #   image: postgres:9.6
+  #   # Name the container
+  #   container_name: db
+  #   image: bloodbee/gotham-timemanager:db
+  #   environment:
+  #     # Set user/password for Postgres
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     # Set a path where Postgres should store the data
+  #     PGDATA: /var/lib/postgresql/data/pgdata
+  #   restart: always
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
   
-# Define the volumes
-volumes:
-  pgdata:
+#Docker Networks
+networks:
+  gotham:
+    driver: bridge
