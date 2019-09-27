@@ -5,15 +5,9 @@ defmodule GothamWeb.UserControllerTest do
   alias Gotham.Accounts.User
   alias GothamWeb.Router
 
-  @create_attrs %{
-    email: "some email",
-    username: "some username"
-  }
-  @update_attrs %{
-    email: "some updated email",
-    username: "some updated username"
-  }
-  @invalid_attrs %{email: nil, username: nil}
+  @create_attrs %{email: "test@yopmail.com", username: "some username", role: "manager", password: "aaaaaa", password_confirmation: "aaaaaa"}
+  @update_attrs %{email: "testupdated@yopmail.com", username: "some updated username", role: "employee"}
+  @invalid_attrs %{email: nil, username: nil, role: nil, password: nil, password_confirmation: nil}
 
   def fixture(:user) do
     {:ok, user} = Accounts.create_user(@create_attrs)
@@ -22,6 +16,8 @@ defmodule GothamWeb.UserControllerTest do
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
+
+    # add authentification jwt to conn
   end
 
   # describe "index" do
