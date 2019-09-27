@@ -5,7 +5,7 @@
       <div id="main-content">
         <div id="teams" class="div-content table-content">
             <div class="sub sub-header">
-                <span><h2>Teams</h2></span>
+                <span><h2>Teams</h2> <b-button>Test</b-button> </span>
             </div>
             <div class="sub sub-content">
 
@@ -19,6 +19,15 @@
                             <b-button size="sm" @click="row.toggleDetails" class="mr-2">
                               {{ row.detailsShowing ? 'Hide' : 'Show'}} members
                             </b-button>
+                        </template>
+
+                        <template v-slot:cell(action)="row"> 
+                          <b-button variant="success" size="sm">
+                            <i class="fas fa-pen"></i>
+                          </b-button>
+                          <b-button variant="danger" size="sm" @click="teamDelete(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                          </b-button>
                         </template>
 
                         <template v-slot:row-details="row">
@@ -78,13 +87,13 @@ export default {
                 { key: 'id', sortable: true },
                 { key: 'name', sortable: true },
                 { key: 'show_details', sortable: false},
-                { key: 'actions', sortable: false}
+                { key: 'action', sortable: false}
             ],
             deleteModal: {
               id: 'delete-modal',
               title: 'Delete an member from the team',
               content: '',
-              teamId: '',
+              teamId: null,
               userId : null
             }
         }
@@ -117,6 +126,18 @@ export default {
       this.deleteModal.teamId = rowTeam.id
       this.deleteModal.userId = rowUser.id
       this.$root.$emit('bv::show::modal', this.deleteModal.id, button)
+    },
+    resetDeleteModal() {
+      this.deleteModal.content = ''
+      this.deleteModal.userId = null
+    },
+    onSubmitDelete(evt) {
+        /*evt.preventDefault()
+        this.$store.dispatch('user/deleteUser', { id: this.deleteModal.userId })
+
+        // close the modal
+        this.resetDeleteModal()
+        this.$root.$emit('bv::hide::modal', this.deleteModal.id)*/
     }
   }
 
