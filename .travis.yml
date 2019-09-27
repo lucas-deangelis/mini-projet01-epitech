@@ -2,9 +2,9 @@ sudo: required
 services:
   - docker
 
-env:
-  COMPOSE_VERSION: "1.4.1"
+addons:
+  hosts:
+  - gotham-time-manager.herokuapp.com
 
 script:
   - docker-compose build
-  - docker-compose run nginx

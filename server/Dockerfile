@@ -21,6 +21,10 @@ RUN mix local.rebar --force
 # Compile the project
 RUN mix do compile
 
-CMD ["chmod", "+x", "/app/entrypoint.sh"]
+RUN mix ecto.setup
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+# EXPOSE 4000
+
+# CMD ["chmod", "+x", "/app/entrypoint.sh"]
+
+# ENTRYPOINT ["/app/entrypoint.sh"]
