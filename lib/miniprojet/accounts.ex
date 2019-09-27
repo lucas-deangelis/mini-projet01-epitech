@@ -260,4 +260,12 @@ defmodule Gotham.Accounts do
   def change_team(%Team{} = team) do
     Team.changeset(team, %{})
   end
+  
+  def get_team_members(id) do
+    query = from t in Team,
+      where: t.id == ^id,
+      preload: [:users]
+    Repo.all(query)
+  end
+
 end

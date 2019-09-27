@@ -3,6 +3,7 @@ defmodule GothamWeb.TeamController do
 
   alias Gotham.Accounts
   alias Gotham.Accounts.Team
+  alias Gotham.Accounts.User
 
   action_fallback GothamWeb.FallbackController
 
@@ -48,5 +49,10 @@ defmodule GothamWeb.TeamController do
     with {:ok, %Team{}} <- Accounts.delete_team(team) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  def show_team_members(conn, %{"id" => teamId}) do
+    users = Accounts.get_team_members(teamId)
+    render(conn, "members.json", users: users)
   end
 end

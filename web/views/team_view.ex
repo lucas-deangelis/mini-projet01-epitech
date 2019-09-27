@@ -17,4 +17,9 @@ defmodule GothamWeb.TeamView do
       users: team.users
     }
   end
+
+  def render("members.json", %{users: users}) do
+    %{data: render_many(users, TeamView, "team.json")}
+  end
+
 end

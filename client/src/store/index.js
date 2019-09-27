@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import user from './modules/user'
+import team from './modules/team'
 import workingtime from './modules/workingtime'
 import clock from './modules/clock'
 
@@ -31,6 +32,8 @@ const listeners = store => {
         store.dispatch('clock/get', action.payload )
         store.dispatch('getWorkingTimes', { userId: action.payload, start: '', end: '' })
         store.dispatch('user/getAllUsers')
+        store.dispatch('team/getManagerTeams', action.payload)
+        store.dispatch('team/getTeamMembers', action.payload)
       }
 
       if (action.type == "user/updateUser") {
@@ -47,6 +50,7 @@ const listeners = store => {
 export default new Vuex.Store({
   modules: {
     user,
+    team,
     workingtime,
     clock
   },

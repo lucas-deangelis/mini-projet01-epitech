@@ -23,7 +23,6 @@
                 <a class="nav-link text-danger" href="#" v-b-modal.modal-delete>Delete account</a>
               </li>
             </div>
-          </b-navbar-nav>
 
         </b-collapse>
         <!-- Right aligned nav items -->

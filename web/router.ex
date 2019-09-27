@@ -43,8 +43,10 @@ defmodule GothamWeb.Router do
     # Teams routes
     scope "/teams" do
       get "/", TeamController, :index
+      get "/all", TeamController, :index
       put "/:id", TeamController, :update
       delete "/:id", TeamController, :delete
+      get "/:id/getMembers", TeamController, :show_team_members
     end
 
     # Working Time routes
