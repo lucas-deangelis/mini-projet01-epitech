@@ -13,15 +13,21 @@ WORKDIR /app
 RUN mix local.hex --force
 
 # Get dependancies
-RUN mix deps.get
+RUN mix deps.get --only prod
 
 # Getting rebar3
 RUN mix local.rebar --force
 
 # Compile the project
-RUN mix do compile
+RUN MIX_ENV=prod mix compile
 
-# EXPOSE 4000
+
+RUN npm run deploy --prefix ./assets
+RUN mix phx.digest
+
+RUN PORT=4000 MIX_ENV=prod mix phx.server
+
+EXPOSE 4000
 
 # CMD ["chmod", "+x", "/app/entrypoint.sh"]
 
