@@ -12,8 +12,11 @@ cache:
 #   keyfile: gotham-254312-cd30ddd476eb.json
 #   project: gotham-254312
 #   skip_cleanup: true
-# script:
-#   - docker-compose build
+script:
+  - docker-compose build
+  - docker tag db gcr.io/gotham-254312/db:latest
+  - docker tag backend gcr.io/gotham-254312/backend:latest
+  - docker tag frontend gcr.io/gotham-254312/frontend:latest
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_fbda79cd40f4_key -iv $encrypted_fbda79cd40f4_iv

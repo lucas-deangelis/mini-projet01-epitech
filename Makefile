@@ -16,10 +16,6 @@ gconfig:
 		--project $(PROJECT_ID)
 	@gcloud auth configure-docker
 
-build:
-	@docker build -t gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION) ./client
-	@docker build -t gcr.io/$(PROJECT_ID)/frontend:$(IMAGE_VERSION) ./server
-
 run:
 	@docker run -p 4000:4000 gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION)
 	@docker run -p 8080:8080 gcr.io/$(PROJECT_ID)/frontend:$(IMAGE_VERSION)

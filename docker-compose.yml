@@ -36,17 +36,6 @@ services:
       - gotham
     depends_on:
       - backend
-  # Our Nginx webserver
-  nginx: 
-    image: nginx:latest
-    container_name: nginx
-    volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
-    ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - gotham
   # Our database container
   db:
     # We use the predefined Postgres image
