@@ -1,12 +1,26 @@
 sudo: required
 services:
-- docker
-deploy:
-  provider: gae
-  keyfile: gotham-254312-cd30ddd476eb.json
-  project: gotham-254312
-script:
-- docker-compose build
+  - docker
+cache: 
+  directories:
+    - "$HOME/google-cloud-sdk/"
+# deploy:
+#   provider: gae
+#   keyfile: gotham-254312-cd30ddd476eb.json
+#   project: gotham-254312
+#   skip_cleanup: true
+# script:
+#   - docker-compose build
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_fbda79cd40f4_key -iv $encrypted_fbda79cd40f4_iv
   -in gotham-254312-cd30ddd476eb.json.enc -out gotham-254312-cd30ddd476eb.json -d
+
+env:
+  global:
+  # Do not prompt for user input when using any SDK methods.
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
+# Deploy web version to Google Kubernetes Engine
+after_success:
+- if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./deploy.sh; fi
