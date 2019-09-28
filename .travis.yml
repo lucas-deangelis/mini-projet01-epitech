@@ -15,16 +15,16 @@ cache:
 script:
   - docker-compose build
   - docker images --all
-  # - docker tag mini-projet01-epitech_backend:latest gcr.io/gotham-254312/backend:latest
+  - docker tag gotham_backend:latest gcr.io/gotham-254312/backend:latest
   # - docker tag postgres:9.6 gcr.io/gotham-254312/db:latest
-  # - docker tag mini-projet01-epitech_frontend:latest gcr.io/gotham-254312/frontend:latest
-  # - docker push gcr.io/gotham-254312/frontend:latest
-  # - docker push gcr.io/gotham-254312/frontend:latest
+  - docker tag gotham_frontend:latest gcr.io/gotham-254312/frontend:latest
+  - docker push gcr.io/gotham-254312/backend:latest
+  - docker push gcr.io/gotham-254312/frontend:latest
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_fbda79cd40f4_key -iv $encrypted_fbda79cd40f4_iv
   -in gotham-254312-cd30ddd476eb.json.enc -out gotham-254312-cd30ddd476eb.json -d
 
 # Deploy web version to Google Kubernetes Engine
-# after_success:
-# - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./deploy.sh; fi
+after_success:
+- if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./deploy.sh; fi
