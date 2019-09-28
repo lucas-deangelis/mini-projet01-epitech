@@ -1,9 +1,5 @@
 sudo: required
 
-branches:
-  only:
-  - master
-
 services:
   - docker
 
@@ -20,8 +16,8 @@ cache:
 #   - docker-compose build
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_fbda79cd40f4_key -iv $encrypted_fbda79cd40f4_iv
-    -in gotham-254312-cd30ddd476eb.json.enc -out gotham-254312-cd30ddd476eb.json -d
+- openssl aes-256-cbc -K $encrypted_fbda79cd40f4_key -iv $encrypted_fbda79cd40f4_iv
+  -in gotham-254312-cd30ddd476eb.json.enc -out gotham-254312-cd30ddd476eb.json -d
 
 env:
   global:
@@ -30,4 +26,4 @@ env:
 
 # Deploy web version to Google Kubernetes Engine
 after_success:
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./deploy.sh; fi
+- if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./deploy.sh; fi
