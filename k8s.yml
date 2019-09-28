@@ -11,7 +11,7 @@ spec:
         app: Gotham
     spec:
       containers:
-      - name: gotham_frontend
+      - name: frontend
         image: gcr.io/gotham-254312/frontend:latest
         imagePullPolicy: Always
         ports:
@@ -29,7 +29,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gotham_frontend
+  name: frontend
 spec:
   ports:
   - port: 80
@@ -51,7 +51,7 @@ spec:
         app: Gotham
     spec:
       containers:
-      - name: gotham_backend
+      - name: backend
         image: gcr.io/gotham-254312/backend:latest
         imagePullPolicy: Always
         ports:
@@ -60,7 +60,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gotham_backend
+  name: backend
 spec:
   ports:
   - port: 4000
@@ -81,7 +81,7 @@ metadata:
 spec:
   tls:
   - hosts:
-    - gotham-254312.appspot
+    - gotham-254312.appspot.com
     secretName: gotham-ingress-tls
   rules:
   - host: gotham-254312

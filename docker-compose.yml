@@ -37,20 +37,20 @@ services:
     depends_on:
       - backend
   # Our database container
-  db:
-    # We use the predefined Postgres image
-    image: postgres:9.6
-    # Name the container
-    container_name: db
-    env_file:
-      - docker.env
-    restart: always
-    volumes:
-      - "./volumes/postgres:/var/lib/postgresql/data"
-    ports:
-    - "5432:5432"
-    networks:
-      - gotham
+  # db:
+  #   # We use the predefined Postgres image
+  #   image: postgres:9.6
+  #   # Name the container
+  #   container_name: db
+  #   env_file:
+  #     - docker.env
+  #   restart: always
+  #   volumes:
+  #     - "./volumes/postgres:/var/lib/postgresql/data"
+  #   ports:
+  #   - "5432:5432"
+  #   networks:
+  #     - gotham
   
 #Docker Networks
 networks:

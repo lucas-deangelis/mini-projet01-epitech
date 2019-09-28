@@ -18,12 +18,11 @@ gconfig:
 
 run:
 	@docker run -p 4000:4000 gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION)
-	@docker run -p 8080:8080 gcr.io/$(PROJECT_ID)/frontend:$(IMAGE_VERSION)
+	@docker run -p 80:8080 gcr.io/$(PROJECT_ID)/frontend:$(IMAGE_VERSION)
 
 push:
 	@docker push gcr.io/$(PROJECT_ID)/frontend:$(IMAGE_VERSION)
 	@docker push gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION)
-	@docker push gcr.io/$(PROJECT_ID)/db:$(IMAGE_VERSION)
 
 deploy: gconfig
 	@kubectl apply -f k8s.yaml
