@@ -11,8 +11,8 @@ spec:
         app: Gotham
     spec:
       containers:
-      - name: frontend
-        image: gcr.io/gotham-254312/frontend
+      - name: gotham_frontend
+        image: gcr.io/gotham-254312/frontend:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -29,7 +29,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: gotham_frontend
 spec:
   ports:
   - port: 80
@@ -51,8 +51,8 @@ spec:
         app: Gotham
     spec:
       containers:
-      - name: backend
-        image: gcr.io/gotham-254312/backend
+      - name: gotham_backend
+        image: gcr.io/gotham-254312/backend:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 4000
@@ -60,7 +60,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: gotham_backend
 spec:
   ports:
   - port: 4000

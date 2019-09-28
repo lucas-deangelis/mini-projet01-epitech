@@ -14,9 +14,9 @@ cache:
 #   skip_cleanup: true
 script:
   - docker-compose build
-  - docker tag db gcr.io/gotham-254312/db:latest
-  - docker tag backend gcr.io/gotham-254312/backend:latest
-  - docker tag frontend gcr.io/gotham-254312/frontend:latest
+  - docker tag mini-projet01-epitech_backend:latest gcr.io/gotham-254312/backend:latest
+  - docker tag postgres:9.6 gcr.io/gotham-254312/db:latest
+  - docker tag mini-projet01-epitech_frontend:latest gcr.io/gotham-254312/frontend:latest
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_fbda79cd40f4_key -iv $encrypted_fbda79cd40f4_iv

@@ -23,6 +23,7 @@ run:
 push:
 	@docker push gcr.io/$(PROJECT_ID)/frontend:$(IMAGE_VERSION)
 	@docker push gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION)
+	@docker push gcr.io/$(PROJECT_ID)/db:$(IMAGE_VERSION)
 
 deploy: gconfig
 	@kubectl apply -f k8s.yaml
