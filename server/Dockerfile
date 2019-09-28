@@ -50,6 +50,7 @@ fi
 
 RUN \
   mkdir -p /opt/built && \
+  mix distillery.init && \
   mix distillery.release --verbose && \
   cp _build/${MIX_ENV}/rel/${APP_NAME}/releases/${APP_VSN}/${APP_NAME}.tar.gz /opt/built && \
   cd /opt/built && \
