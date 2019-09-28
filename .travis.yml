@@ -1,15 +1,15 @@
 sudo: required
 services:
   - docker
-
+  
 deploy:
-  provider: heroku
-  api_key:
-    secure: "5a46fd74-c69b-4d23-9767-369b1fa482ec"
-  app: gotham-time-manager
-
-after_deploy: 
-  - docker run --name web -d nginx backend
+  provider: gae
+  keyfile: gotham-254312-cd30ddd476eb.json
+  project: gotham-254312
 
 script:
   - docker-compose build
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_fbda79cd40f4_key -iv $encrypted_fbda79cd40f4_iv
+  -in gotham-254312-cd30ddd476eb.json.enc -out gotham-254312-cd30ddd476eb.json -d

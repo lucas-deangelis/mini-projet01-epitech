@@ -12,11 +12,16 @@ services:
       dockerfile: Dockerfile
     # Name the container
     container_name: backend
+    # image: bloodbee/gotham-timemanager:backend 
+    env_file:
+      - docker.env
     ports:
       # Mapping the port to make the Phoenix app accessible outside of the container
       - "4000:4000"
     networks:
       - gotham
+    depends_on:
+      - db
   # Our client container
   frontend:
     build:
@@ -26,18 +31,35 @@ services:
     container_name: frontend
     # image: bloodbee/gotham-timemanager:frontend
     ports: 
-      - "8080:8080"
+      - "80:8080"
     networks:
       - gotham
-  # Our Nginx webserver
-  nginx: 
-    image: nginx:latest
-    container_name: nginx
+    depends_on:
+      - backend
+  # # Our Nginx webserver
+  # nginx: 
+  #   image: nginx:latest
+  #   container_name: nginx
+  #   volumes:
+  #     - ./nginx/conf.d/:/etc/nginx/conf.d/
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   networks:
+  #     - gotham
+  # Our database container
+  db:
+    # We use the predefined Postgres image
+    image: postgres:9.6
+    # Name the container
+    container_name: db
+    env_file:
+      - docker.env
+    restart: always
     volumes:
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - "./volumes/postgres:/var/lib/postgresql/data"
     ports:
-      - "80:80"
-      - "443:443"
+    - "5432:5432"
     networks:
       - gotham
   

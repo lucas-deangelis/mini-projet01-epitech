@@ -10,17 +10,19 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :miniprojet, GothamWeb.Endpoint,
-  lod_from_system_env: true,
-  url: [scheme: "https", host: "gotham-time-manager", port: 80],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]],
-  cache_static_manifest: "priv/static/cache_manifest.json",
-  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
+  http: [port: "${PORT}"],
+  url: [host: "${HOST}", port: "${PORT}"],
+  secret_key_base: "${SECRET_KEY_BASE}",
+  server: true
 
 config :miniprojet, Gotham.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-  ssl: true
+  hostname: "${DB_HOSTNAME}",
+  username: "${DB_USERNAME}",
+  password: "${DB_PASSWORD}",
+  database: "${DB_NAME}",
+  pool_size: 20
+  # ssl: true
 
 
 # Do not print debug messages in production

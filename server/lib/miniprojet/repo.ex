@@ -5,11 +5,11 @@ defmodule Gotham.Repo do
 
   def init(config) do
     config = config
-      |> Keyword.put(:username, System.get_env("PGUSER"))
-      |> Keyword.put(:password, System.get_env("PGPASSWORD"))
-      |> Keyword.put(:database, System.get_env("PGDATABASE"))
-      |> Keyword.put(:hostname, System.get_env("PGHOST"))
-      |> Keyword.put(:port, System.get_env("PGPORT") |> String.to_integer)
+      |> Keyword.put(:username, System.get_env("DB_USERNAME"))
+      |> Keyword.put(:password, System.get_env("DB_PASSWORD"))
+      |> Keyword.put(:database, System.get_env("DB_NAME"))
+      |> Keyword.put(:hostname, System.get_env("DB_HOSTNAME"))
+      |> Keyword.put(:port, System.get_env("DB_PORT") |> String.to_integer)
     {:ok, config}
   end
 end
