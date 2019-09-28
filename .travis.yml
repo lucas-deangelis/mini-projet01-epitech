@@ -12,13 +12,13 @@ cache:
 #   keyfile: gotham-254312-cd30ddd476eb.json
 #   project: gotham-254312
 #   skip_cleanup: true
-# script:
-#   - docker-compose build
+script:
+  - docker images # fake docker cmd just to do something
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_fbda79cd40f4_key -iv $encrypted_fbda79cd40f4_iv
   -in gotham-254312-cd30ddd476eb.json.enc -out gotham-254312-cd30ddd476eb.json -d
 
 # Deploy web version to Google Kubernetes Engine
-after_success:
+before_script:
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./deploy.sh; fi
