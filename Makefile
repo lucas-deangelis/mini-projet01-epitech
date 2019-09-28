@@ -3,7 +3,7 @@ PROJECT_ID:=gotham-254312
 K8s_CLUSTER:=standard-cluster-1
 ZONE:=europe-west1-b
 
-IMAGE_VERSION=latest
+IMAGE_VERSION:=latest
 
 gauth:
 	@gcloud auth activate-service-account --key-file ${KEY_FILE}
@@ -15,6 +15,10 @@ gconfig:
 		--zone $(ZONE) \
 		--project $(PROJECT_ID)
 	@gcloud auth configure-docker
+
+build:
+	@docker build -t gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION) ./server
+	@docker build -t gcr.io/$(PROJECT_ID)/frontend:$(IMAGE_VERSION) ./client
 
 run:
 	@docker run -p 4000:4000 gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION)
