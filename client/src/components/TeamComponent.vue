@@ -4,8 +4,13 @@
     <transition appear name="fade">
       <div id="main-content">
         <div id="teams" class="div-content table-content">
-            <div class="sub sub-header">
-                <span><h2>Teams</h2> <b-button>Test</b-button> </span>
+            <div class="sub sub-header" id="main">
+                <span>
+                  <h2 class="d-inline-block">Teams</h2> 
+                  <b-button class="ml-5 mb-2" variant="success">
+                    <i class="fas fa-plus-square"></i>
+                  </b-button> 
+                </span>
             </div>
             <div class="sub sub-content">
 
@@ -16,16 +21,19 @@
 
                         <!-- Gère actions sur la ligne -->
                         <template v-slot:cell(show_details)="row">
-                            <b-button size="sm" @click="row.toggleDetails" class="mr-2">
+                            <b-button size="sm" @click="row.toggleDetails">
                               {{ row.detailsShowing ? 'Hide' : 'Show'}} members
                             </b-button>
                         </template>
 
                         <template v-slot:cell(action)="row"> 
-                          <b-button variant="success" size="sm">
+                          <b-button variant="success" size="sm" class="mr-1">
                             <i class="fas fa-pen"></i>
                           </b-button>
-                          <b-button variant="danger" size="sm" @click="teamDelete(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Delete">
+                          <b-button variant="success" size="sm" class="mr-5">
+                            <i class="fas fa-user-plus"></i>
+                          </b-button>
+                          <b-button variant="danger" size="sm" @click="teamDelete(row.item, row.index, $event.target)" v-b-tooltip.hover title="Delete">
                             <i class="fas fa-trash-alt"></i>
                           </b-button>
                         </template>
@@ -37,7 +45,7 @@
                               <b-col sm="3">Email : {{ user.email }}</b-col>
                               <b-col sm="3">Role : {{ user.role }}</b-col>
                               <b-col sm="3">
-                                <b-button variant="danger" size="sm" @click="userDelete(row.item, row.index, $event.target)" class="mr-2" v-b-tooltip.hover title="Delete">
+                                <b-button variant="danger" size="sm" @click="userDelete(row.item, row.index, $event.target)" v-b-tooltip.hover title="Delete">
                                   <i class="fas fa-trash-alt"></i>
                                 </b-button>
                               </b-col>
