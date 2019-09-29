@@ -49,8 +49,7 @@ metadata:
     ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
-    paths:
+    - http:
       - path: /
         backend:
           serviceName: frontend
