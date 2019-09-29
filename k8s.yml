@@ -43,13 +43,19 @@ metadata:
     app: gotham
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    # certmanager.k8s.io/issuer: "letsencrypt-prod"
-    # certmanager.k8s.io/acme-challenge-type: http01
-    # kubernetes.io/ingress.global-static-ip-name: gothamweb-ip
+    certmanager.k8s.io/issuer: "letsencrypt-prod"
+    certmanager.k8s.io/acme-challenge-type: http01
+    kubernetes.io/ingress.global-static-ip-name: gothamweb-ip
     ingress.kubernetes.io/rewrite-target: /
 spec:
+  tls:
+  - hosts:
+    - gothamweb-ip
+    secretName: default-token-8662q
   rules:
-    - http:
+  - host: gothamweb-ip
+    http:
+      paths:
       - path: /
         backend:
           serviceName: frontend
