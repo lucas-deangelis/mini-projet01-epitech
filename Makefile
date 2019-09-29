@@ -34,5 +34,4 @@ push:
 deploy: gconfig
 	@kubectl apply -f k8s.yml
 # https://github.com/kubernetes/kubernetes/issues/27081#issuecomment-238078103
-	@kubectl patch deployment backend-pod -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-	@kubectl patch deployment frontend-pod -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+	@kubectl patch deployment gothamweb-deployment -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
