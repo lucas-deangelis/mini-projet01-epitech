@@ -1,55 +1,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gothamweb-deployment
+  name: gothamdb-deployment
   labels:
     app: gotham
 spec:
   selector:
     matchLabels:
       app: gotham
-      tier: web
+      tier: db
   template:
     metadata:
       labels:
         app: gotham
-        tier: web
+        tier: db
     spec:
       containers:
-      - name: frontend
-        image: gcr.io/gotham-254312/frontend:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 80
-      - name: backend
-        image: gcr.io/gotham-254312/backend:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 4000
-        env:
-            - name: DB_HOST
-              value: 127.0.0.1:5432
-            # [START cloudsql_secrets]
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: cloudsql-db-credentials
-                  key: username
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: cloudsql-db-credentials
-                  key: password
-            - name: DB_NAME
-              value: gotham
-        readinessProbe:
-          httpGet:
-            path: /api
-            port: 80
+      # - name: frontend
+      #   image: gcr.io/gotham-254312/frontend:latest
+      #   imagePullPolicy: Always
+      #   ports:
+      #   - containerPort: 8080
+      #   readinessProbe:
+      #     httpGet:
+      #       path: /
+      #       port: 80
+      # - name: backend
+      #   image: gcr.io/gotham-254312/backend:latest
+      #   imagePullPolicy: Always
+      #   ports:
+      #   - containerPort: 4000
+      #   env:
+      #       - name: DB_HOST
+      #         value: 127.0.0.1:5432
+      #       # [START cloudsql_secrets]
+      #       - name: DB_USER
+      #         valueFrom:
+      #           secretKeyRef:
+      #             name: cloudsql-db-credentials
+      #             key: username
+      #       - name: DB_PASS
+      #         valueFrom:
+      #           secretKeyRef:
+      #             name: cloudsql-db-credentials
+      #             key: password
+      #       - name: DB_NAME
+      #         value: gotham
+      #   readinessProbe:
+      #     httpGet:
+      #       path: /api
+      #       port: 80
       - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.14
         command: ["/cloud_sql_proxy",
@@ -74,7 +74,80 @@ spec:
           secret:
             secretName: cloudsql-instance-credentials
       # [END volumes]
-      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: gotham
+    tier: web
+spec:
+  type: LoadBalancer
+  ports:
+    # the port that this service should serve on
+  - port: 80
+  selector:
+    app: gotham
+    tier: web
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: backend
+spec:
+  # this replicas value is default
+  # modify it according to your case
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: gotham
+        tier: web
+    spec:
+      containers:
+      - name: backend
+        image: gcr.io/gotham-254312/backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app: gotham
+    tier: web
+spec:
+  type: LoadBalancer
+  ports:
+    # the port that this service should serve on
+  - port: 80
+  selector:
+    app: gotham
+    tier: web
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: frontend
+spec:
+  # this replicas value is default
+  # modify it according to your case
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: gotham
+        tier: web
+    spec:
+      containers:
+      - name: frontend
+        image: gcr.io/gotham-254312/frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -90,7 +163,7 @@ metadata:
     ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
+  -  http:
       paths:
       - path: /
         backend:
