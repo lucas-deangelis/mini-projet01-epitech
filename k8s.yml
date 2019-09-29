@@ -71,7 +71,7 @@ spec:
   tls:
   - hosts:
     - gotham-254312.appspot.com
-    secretName: gotham-ingress-tls
+    secretName: default-token-8662q
   rules:
   - host: gotham-254312.appspot.com
     http:
