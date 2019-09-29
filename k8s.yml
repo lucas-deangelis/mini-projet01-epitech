@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta1
+apiVersion: v1
 kind: Pod
 metadata:
   name: frontend-pod
@@ -28,7 +28,7 @@ spec:
   selector:
     app: gotham-project
 ---
-apiVersion: apps/v1beta1
+apiVersion: v1
 kind: Pod
 metadata:
   name: backend-pod
