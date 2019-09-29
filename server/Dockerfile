@@ -37,8 +37,9 @@ COPY . .
 
 RUN mix do deps.get, deps.compile, compile
 
+EXPOSE 4000
 
-RUN mix phx.server&
+CMD mix phx.server&
 
 # # This step builds assets for the Phoenix app (if there is one)
 # # If you aren't building a Phoenix app, pass `--build-arg SKIP_PHOENIX=true`
