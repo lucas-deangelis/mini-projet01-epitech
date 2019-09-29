@@ -21,4 +21,5 @@ before_install:
 
 # Deploy web version to Google Kubernetes Engine
 after_success:
-- if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./deploy.sh; fi
+- chmod + x deploy.sh
+- travis_wait ./deploy.sh
