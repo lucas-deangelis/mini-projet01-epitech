@@ -12,6 +12,6 @@ source $HOME/travis/google-cloud-sdk/path.bash.inc
 
 # Make sure kubectl is updated to latest version
 gcloud --quiet components update
-gcloud --quiet components update kubectl
+gcloud --quiet components install kubectl
 
 make gauth build push deploy
