@@ -7,8 +7,8 @@ IMAGE_VERSION:=latest
 
 gauth:
 	@gcloud auth activate-service-account --key-file ${KEY_FILE}
-	# @gcloud auth configure-docker
 	@cat ${KEY_FILE} | docker login -u _json_key --password-stdin https://gcr.io
+	@gcloud auth configure-docker
 
 
 gconfig:
@@ -17,7 +17,6 @@ gconfig:
 		get-credentials $(K8s_CLUSTER) \
 		--zone $(ZONE) \
 		--project $(PROJECT_ID)
-	@gcloud auth configure-docker
 
 build:
 	@docker build -t gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION) ./server

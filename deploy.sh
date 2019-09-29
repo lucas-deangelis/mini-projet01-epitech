@@ -11,6 +11,7 @@ fi
 source $HOME/travis/google-cloud-sdk/path.bash.inc
 
 # Make sure kubectl is updated to latest version
+gcloud init --disable-prompts --install-dir=$HOME
 gcloud --quiet components update
 gcloud --quiet components install kubectl
 
