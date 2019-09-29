@@ -7,8 +7,9 @@ IMAGE_VERSION:=latest
 
 gauth:
 	@gcloud auth activate-service-account --key-file ${KEY_FILE}
+	@gcloud init
 	@cat ${KEY_FILE} | docker login -u _json_key --password-stdin https://gcr.io
-	@gcloud auth configure-docker
+	@gcloud beta auth configure-docker
 
 
 gconfig:
