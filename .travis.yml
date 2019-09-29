@@ -1,11 +1,16 @@
 sudo: required
 
+language: ruby
+
 services:
   - docker
 
 cache: 
   directories:
     - "$HOME/google-cloud-sdk/"
+
+script: 
+  - docker images --all
 
 deploy:
   provider: script
