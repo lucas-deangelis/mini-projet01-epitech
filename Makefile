@@ -8,7 +8,7 @@ IMAGE_VERSION:=latest
 gauth:
 	@gcloud auth activate-service-account --key-file ${KEY_FILE}
 	# @gcloud auth configure-docker
-	@docker login -u _json_key -p "$(cat gotham-254312-cd30ddd476eb.json)" https://gcr.io
+	@cat ${KEY_FILE} | docker login -u _json_key --password-stdin https://gcr.io
 
 
 gconfig:
