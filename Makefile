@@ -19,6 +19,7 @@ gconfig:
 build:
 	@docker build -t gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION) ./server
 	@docker build -t gcr.io/$(PROJECT_ID)/frontend:$(IMAGE_VERSION) ./client
+	@docker images --all
 
 run:
 	@docker run -p 4000:4000 gcr.io/$(PROJECT_ID)/backend:$(IMAGE_VERSION)
