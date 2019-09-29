@@ -30,10 +30,51 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 4000
+        env:
+            - name: DB_HOST
+              value: 127.0.0.1:5432
+            # [START cloudsql_secrets]
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: password
+            - name: DB_NAME
+              value: gotham
         readinessProbe:
           httpGet:
             path: /api
             port: 80
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.14
+        command: ["/cloud_sql_proxy",
+                  "-instances=gotham-254312:europe-west1:gotham-db-instance=tcp:5432",
+                  # If running on a VPC, the Cloud SQL proxy can connect via Private IP. See:
+                  # https://cloud.google.com/sql/docs/mysql/private-ip for more info.
+                  # "-ip_address_types=PRIVATE",
+                  "-credential_file=gotham-254312-cd30ddd476eb.json"]
+        # [START cloudsql_security_context]
+        securityContext:
+          runAsUser: 2  # non-root user
+          allowPrivilegeEscalation: false
+        # [END cloudsql_security_context]
+        volumeMounts:
+          - name: cloudsql-instance
+            mountPath: /volumes/database
+            readOnly: true
+      # [END proxy_container]
+      # [START volumes]
+      volumes:
+        - name: cloudsql-instance
+          secret:
+            secretName: cloudsql-instance-credentials
+      # [END volumes]
+      
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -48,13 +89,8 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: cluster-ip
     ingress.kubernetes.io/rewrite-target: /
 spec:
-  tls:
-  - hosts:
-    - 23.251.141.98
-    secretName: default-token-8662q
   rules:
-  - host: 23.251.141.98
-    http:
+  - http:
       paths:
       - path: /
         backend:
