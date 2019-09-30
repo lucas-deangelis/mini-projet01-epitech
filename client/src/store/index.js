@@ -36,7 +36,7 @@ const listeners = store => {
         store.dispatch('team/getManagerTeams', action.payload)
       }
 
-      if (action.type == "user/updateUser") {
+      if (action.type == "user/updateUser" || action.type == "user/updateRoleUser") {
         store.dispatch('user/getAllUsers')
       }
       

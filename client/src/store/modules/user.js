@@ -128,6 +128,33 @@ const actions = {
     })
   },
 
+  updateRoleUser({ commit, state }, user) {
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/users/' + user.id;
+
+      let params = {}
+      for (const key in user) {
+        if (user.hasOwnProperty(key)) {
+          params[key] = user[key];
+        }
+      }
+
+      window.axios({
+        method: 'put',
+        url: url,
+        data: params,
+        headers: { Authorization: "Bearer " + state.userStatus.jwt }
+      })
+      .then(response => {
+          resolve()
+      })
+      .catch(error => {
+          console.error(error)
+          reject(error)
+      })
+    })
+  },
+
   deleteUser({ commit, state }, user) {
     return new Promise((resolve, reject) => {
       let url = window.apiUrl + '/api/users/' + user.id;

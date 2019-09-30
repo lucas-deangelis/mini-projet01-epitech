@@ -1,105 +1,103 @@
 <!-- Template -->
 
 <template>
-    <transition appear name="fade">
-      <div id="main-content">
-        <div id="teams" class="div-content table-content">
-            <div class="sub sub-header" id="main">
-                <span>
-                  <h2 class="d-inline-block">Teams</h2> 
-                  <b-button class="ml-5 mb-2" v-b-modal.modal-create-team v-b-tooltip.hover title="Create a team" variant="success">
-                    <i class="fas fa-plus-square"></i>
-                  </b-button> 
-                </span>
-            </div>
-
-            <div class="sub sub-content">
-
-                <!-- Tableau des teams -->
-                <div class="sub sub-content">
-                    <b-table responsive sticky-header head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-                      sort-icon-right :items="teams" :fields="teamsFields" show-empty id="teams-table">
-
-                        <!-- Gère actions sur la ligne -->
-                        <template v-slot:cell(show_details)="row">
-                            <b-button size="sm" @click="row.toggleDetails">
-                              {{ row.detailsShowing ? 'Hide' : 'Show'}} members
-                            </b-button>
-                        </template>
-
-                        <template v-slot:cell(action)="row"> 
-                          <!-- <b-button variant="success" size="sm" class="mr-1">
-                            <i class="fas fa-pen"></i>
-                          </b-button> -->
-                          <b-button variant="success" size="sm" class="mr-2" @click="addUserInTeam(row.index, row.item, user, $event.target)" v-b-tooltip.hover title="Add an user">
-                            <i class="fas fa-user-plus"></i>
-                          </b-button>
-                          <!-- <b-button variant="danger" size="sm" @click="teamDelete(row.item, row.index, $event.target)" v-b-tooltip.hover title="Delete ">
-                            <i class="fas fa-trash-alt"></i>
-                          </b-button> -->
-                        </template>
-
-                        <template v-slot:row-details="row">
-                          <b-card v-for="user in row.item.users" :key="user.id">
-                            <b-row class="mb-2">
-                              <b-col sm="3">Name : {{user.username}} </b-col>
-                              <b-col sm="3">Email : {{ user.email }}</b-col>
-                              <b-col sm="3">Role : {{ user.role }}</b-col>
-                              <b-col sm="3">
-                                <b-button variant="danger" size="sm" @click="deleteUserFromTeam(row.index, row.item, user, $event.target)" v-b-tooltip.hover title="Remove this user">
-                                  <i class="fas fa-trash-alt"></i>
-                                </b-button>
-                              </b-col>
-                            </b-row>
-                          </b-card>
-                        </template>
-
-                        <!-- info if no data -->
-                        <template v-slot:empty="scope">
-                            <h4>{{ scope.emptyText }}</h4>
-                        </template>
-                        <template v-slot:emptyfiltered="scope">
-                          <h4>{{ scope.emptyFilteredText }}</h4>
-                        </template>
-                    </b-table>
-                </div>
-
-            </div>
+  <div id="main-content">
+    <div id="teams" class="div-content table-content">
+        <div class="sub sub-header" id="main">
+            <span>
+              <h2 class="d-inline-block">Teams</h2> 
+              <b-button class="ml-5 mb-2" v-b-modal.modal-create-team v-b-tooltip.hover title="Create a team" variant="success">
+                <i class="fas fa-plus-square"></i>
+              </b-button> 
+            </span>
         </div>
 
-        <b-modal id="modal-create-team" hide-footer title="Create a new team" @hide="resetCreateTeamModal">
-          <form ref="form" @submit="onSubmitCreateTeam">
-            <b-form-group label="Name" label-for="name-input">
-              <b-form-input id="name-input" v-model="name" required></b-form-input>
-              <b-form-invalid-feedback :state="validationName">
-                Name is required
-              </b-form-invalid-feedback>
-              <b-form-valid-feedback :state="validationName">
-                Sweet !
-              </b-form-valid-feedback>
-            </b-form-group>
-            <b-button type="submit" variant="success">Yes create this team</b-button>
-          </form>
-        </b-modal>
+        <div class="sub sub-content">
 
-        <!-- delete user modal -->
-        <b-modal :id="deleteUserFromTeamModal.id" :title="deleteUserFromTeamModal.title" hide-footer @hide="resetDeleteUserTeamModal">
-          <b-form @submit="onSubmitDeleteUserTeam">
-            <h3>{{ deleteUserFromTeamModal.content }}</h3>
-            <b-button type="submit" variant="danger">Yes delete this member from this team</b-button>
-          </b-form>
-        </b-modal>
-        <!-- add user in teammodal -->
-        <b-modal :id="addUserInTeamModal.id" :title="addUserInTeamModal.title" hide-footer @hide="resetAddUserTeamModal">
-          <b-form @submit="onSubmitAddUserTeam">
-            <h3>{{ addUserInTeamModal.content }}</h3>
-            <b-form-select class="mb-5" v-model="addUserInTeamModal.userInTeamSelected" :options="addUserInTeamModal.usersNotInThisTeam"></b-form-select>
-            <b-button type="submit" variant="success">Yes add this member in this team</b-button>
-          </b-form>
-        </b-modal>
+            <!-- Tableau des teams -->
+            <div class="sub sub-content">
+                <b-table responsive sticky-header head-variant="light" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
+                  sort-icon-right :items="teams" :fields="teamsFields" show-empty id="teams-table">
 
-      </div>
-    </transition>
+                    <!-- Gère actions sur la ligne -->
+                    <template v-slot:cell(show_details)="row">
+                        <b-button size="sm" @click="row.toggleDetails">
+                          {{ row.detailsShowing ? 'Hide' : 'Show'}} members
+                        </b-button>
+                    </template>
+
+                    <template v-slot:cell(action)="row"> 
+                      <!-- <b-button variant="success" size="sm" class="mr-1">
+                        <i class="fas fa-pen"></i>
+                      </b-button> -->
+                      <b-button variant="success" size="sm" class="mr-2" @click="addUserInTeam(row.index, row.item, user, $event.target)" v-b-tooltip.hover title="Add an user">
+                        <i class="fas fa-user-plus"></i>
+                      </b-button>
+                      <!-- <b-button variant="danger" size="sm" @click="teamDelete(row.item, row.index, $event.target)" v-b-tooltip.hover title="Delete ">
+                        <i class="fas fa-trash-alt"></i>
+                      </b-button> -->
+                    </template>
+
+                    <template v-slot:row-details="row">
+                      <b-card v-for="user in row.item.users" :key="user.id">
+                        <b-row class="mb-2">
+                          <b-col sm="3">Name : {{user.username}} </b-col>
+                          <b-col sm="3">Email : {{ user.email }}</b-col>
+                          <b-col sm="3">Role : {{ user.role }}</b-col>
+                          <b-col sm="3">
+                            <b-button variant="danger" size="sm" @click="deleteUserFromTeam(row.index, row.item, user, $event.target)" v-b-tooltip.hover title="Remove this user">
+                              <i class="fas fa-trash-alt"></i>
+                            </b-button>
+                          </b-col>
+                        </b-row>
+                      </b-card>
+                    </template>
+
+                    <!-- info if no data -->
+                    <template v-slot:empty="scope">
+                        <h4>{{ scope.emptyText }}</h4>
+                    </template>
+                    <template v-slot:emptyfiltered="scope">
+                      <h4>{{ scope.emptyFilteredText }}</h4>
+                    </template>
+                </b-table>
+            </div>
+
+        </div>
+    </div>
+
+    <b-modal id="modal-create-team" hide-footer title="Create a new team" @hide="resetCreateTeamModal">
+      <form ref="form" @submit="onSubmitCreateTeam">
+        <b-form-group label="Name" label-for="name-input">
+          <b-form-input id="name-input" v-model="name" required></b-form-input>
+          <b-form-invalid-feedback :state="validationName">
+            Name is required
+          </b-form-invalid-feedback>
+          <b-form-valid-feedback :state="validationName">
+            Sweet !
+          </b-form-valid-feedback>
+        </b-form-group>
+        <b-button type="submit" variant="success">Yes create this team</b-button>
+      </form>
+    </b-modal>
+
+    <!-- delete user modal -->
+    <b-modal :id="deleteUserFromTeamModal.id" :title="deleteUserFromTeamModal.title" hide-footer @hide="resetDeleteUserTeamModal">
+      <b-form @submit="onSubmitDeleteUserTeam">
+        <h3>{{ deleteUserFromTeamModal.content }}</h3>
+        <b-button type="submit" variant="danger">Yes delete this member from this team</b-button>
+      </b-form>
+    </b-modal>
+    <!-- add user in teammodal -->
+    <b-modal :id="addUserInTeamModal.id" :title="addUserInTeamModal.title" hide-footer @hide="resetAddUserTeamModal">
+      <b-form @submit="onSubmitAddUserTeam">
+        <h3>{{ addUserInTeamModal.content }}</h3>
+        <b-form-select class="mb-5" v-model="addUserInTeamModal.userInTeamSelected" :options="addUserInTeamModal.usersNotInThisTeam"></b-form-select>
+        <b-button type="submit" variant="success">Yes add this member in this team</b-button>
+      </b-form>
+    </b-modal>
+
+  </div>
 </template>
 
 
@@ -154,13 +152,13 @@ export default {
 
     validationName() {
       return this.name != null && this.name != '' && this.name.length > 0
-    }
+    },
   },
 
   mounted() {
       setTimeout(() => {
         this.$store.dispatch('team/getManagerTeams', this.user.id)
-      }, 1000);
+      }, 2000);
   },
 
   methods: {

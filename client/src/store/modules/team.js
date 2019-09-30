@@ -12,14 +12,18 @@ const getters = {
 
 // actions
 const actions = {
-    getManagerTeams({commit, state}, managerId){
+    getManagerTeams({commit, state, rootState }, managerId){
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/users/' + managerId + '/teams';
 
             // empty the teams list
             commit('setListTeams', [])
             
-            window.axios.get(url)
+            window.axios({
+                method: 'get',
+                url: url,
+                headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+            })
             .then(response => {
                 commit('setListTeams', JSON.parse(JSON.stringify(response.data.data)))
                 resolve()
@@ -32,12 +36,17 @@ const actions = {
         })
     },
 
-    createTeam({ commit, state}, team){
+    createTeam({ commit, state, rootState }, team){
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/users/' + team.managerId + '/teams/'
 
-            window.axios.post(url, {
-                name: team.name
+            window.axios({
+                method: 'post',
+                url: url,
+                data: {
+                    name: team.name
+                },
+                headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
             })
             .then(response => {
                 // add team to list team
@@ -54,7 +63,7 @@ const actions = {
     },
 
     // update a team
-    updateTeam({ commit, state }, team){
+    updateTeam({ commit, state, rootState }, team){
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/teams/' + team.id;
 
@@ -65,7 +74,12 @@ const actions = {
                 }
             }
 
-            window.axios.put(url, params)
+            window.axios({
+                method: 'put',
+                url: url,
+                data: params,
+                headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+            })
             .then(response => {
                 resolve()
             })
@@ -76,11 +90,16 @@ const actions = {
         })
     },
 
-    deleteTeam({commit, state}, team) {
+    deleteTeam({commit, state, rootState }, team) {
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/teams/' + team.id;
 
-            window.axios.delete(url, params)
+            window.axios({
+                method: 'delete',
+                url: url,
+                data: params,
+                headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+            })
             .then(response => {
                 resolve()
             })
@@ -91,14 +110,18 @@ const actions = {
         })
     },
 
-    getAllTeams({commit, state}) {
+    getAllTeams({commit, state, rootState }) {
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/teams';
 
             // empty the teams list
             commit('setListTeams', [])
             
-            window.axios.get(url)
+            window.axios({
+                method: 'get',
+                url: url,
+                headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+            })
             .then(response => {
                 commit('setListTeams', JSON.parse(JSON.stringify(response.data.data)))
                 resolve()
@@ -110,11 +133,15 @@ const actions = {
         })
     },
 
-    removeUserFromTeam({commit, state}, item) {
+    removeUserFromTeam({commit, state, rootState }, item) {
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/teams/' + item.teamId + '/users/' + item.userId
 
-            window.axios.delete(url)
+            window.axios({
+                method: 'delete',
+                url: url,
+                headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+            })
             .then(response => {
                 resolve()
             })
@@ -125,11 +152,15 @@ const actions = {
         })
     },
 
-    addUserInTeam({commit, state}, item) {
+    addUserInTeam({commit, state, rootState }, item) {
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/teams/' + item.teamId + '/users/' + item.userId
 
-            window.axios.post(url)
+            window.axios({
+                method: 'post',
+                url: url,
+                headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+            })
             .then(response => {
                 resolve()
             })
