@@ -1,27 +1,10 @@
 //initial state
 const state = {
-    team: {
-        id: null,
-        name: null
-    },
-    membersList: [],
     listTeams: []
 }
 
 //getters
 const getters = {
-    getTeamId: state => {
-        return state.team.id
-    },
-
-    getTeamName: state => {
-      return state.team.name  
-    },
-
-    getTeamMembers: state => {
-        return state.membersList  
-      },
-
     getTeams: state => {
         return state.listTeams
     }
@@ -29,26 +12,6 @@ const getters = {
 
 // actions
 const actions = {
-    // get a team from the api and assign it to the state
-    getTeam({commit, state}, managerId, teamId){
-        return new Promise((resolve, reject) => {
-            let url = window.apiUrl + '/api/users/' + managerId + '/teams/' + teamId;
-
-            //empty the team
-            commit('setTeam', {});
-
-            windows.axios.get(url)
-            .then(response => {
-                commit('setTeam', JSON.parse(JSON.stringify(response.data.data)))
-                resolve()
-            })
-            .catch(error => {
-                console.error(error)
-                reject(error)
-            })
-        })
-    },
-
     getManagerTeams({commit, state}, managerId){
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/users/' + managerId + '/teams';
@@ -69,21 +32,24 @@ const actions = {
         })
     },
 
-    createTeam({ commit, state}, managerId, teamName){
+    createTeam({ commit, state}, team){
+        return new Promise((resolve, reject) => {
+            let url = window.apiUrl + '/api/users/' + team.managerId + '/teams/'
 
-        let url = window.apiUrl + '/api/users/' + managerId + '/teams/'
-
-        var text = '{ "team": { "name": "'+teamName+'" } }'
-        var obj = JSON.parse(text)
-
-        console.log(text)
-
-        window.axios.post(url, obj)
-        .then(response => {resolve()
-        })
-        .catch(error => {
-            console.error(error) 
-            reject(error)
+            window.axios.post(url, {
+                name: team.name
+            })
+            .then(response => {
+                // add team to list team
+                let newTeam = JSON.parse(JSON.stringify(response.data.data))
+                newTeam.users = []
+                commit('addTeam', newTeam)
+                resolve()
+            })
+            .catch(error => {
+                console.error(error) 
+                reject(error)
+            })
         })
     },
 
@@ -134,26 +100,7 @@ const actions = {
             
             window.axios.get(url)
             .then(response => {
-                commit('setListTeams', JSON.parse(JSON.stringify(res226ponse.data.data)))
-                resolve()
-            })
-            .catch(error => {
-                console.error(error)
-                reject(error)
-            })
-        })
-    },
-
-    getTeamMembers({commit, state}, teamId) {
-        return new Promise((resolve, reject) => {
-            let url = window.apiUrl + '/api/teams/' + teamId + '/getMembers'
-
-            //empty the members list
-            commit('setTeamMembers', [])
-
-            window.axios.get(url)
-            .then(response => {
-                commit('setTeamMembers', JSON.parse(JSON.stringify(response.data.data)))
+                commit('setListTeams', JSON.parse(JSON.stringify(response.data.data)))
                 resolve()
             })
             .catch(error => {
@@ -177,6 +124,7 @@ const actions = {
             })
         })
     },
+
     addUserInTeam({commit, state}, item) {
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/teams/' + item.teamId + '/users/' + item.userId
@@ -196,27 +144,12 @@ const actions = {
 
 // mutations
 const mutations = {
-
-    setTeamId(state, teamId) {
-        state.team.id = teamId
+    addTeam(state, team) {
+        state.listTeams.push(team)
     },
-
-    setTeamName(state, teamName) {
-        state.team.name = teamName
-    },
-
-    setTeam(state, team){
-        state.team = team
-    },
-
-    setTeamMembers(state, users){
-        state.membersList = users
-    },
-
     setListTeams(state, listTeams) {
         state.listTeams = listTeams
     }
-
 }
 
 export default {

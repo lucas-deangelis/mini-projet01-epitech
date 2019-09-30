@@ -7,32 +7,11 @@
             <div class="sub sub-header" id="main">
                 <span>
                   <h2 class="d-inline-block">Teams</h2> 
-                  <b-button class="ml-5 mb-2" v-b-modal.modal-choose-teamname v-b-tooltip.hover title="Create team" variant="success">
+                  <b-button class="ml-5 mb-2" v-b-modal.modal-create-team v-b-tooltip.hover title="Create a team" variant="success">
                     <i class="fas fa-plus-square"></i>
                   </b-button> 
                 </span>
             </div>
-
-            <b-modal
-              id="modal-choose-teamname"
-              ref="modal"
-              title="Submit Your Name"
-              @show="resetModal"
-              @hidden="resetModal"
-              @ok="handleOk"
-            >
-              <form ref="form" @submit.stop.prevent="handleSubmit">
-                <b-form-group label="Name" label-for="name-input">
-                  <b-form-input id="name-input" v-model="name" required></b-form-input>
-                  <b-form-invalid-feedback :state="validationName">
-                    Name is required
-                  </b-form-invalid-feedback>
-                  <b-form-valid-feedback :state="validationName">
-                    Sweet !
-                  </b-form-valid-feedback>
-                </b-form-group>
-              </form>
-            </b-modal>
 
             <div class="sub sub-content">
 
@@ -55,9 +34,9 @@
                           <b-button variant="success" size="sm" class="mr-2" @click="addUserInTeam(row.index, row.item, user, $event.target)" v-b-tooltip.hover title="Add an user">
                             <i class="fas fa-user-plus"></i>
                           </b-button>
-                          <b-button variant="danger" size="sm" @click="teamDelete(row.item, row.index, $event.target)" v-b-tooltip.hover title="Delete">
+                          <!-- <b-button variant="danger" size="sm" @click="teamDelete(row.item, row.index, $event.target)" v-b-tooltip.hover title="Delete ">
                             <i class="fas fa-trash-alt"></i>
-                          </b-button>
+                          </b-button> -->
                         </template>
 
                         <template v-slot:row-details="row">
@@ -88,20 +67,35 @@
             </div>
         </div>
 
+        <b-modal id="modal-create-team" hide-footer title="Create a new team" @hide="resetCreateTeamModal">
+          <form ref="form" @submit="onSubmitCreateTeam">
+            <b-form-group label="Name" label-for="name-input">
+              <b-form-input id="name-input" v-model="name" required></b-form-input>
+              <b-form-invalid-feedback :state="validationName">
+                Name is required
+              </b-form-invalid-feedback>
+              <b-form-valid-feedback :state="validationName">
+                Sweet !
+              </b-form-valid-feedback>
+            </b-form-group>
+            <b-button type="submit" variant="success">Yes create this team</b-button>
+          </form>
+        </b-modal>
+
         <!-- delete user modal -->
         <b-modal :id="deleteUserFromTeamModal.id" :title="deleteUserFromTeamModal.title" hide-footer @hide="resetDeleteUserTeamModal">
           <b-form @submit="onSubmitDeleteUserTeam">
-                <h3>{{ deleteUserFromTeamModal.content }}</h3>
-                <b-button type="submit" variant="danger">Yes delete this member from this team</b-button>
-            </b-form>
+            <h3>{{ deleteUserFromTeamModal.content }}</h3>
+            <b-button type="submit" variant="danger">Yes delete this member from this team</b-button>
+          </b-form>
         </b-modal>
         <!-- add user in teammodal -->
         <b-modal :id="addUserInTeamModal.id" :title="addUserInTeamModal.title" hide-footer @hide="resetAddUserTeamModal">
           <b-form @submit="onSubmitAddUserTeam">
-                <h3>{{ addUserInTeamModal.content }}</h3>
-                <b-form-select class="mb-5" v-model="addUserInTeamModal.userInTeamSelected" :options="addUserInTeamModal.usersNotInThisTeam"></b-form-select>
-                <b-button type="submit" variant="success">Yes add this member in this team</b-button>
-            </b-form>
+            <h3>{{ addUserInTeamModal.content }}</h3>
+            <b-form-select class="mb-5" v-model="addUserInTeamModal.userInTeamSelected" :options="addUserInTeamModal.usersNotInThisTeam"></b-form-select>
+            <b-button type="submit" variant="success">Yes add this member in this team</b-button>
+          </b-form>
         </b-modal>
 
       </div>
@@ -144,12 +138,6 @@ export default {
               teamId: null,
               usersNotInThisTeam: [],
               userInTeamSelected: null,
-            },
-            createTeamModel: {
-              id:'create-team',
-              title: 'Create a team',
-              content: '',
-              name: ''
             }
         }
   },
@@ -176,42 +164,24 @@ export default {
   },
 
   methods: {
-    // methods to create a new team
-    createTeam(teamname, button){
-      console.log("Team name :" + this.name)
-      this.$store.dispatch('team/createTeam', { managerId: this.user.id, teamName: this.name})
+    // methods for create team modal
+    resetCreateTeamModal() {
+      this.name = ''
     },
+    onSubmitCreateTeam(evt) {
+        evt.preventDefault()
 
-    checkFormValidity() {
-        const valid = this.$refs.form.checkValidity()
-        return valid
-      },
-      resetModal() {
-        this.name = ''
-      },
-      handleOk(bvModalEvt) {
-        // Prevent modal from closing
-        bvModalEvt.preventDefault()
-        // Trigger submit handler
-        this.handleSubmit()
-        this.createTeam(this.name)
-      },
-      handleSubmit() {
-        // Exit when the form isn't valid
-        if (!this.checkFormValidity()) {
-          return
-        }
-        // Hide the modal manually
-        this.$nextTick(() => {
-          this.$refs.modal.hide()
+        this.$store.dispatch('team/createTeam', {
+          managerId: this.user.id,
+          name: this.name
+        }).then(() => {
+
         })
-      },
 
-    // methods to delate a team
-    teamDelete(item, index, button){
-      console.log(item)
+        // close the modal
+        this.resetCreateTeamModal()
+        this.$root.$emit('bv::hide::modal', 'modal-create-team')
     },
-
     // methods for delete modal
     deleteUserFromTeam(index, item, user, button) {
       let team = JSON.parse(JSON.stringify(item))

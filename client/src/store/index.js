@@ -33,7 +33,6 @@ const listeners = store => {
         store.dispatch('getWorkingTimes', { userId: action.payload, start: '', end: '' })
         store.dispatch('user/getAllUsers')
         store.dispatch('team/getManagerTeams', action.payload)
-        store.dispatch('team/getTeamMembers', action.payload)
       }
 
       if (action.type == "user/updateUser") {
