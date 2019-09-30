@@ -3,7 +3,8 @@ const state = {
   user: {
     id: null,
     username: null,
-    email: null
+    email: null,
+    role: null
   },
   userStatus: {
     jwt: null,
@@ -33,7 +34,10 @@ const getters = {
     return state.userStatus.jwt;
   },
   getIsAuthenticated: state => {
-    return state.userStatus.isAuthenticated;
+    return state.userStatus.isAuthenticated
+  },
+  getUserRole: state => {
+    return state.user.role
   }
 }
 
@@ -115,6 +119,33 @@ const actions = {
       })
       .then(response => {
           commit('setUser', JSON.parse(JSON.stringify(response.data.data)))
+          resolve()
+      })
+      .catch(error => {
+          console.error(error)
+          reject(error)
+      })
+    })
+  },
+
+  updateRoleUser({ commit, state }, user) {
+    return new Promise((resolve, reject) => {
+      let url = window.apiUrl + '/api/users/' + user.id;
+
+      let params = {}
+      for (const key in user) {
+        if (user.hasOwnProperty(key)) {
+          params[key] = user[key];
+        }
+      }
+
+      window.axios({
+        method: 'put',
+        url: url,
+        data: params,
+        headers: { Authorization: "Bearer " + state.userStatus.jwt }
+      })
+      .then(response => {
           resolve()
       })
       .catch(error => {
@@ -274,17 +305,17 @@ const mutations = {
   setListUsers (state, listUsers) {
     state.listUsers = listUsers
   },
-
   setUserStatus (state, userStatus) {
     state.userStatus = userStatus
   },
-
   setJwt (state, jwt) {
     state.userStatus.jwt = jwt;
   },
-
   setIsAuthenticated (state, isAuthenticated) {
     state.userStatus.isAuthenticated = isAuthenticated;
+  },
+  setUserRole(state, userRole) {
+    state.user.role = userRole
   }
 
 }

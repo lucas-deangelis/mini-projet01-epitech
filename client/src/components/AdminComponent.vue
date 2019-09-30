@@ -123,7 +123,7 @@ export default {
       },
       onSubmitPromote(evt) {
           evt.preventDefault()
-          this.$store.dispatch('user/updateUser', { id: this.promoteModal.userId, role: 'manager' })
+          this.$store.dispatch('user/updateRoleUser', { id: this.promoteModal.userId, role: 'manager' })
 
           // close the modal
           this.resetPromoteModal()
@@ -142,7 +142,7 @@ export default {
       },
       onSubmitDemote(evt) {
           evt.preventDefault()
-          this.$store.dispatch('user/updateUser', { id: this.demoteModal.userId, role: 'employee' })
+          this.$store.dispatch('user/updateRoleUser', { id: this.demoteModal.userId, role: 'employee' })
 
           // close the modal
           this.resetDemoteModal()

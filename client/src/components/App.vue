@@ -11,8 +11,8 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="navbar-links mr-auto ml-auto">
             <router-link to="/" class="nav-link text-yellow">Home</router-link>
-            <router-link to="/team" class="nav-link text-yellow" v-if="user.role == 'manager' || user.role == 'admin'">Teams</router-link>
-            <router-link to="/users" class="nav-link text-yellow" v-if="user.role == 'admin'">Users</router-link>
+            <router-link to="/team" class="nav-link text-yellow" v-if="isUserAdminOrManager()">Teams</router-link>
+            <router-link to="/users" class="nav-link text-yellow" v-if="isUserAdmin()">Users</router-link>
 
             <div id="user-links-collapsed">
               <li class="nav-item">
@@ -23,7 +23,6 @@
               </li>
             </div>
           </b-navbar-nav>
-
         </b-collapse>
         <!-- Right aligned nav items -->
         <b-navbar-nav id="user-links">
@@ -93,20 +92,19 @@
 
 <script>
 import UserComponent from './UserComponent.vue'
-import { mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 
 export default {
   name: 'app',
-
-  data() {
-    return {}
-  },
 
   computed: {
     ...mapState('user', {
       user: state => state.user,
       userId: state => state.user.id,
       userStatus: state => state.userStatus
+    }),
+    ...mapGetters({
+        userRole: 'user/getUserRole'
     })
   },
 
@@ -193,7 +191,18 @@ export default {
         }
       }, false);
     }, 1000);
-  }
+  },
+  methods: {
+
+      isUserAdminOrManager(){
+        return this.userRole == 'admin' || this.userRole == 'manager' ? true : false
+      },
+
+      isUserAdmin(){
+        return this.userRole == 'admin' ? true : false
+      }
+
+  },
 }
 </script>
 

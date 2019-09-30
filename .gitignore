@@ -2,10 +2,12 @@
 /server/_build/
 
 # If you run "mix test --cover", coverage assets end up here.
-server/cover/
+/server/cover/
 
 # The directory Mix downloads your dependencies sources to.
-server/deps/
+/server/deps/
+
+/server/mix.lock
 
 # Where 3rd-party dependencies like ExDoc output generated docs.
 /doc/
@@ -25,8 +27,8 @@ miniprojet-*.tar
 # Since we are building assets from assets/,
 # we ignore priv/static. You may want to comment
 # this depending on your deployment strategy.
-server/priv/static/
-server/priv/repo/structure.sql
+/server/priv/static/
+/server/priv/repo/structure.sql
 
 # For Mac only
 .DS_STORE
@@ -34,11 +36,12 @@ server/priv/repo/structure.sql
 #node module
 node_modules
 /assets/node_modules
+/client/node_modules
 
 # Docker
 notes docker
-server/rel/
-volumes/
+/server/rel/
+/volumes/
 
 # Google cloud secret file
 gotham-254312-cd30ddd476eb.json

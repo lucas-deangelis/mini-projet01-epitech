@@ -55,6 +55,9 @@ defmodule GothamWeb.Router do
       get "/", TeamController, :index
       put "/:id", TeamController, :update
       delete "/:id", TeamController, :delete
+      get "/:id/getMembers", TeamController, :show_team_members
+      delete "/:teamId/users/:userId", TeamController, :delete_team_member
+      post "/:teamId/users/:userId", TeamController, :add_team_member
     end
 
     # Working Time routes
