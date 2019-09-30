@@ -268,4 +268,8 @@ defmodule Gotham.Accounts do
     Repo.all(query)
   end
 
+  def delete_user_from_team(teamId, userId) do
+    
+  end
+
 end

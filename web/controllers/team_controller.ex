@@ -55,4 +55,9 @@ defmodule GothamWeb.TeamController do
     users = Accounts.get_team_members(teamId)
     render(conn, "members.json", users: users)
   end
+
+  def delete_team_member(conn, %{"teamId" => teamId, "userId" => userId}) do
+    team = Accounts.delete_user_from_team(teamId, userId)
+    render(conn, "show.json", tema: team)
+  end
 end

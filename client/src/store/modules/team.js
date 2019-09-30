@@ -71,6 +71,24 @@ const actions = {
         })
     },
 
+    createTeam({ commit, state}, managerId, teamName){
+
+        let url = window.apiUrl + '/api/users/' + managerId + '/teams/'
+
+        var text = '{ "team": { "name": "'+teamName+'" } }'
+        var obj = JSON.parse(text)
+
+        console.log(text)
+
+        window.axios.post(url, obj)
+        .then(response => {resolve()
+        })
+        .catch(error => {
+            console.error(error) 
+            reject(error)
+        })
+    },
+
     // update a team
     updateTeam({ commit, state }, team){
         return new Promise((resolve, reject) => {
@@ -120,7 +138,7 @@ const actions = {
             
             window.axios.get(url)
             .then(response => {
-                commit('setListTeams', JSON.parse(JSON.stringify(response.data.data)))
+                commit('setListTeams', JSON.parse(JSON.stringify(res226ponse.data.data)))
                 resolve()
             })
             .catch(error => {
