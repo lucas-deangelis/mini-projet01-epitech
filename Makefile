@@ -1,6 +1,6 @@
 KEY_FILE:=gotham-254312-cd30ddd476eb.json
 PROJECT_ID:=gotham-254312
-K8s_CLUSTER:=standard-cluster-2
+K8s_CLUSTER:=gotham-cluster
 ZONE:=europe-west1-b
 
 IMAGE_VERSION:=latest
