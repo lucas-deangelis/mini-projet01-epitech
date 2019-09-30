@@ -53,8 +53,6 @@ const actions = {
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/users/' + managerId + '/teams';
 
-            console.log("getManagerTeams");
-
             // empty the teams list
             commit('setListTeams', [])
             
@@ -129,9 +127,7 @@ const actions = {
 
     getAllTeams({commit, state}) {
         return new Promise((resolve, reject) => {
-            let url = window.apiUrl + '/api/teams/all';
-
-            console.log("url : " + window.apiUrl + 'api/teams/all')
+            let url = window.apiUrl + '/api/teams';
 
             // empty the teams list
             commit('setListTeams', [])
@@ -148,7 +144,7 @@ const actions = {
         })
     },
 
-    getTeamMembers({commit, state}, teamId){
+    getTeamMembers({commit, state}, teamId) {
         return new Promise((resolve, reject) => {
             let url = window.apiUrl + '/api/teams/' + teamId + '/getMembers'
 
@@ -158,6 +154,21 @@ const actions = {
             window.axios.get(url)
             .then(response => {
                 commit('setTeamMembers', JSON.parse(JSON.stringify(response.data.data)))
+                resolve()
+            })
+            .catch(error => {
+                console.error(error)
+                reject(error)
+            })
+        })
+    },
+
+    removeUserFromTeam({commit, state}, item) {
+        return new Promise((resolve, reject) => {
+            let url = window.apiUrl + '/api/teams/' + item.teamId + '/' + item.userId
+
+            window.axios.delete(url)
+            .then(response => {
                 resolve()
             })
             .catch(error => {

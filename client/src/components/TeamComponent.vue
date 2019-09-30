@@ -22,18 +22,14 @@
               @ok="handleOk"
             >
               <form ref="form" @submit.stop.prevent="handleSubmit">
-                <b-form-group
-                  :state="nameState"
-                  label="Name"
-                  label-for="name-input"
-                  invalid-feedback="Name is required"
-                >
-                  <b-form-input
-                    id="name-input"
-                    v-model="name"
-                    :state="nameState"
-                    required
-                  ></b-form-input>
+                <b-form-group label="Name" label-for="name-input">
+                  <b-form-input id="name-input" v-model="name" required></b-form-input>
+                  <b-form-invalid-feedback :state="validationName">
+                    Name is required
+                  </b-form-invalid-feedback>
+                  <b-form-valid-feedback :state="validationName">
+                    Sweet !
+                  </b-form-valid-feedback>
                 </b-form-group>
               </form>
             </b-modal>
@@ -71,7 +67,7 @@
                               <b-col sm="3">Email : {{ user.email }}</b-col>
                               <b-col sm="3">Role : {{ user.role }}</b-col>
                               <b-col sm="3">
-                                <b-button variant="danger" size="sm" @click="deleteUserFromTeam(user.id, row.item.id, $event.target)" v-b-tooltip.hover title="Delete">
+                                <b-button variant="danger" size="sm" @click="deleteUserFromTeam(row.index, row.item, user, $event.target)" v-b-tooltip.hover title="Delete">
                                   <i class="fas fa-trash-alt"></i>
                                 </b-button>
                               </b-col>
@@ -94,7 +90,7 @@
 
         <!-- delete user modal -->
         <b-modal :id="deleteUserFromTeamModal.id" :title="deleteUserFromTeamModal.title" hide-footer @hide="resetDeleteUserTeamModal">
-          <b-form @submit="onSubmitDelete">
+          <b-form @submit="onSubmitDeleteUserTeam">
                 <h3>{{ deleteUserFromTeamModal.content }}</h3>
                 <b-button type="submit" variant="danger">Yes delete this member from the team</b-button>
             </b-form>
@@ -123,12 +119,11 @@ export default {
                 { key: 'id', sortable: true },
                 { key: 'name', sortable: true },
                 { key: 'show_details', sortable: false},
-                { key: 'manager_id', sortable: false},
                 { key: 'action', sortable: false}
             ],
             deleteUserFromTeamModal: {
               id: 'delete-user-from-team-modal',
-              title: 'Delete an member from the team',
+              title: 'Delete a member from the team',
               content: '',
               teamId: null,
               userId : null
@@ -150,11 +145,17 @@ export default {
     ...mapGetters({
         teams: 'team/getTeams',
         users: 'user/getListUsers'
-    })
+    }),
+
+    validationName() {
+      return this.name != null && this.name != '' && this.name.length > 0
+    }
   },
 
   mounted() {
-      this.$store.dispatch('team/getManagerTeams', this.user.id)
+      setTimeout(() => {
+        this.$store.dispatch('team/getManagerTeams', this.user.id)
+      }, 1000);
   },
 
   components: {
@@ -170,12 +171,10 @@ export default {
 
     checkFormValidity() {
         const valid = this.$refs.form.checkValidity()
-        this.nameState = valid ? 'valid' : 'invalid'
         return valid
       },
       resetModal() {
         this.name = ''
-        this.nameState = null
       },
       handleOk(bvModalEvt) {
         // Prevent modal from closing
@@ -201,26 +200,41 @@ export default {
     },
 
     // methods for delete modal
-    deleteUserFromTeam(userId, teamId, button) {
-      /*let rowUser = JSON.parse(JSON.stringify(item))
-      this.deleteModal.content = 'Are you sure you want to remove ' + rowUser.username + ' - ' + rowUser.email + ' from the team ?'
-      this.deleteModal.teamId = rowTeam.id
-      this.deleteModal.userId = rowUser.id
-      this.$root.$emit('bv::show::modal', this.deleteModal.id, button)*/
-      console.log(userId)
-      console.log(teamId)
+    deleteUserFromTeam(index, item, user, button) {
+      let team = JSON.parse(JSON.stringify(item))
+      this.deleteUserFromTeamModal.content = 'Are you sure you want to remove ' + user.username + ' - ' + user.email + ' from the team ?'
+      this.deleteUserFromTeamModal.teamId = team.id
+      this.deleteUserFromTeamModal.userId = user.id
+      this.$root.$emit('bv::show::modal', this.deleteUserFromTeamModal.id, button)
     },
     resetDeleteUserTeamModal() {
-      /*this.deleteModal.content = ''
-      this.deleteModal.userId = null*/
+      this.deleteUserFromTeamModal.content = ''
+      this.deleteUserFromTeamModal.teamId = null
+      this.deleteUserFromTeamModal.userId = null
     },
     onSubmitDeleteUserTeam(evt) {
-        /*evt.preventDefault()
-        this.$store.dispatch('user/deleteUser', { id: this.deleteModal.userId })
+        evt.preventDefault()
+        let teams = this.teams
+        // update the team and remove the user
+        let teamIndex = teams.findIndex((item) => {
+          return item.id === this.deleteUserFromTeamModal.teamId
+        })
+        teams[teamIndex].users = teams[teamIndex].users.filter((item) => {
+          return item.id != this.deleteUserFromTeamModal.userId
+        })
+
+        this.$store.dispatch('team/removeUserFromTeam', {
+          teamId: this.deleteUserFromTeamModal.teamId,
+          userId: this.deleteUserFromTeamModal.userId
+        }).then(() => {
+          console.log('done')
+          // commit the teams updated
+          this.$store.commit('team/setListTeams', teams)
+        })
 
         // close the modal
-        this.resetDeleteModal()
-        this.$root.$emit('bv::hide::modal', this.deleteModal.id)*/
+        this.resetDeleteUserTeamModal()
+        this.$root.$emit('bv::hide::modal', this.deleteUserFromTeamModal.id)
     }
   }
 

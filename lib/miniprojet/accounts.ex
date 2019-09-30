@@ -6,8 +6,7 @@ defmodule Gotham.Accounts do
   import Ecto.Query, warn: false
   alias Gotham.Repo
 
-  alias Gotham.Accounts.User
-  alias Gotham.Accounts.Team
+  alias Gotham.Accounts.{User, UserTeam, Team}
 
   @doc """
   Returns the list of users.
@@ -260,7 +259,7 @@ defmodule Gotham.Accounts do
   def change_team(%Team{} = team) do
     Team.changeset(team, %{})
   end
-  
+
   def get_team_members(id) do
     query = from t in Team,
       where: t.id == ^id,
@@ -269,7 +268,13 @@ defmodule Gotham.Accounts do
   end
 
   def delete_user_from_team(teamId, userId) do
-    
+
+    query = from ut in UserTeam,
+      where: ut.team_id == ^teamId,
+      where: ut.user_id == ^userId
+
+    # Delete the assoc
+    Repo.delete_all(query)
   end
 
 end
