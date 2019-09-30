@@ -17,10 +17,14 @@ const getters = {
 // actions
 const actions = {
   // clock in - clock out
-  clock({ commit, state, dispatch }, userId) {
+  clock({ commit, state, dispatch, rootState }, userId) {
     let url = window.apiUrl + '/api/clocks/' + userId
 
-    window.axios.post(url)
+    window.axios({
+      method: 'post',
+      url: url,
+      headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+    })
     .then(response => {
         let data = JSON.parse(JSON.stringify(response.data.data))
         
@@ -41,21 +45,27 @@ const actions = {
     });
   },
 
-  get({commit, state, dispatch}, userId) {
+  get({commit, state, dispatch, rootState}, userId) {
     let url = window.apiUrl + '/api/clocks/' + userId
 
-    window.axios.get(url)
+    window.axios({
+      method: 'get',
+      url: url,
+      headers: { Authorization: "Bearer " + rootState.user.userStatus.jwt }
+    })
     .then(response => {
         let data = JSON.parse(JSON.stringify(response.data.data))
 
-        if (data.status == false) {
-            // update clockInProgress var
-            commit('setClock', false)
-        } else {
+        if (data != null) {
+          if (data.status == false) {
+              // update clockInProgress var
+              commit('setClock', false)
+          } else {
             // update startDateTime and clockInProgress var
             commit('setClock', true)
           }
           commit('setStart', data.time.replace('T', ' '))
+        }
     })
     .catch(error => {
         console.error(error)

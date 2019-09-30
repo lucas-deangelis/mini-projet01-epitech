@@ -33,9 +33,3 @@ export default {
   }
 }
 </script>
-
-<style>
-@import url('../assets/fontawesome/css/all.css');
-@import url('../assets/css/style.css');
-@import url('../assets/css/transition.css');
-</style>

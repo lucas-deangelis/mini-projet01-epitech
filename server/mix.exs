@@ -54,7 +54,9 @@ defmodule Gotham.MixProject do
       {:poison, "~> 3.1"},
       {:corsica, "~> 1.0"},
       {:ecto_enum, "~> 1.3"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:argon2_elixir, "~> 2.0"},
+      {:guardian, "~> 1.2"}
     ]
   end
 

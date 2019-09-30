@@ -55,3 +55,8 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Use Guardian for JWT Authentification
+config :miniprojet, Gotham.Auth.Guardian,
+       issuer: "gotham",
+       secret_key: "K18ndbBb2rRPKslEKqr7wPE2/eBBEDpDL6FXnCFbme2psJ7dna2L89r9L8SHAKGS"
