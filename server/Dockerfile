@@ -25,7 +25,7 @@ ENV SKIP_PHOENIX=${SKIP_PHOENIX} \
     MIX_ENV=${MIX_ENV}
 
 # By convention, /opt is typically used for applications
-WORKDIR /opt/app
+WORKDIR /app/server
 
 # This step installs all the build tools we'll need
 RUN apt-get update && \
