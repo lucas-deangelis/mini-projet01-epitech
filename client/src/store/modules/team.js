@@ -165,9 +165,23 @@ const actions = {
 
     removeUserFromTeam({commit, state}, item) {
         return new Promise((resolve, reject) => {
-            let url = window.apiUrl + '/api/teams/' + item.teamId + '/' + item.userId
+            let url = window.apiUrl + '/api/teams/' + item.teamId + '/users/' + item.userId
 
             window.axios.delete(url)
+            .then(response => {
+                resolve()
+            })
+            .catch(error => {
+                console.error(error)
+                reject(error)
+            })
+        })
+    },
+    addUserInTeam({commit, state}, item) {
+        return new Promise((resolve, reject) => {
+            let url = window.apiUrl + '/api/teams/' + item.teamId + '/users/' + item.userId
+
+            window.axios.post(url)
             .then(response => {
                 resolve()
             })

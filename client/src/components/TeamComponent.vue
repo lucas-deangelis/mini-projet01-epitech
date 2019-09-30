@@ -49,10 +49,10 @@
                         </template>
 
                         <template v-slot:cell(action)="row"> 
-                          <b-button variant="success" size="sm" class="mr-1">
+                          <!-- <b-button variant="success" size="sm" class="mr-1">
                             <i class="fas fa-pen"></i>
-                          </b-button>
-                          <b-button variant="success" size="sm" class="mr-5">
+                          </b-button> -->
+                          <b-button variant="success" size="sm" class="mr-2" @click="addUserInTeam(row.index, row.item, user, $event.target)" v-b-tooltip.hover title="Add an user">
                             <i class="fas fa-user-plus"></i>
                           </b-button>
                           <b-button variant="danger" size="sm" @click="teamDelete(row.item, row.index, $event.target)" v-b-tooltip.hover title="Delete">
@@ -67,7 +67,7 @@
                               <b-col sm="3">Email : {{ user.email }}</b-col>
                               <b-col sm="3">Role : {{ user.role }}</b-col>
                               <b-col sm="3">
-                                <b-button variant="danger" size="sm" @click="deleteUserFromTeam(row.index, row.item, user, $event.target)" v-b-tooltip.hover title="Delete">
+                                <b-button variant="danger" size="sm" @click="deleteUserFromTeam(row.index, row.item, user, $event.target)" v-b-tooltip.hover title="Remove this user">
                                   <i class="fas fa-trash-alt"></i>
                                 </b-button>
                               </b-col>
@@ -92,7 +92,15 @@
         <b-modal :id="deleteUserFromTeamModal.id" :title="deleteUserFromTeamModal.title" hide-footer @hide="resetDeleteUserTeamModal">
           <b-form @submit="onSubmitDeleteUserTeam">
                 <h3>{{ deleteUserFromTeamModal.content }}</h3>
-                <b-button type="submit" variant="danger">Yes delete this member from the team</b-button>
+                <b-button type="submit" variant="danger">Yes delete this member from this team</b-button>
+            </b-form>
+        </b-modal>
+        <!-- add user in teammodal -->
+        <b-modal :id="addUserInTeamModal.id" :title="addUserInTeamModal.title" hide-footer @hide="resetAddUserTeamModal">
+          <b-form @submit="onSubmitAddUserTeam">
+                <h3>{{ addUserInTeamModal.content }}</h3>
+                <b-form-select class="mb-5" v-model="addUserInTeamModal.userInTeamSelected" :options="addUserInTeamModal.usersNotInThisTeam"></b-form-select>
+                <b-button type="submit" variant="success">Yes add this member in this team</b-button>
             </b-form>
         </b-modal>
 
@@ -114,7 +122,8 @@ export default {
             sortBy: 'id',
             sortDesc: false,
             name: '',
-            namteState: null,
+            usersNotInThisTeam: [],
+            userInTeamSelected: null,
             teamsFields: [
                 { key: 'id', sortable: true },
                 { key: 'name', sortable: true },
@@ -123,10 +132,18 @@ export default {
             ],
             deleteUserFromTeamModal: {
               id: 'delete-user-from-team-modal',
-              title: 'Delete a member from the team',
+              title: 'Remove a member from this team',
               content: '',
               teamId: null,
               userId : null
+            },
+            addUserInTeamModal: {
+              id: 'add-user-in-team-modal',
+              title: 'Add a user in this team',
+              content: '',
+              teamId: null,
+              usersNotInThisTeam: [],
+              userInTeamSelected: null,
             },
             createTeamModel: {
               id:'create-team',
@@ -156,10 +173,6 @@ export default {
       setTimeout(() => {
         this.$store.dispatch('team/getManagerTeams', this.user.id)
       }, 1000);
-  },
-
-  components: {
-      
   },
 
   methods: {
@@ -227,7 +240,6 @@ export default {
           teamId: this.deleteUserFromTeamModal.teamId,
           userId: this.deleteUserFromTeamModal.userId
         }).then(() => {
-          console.log('done')
           // commit the teams updated
           this.$store.commit('team/setListTeams', teams)
         })
@@ -235,6 +247,75 @@ export default {
         // close the modal
         this.resetDeleteUserTeamModal()
         this.$root.$emit('bv::hide::modal', this.deleteUserFromTeamModal.id)
+    },
+    // methods for add user in team modal
+    addUserInTeam(index, item, user, button) {
+      let team = JSON.parse(JSON.stringify(item))
+      this.addUserInTeamModal.content = 'Please select the user you want to add in this team ?'
+      this.addUserInTeamModal.teamId = team.id
+
+      // get the users that are not already in this team
+      let users = this.users
+      let usersInId = team.users.map(item => {
+        return item.id
+      })
+      let usersNotInId = users.filter((item) => {
+        return !usersInId.includes(item.id) && item.id != this.user.id
+      })
+
+      usersNotInId.forEach(user => {
+        this.addUserInTeamModal.usersNotInThisTeam.push({
+          value: user.id,
+          text: user.username + ' - ' + user.email
+        })
+      });
+      this.addUserInTeamModal.usersNotInThisTeam.sort((a, b) => {
+        if (a.text > b.text)
+          return 1
+        else if (a.text < b.text)
+          return -1
+        else return 0
+      })
+
+
+      this.$root.$emit('bv::show::modal', this.addUserInTeamModal.id, button)
+    },
+    resetAddUserTeamModal() {
+      this.addUserInTeamModal.content = ''
+      this.addUserInTeamModal.teamId = null
+      this.addUserInTeamModal.userInTeamSelected = null
+      this.addUserInTeamModal.usersNotInThisTeam = []
+    },
+    onSubmitAddUserTeam(evt) {
+        evt.preventDefault()
+        // get the selected user
+        let users = this.users
+        let userIndex = this.addUserInTeamModal.usersNotInThisTeam.findIndex((item) => {
+          return item.value == this.addUserInTeamModal.userInTeamSelected
+        })
+        let teams = this.teams
+        let userId = this.addUserInTeamModal.usersNotInThisTeam[userIndex].value
+        let user = users.find((item) => {
+          return item.id === userId
+        })
+
+        // update the team and add the user
+        let teamIndex = teams.findIndex((item) => {
+          return item.id === this.addUserInTeamModal.teamId
+        })
+        teams[teamIndex].users.push(user)
+
+        this.$store.dispatch('team/addUserInTeam', {
+          teamId: this.addUserInTeamModal.teamId,
+          userId: userId
+        }).then(() => {
+          // commit the teams updated
+          this.$store.commit('team/setListTeams', teams)
+        })
+
+        // close the modal
+        this.resetAddUserTeamModal()
+        this.$root.$emit('bv::hide::modal', this.addUserInTeamModal.id)
     }
   }
 

@@ -60,4 +60,13 @@ defmodule GothamWeb.TeamController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def add_team_member(conn, %{"teamId" => teamId, "userId" => userId}) do
+    with {:ok, %UserTeam{} = user_team} <- Accounts.add_user_in_team(teamId, userId) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", Routes.team_path(conn, :add_team_member, teamId, userId))
+      |> render("show_user_team.json", user_team: user_team)
+    end
+  end
 end

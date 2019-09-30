@@ -277,4 +277,10 @@ defmodule Gotham.Accounts do
     Repo.delete_all(query)
   end
 
+  def add_user_in_team(teamId, userId) do
+
+    changeset = UserTeam.changeset(%UserTeam{}, %{user_id: userId, team_id: teamId})
+    Repo.insert(changeset)
+  end
+
 end
