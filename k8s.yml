@@ -1,0 +1,66 @@
+---
+apiVersion: "v1"
+kind: "Namespace"
+metadata:
+  name: "gotham-time-manager"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "gotham-project"
+  namespace: "gotham-time-manager"
+  labels:
+    app: "gotham-project"
+    tier: "web"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "gotham-project"
+      tier: "web"
+  template:
+    metadata:
+      labels:
+        app: "gotham-project"
+        tier: "web"
+    spec:
+      containers:
+      - name: frontend
+        image: gcr.io/gotham-254312/frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+      - name: backend
+        image: gcr.io/gotham-254312/backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4000
+        readinessProbe:
+          httpGet:
+            path: /api
+            port: 80
+---
+apiVersion: "autoscaling/v2beta1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "gotham-project-hpa"
+  namespace: "gotham-time-manager"
+  labels:
+    app: "gotham-project"
+    tier: "web"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "gotham-project"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      targetAverageUtilization: 80

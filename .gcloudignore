@@ -1,0 +1,2 @@
+#!include:/client/.dockerignore
+#!include:/server/.dockerignore
