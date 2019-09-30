@@ -3,7 +3,8 @@ const state = {
   user: {
     id: null,
     username: null,
-    email: null
+    email: null,
+    role: null
   },
   userStatus: {
     jwt: null,
@@ -33,7 +34,10 @@ const getters = {
     return state.userStatus.jwt;
   },
   getIsAuthenticated: state => {
-    return state.userStatus.isAuthenticated;
+    return state.userStatus.isAuthenticated
+  },
+  getUserRole: state => {
+    return state.user.role
   }
 }
 
@@ -274,17 +278,17 @@ const mutations = {
   setListUsers (state, listUsers) {
     state.listUsers = listUsers
   },
-
   setUserStatus (state, userStatus) {
     state.userStatus = userStatus
   },
-
   setJwt (state, jwt) {
     state.userStatus.jwt = jwt;
   },
-
   setIsAuthenticated (state, isAuthenticated) {
     state.userStatus.isAuthenticated = isAuthenticated;
+  },
+  setUserRole(state, userRole) {
+    state.user.role = userRole
   }
 
 }
