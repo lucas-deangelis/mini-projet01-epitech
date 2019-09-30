@@ -5,7 +5,7 @@ RUN apt-get update
 RUN npm install -g http-server
 
 # définit le dossier 'app/client' comme dossier de travail
-WORKDIR /app/client
+WORKDIR /opt/app
 
 # copie 'package.json' et 'package-lock.json' (si disponible)
 #COPY package*.json ./

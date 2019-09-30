@@ -10,7 +10,17 @@ defmodule Gotham.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: [
+        miniprojet: [
+          include_erts: true,
+          include_executables_for: [:unix],
+          applications: [
+            runtime_tools: :permanent
+          ]
+        ]
+      ]
+
     ]
   end
 
@@ -44,8 +54,7 @@ defmodule Gotham.MixProject do
       {:poison, "~> 3.1"},
       {:corsica, "~> 1.0"},
       {:ecto_enum, "~> 1.3"},
-      {:plug_cowboy, "~> 2.0"},
-      {:distillery, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"}
     ]
   end
 

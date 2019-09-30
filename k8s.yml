@@ -4,23 +4,25 @@ kind: "Namespace"
 metadata:
   name: "gotham-time-manager"
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: "apps/v1"
+kind: "Deployment"
 metadata:
-  name: gotham-project
-  namespace: gotham-time-manager
+  name: "gotham-project"
+  namespace: "gotham-time-manager"
   labels:
-    app: gotham
+    app: "gotham-project"
+    tier: "web"
 spec:
+  replicas: 3
   selector:
     matchLabels:
-      app: gotham
-      tier: web
+      app: "gotham-project"
+      tier: "web"
   template:
     metadata:
       labels:
-        app: gotham
-        tier: web
+        app: "gotham-project"
+        tier: "web"
     spec:
       containers:
       - name: frontend
@@ -37,59 +39,19 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 4000
-        env:
-            - name: DB_HOST
-              value: 127.0.0.1:5432
-            # [START cloudsql_secrets]
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: cloudsql-db-credentials
-                  key: username
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: cloudsql-db-credentials
-                  key: password
-            - name: DB_NAME
-              value: gotham
         readinessProbe:
           httpGet:
             path: /api
             port: 80
-      - name: cloudsql-proxy
-        image: gcr.io/cloudsql-docker/gce-proxy:1.14
-        command: ["/cloud_sql_proxy",
-                  "-instances=gotham-254312:europe-west1:gotham-db-instance=tcp:5432",
-                  # If running on a VPC, the Cloud SQL proxy can connect via Private IP. See:
-                  # https://cloud.google.com/sql/docs/mysql/private-ip for more info.
-                  # "-ip_address_types=PRIVATE",
-                  "-credential_file=gotham-254312-cd30ddd476eb.json"]
-        # [START cloudsql_security_context]
-        securityContext:
-          runAsUser: 2  # non-root user
-          allowPrivilegeEscalation: false
-        # [END cloudsql_security_context]
-        volumeMounts:
-          - name: cloudsql-instance
-            mountPath: /volumes/database
-            readOnly: true
-      # [END proxy_container]
-      # [START volumes]
-      volumes:
-        - name: cloudsql-instance
-          secret:
-            secretName: cloudsql-instance-credentials
-      # [END volumes]
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
 metadata:
-  name: "gotham-hpa"
-  namespace: gotham-time-manager
+  name: "gotham-project-hpa"
+  namespace: "gotham-time-manager"
   labels:
-    app: "gotham"
-    tier: "hpa"
+    app: "gotham-project"
+    tier: "web"
 spec:
   scaleTargetRef:
     kind: "Deployment"

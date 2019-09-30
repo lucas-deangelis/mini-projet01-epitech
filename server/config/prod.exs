@@ -10,17 +10,19 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :miniprojet, GothamWeb.Endpoint,
-  http: [port: "${PORT}"],
-  url: [host: "${HOST}", port: "${PORT}"],
-  secret_key_base: "${SECRET_KEY_BASE}",
-  server: true
+  load_from_system_env: true,
+  http: [port: {:system, "PORT"} || 4000],
+  check_origin: false,
+  server: true,
+  root: ".",
+  secret_key_base: {:system, "SECRET_KEY_BASE"}
 
 config :miniprojet, Gotham.Repo,
   adapter: Ecto.Adapters.Postgres,
-  hostname: "${DB_HOSTNAME}",
-  username: "${DB_USERNAME}",
-  password: "${DB_PASSWORD}",
-  database: "${DB_NAME}",
+  username: "postgres",
+  password: "7pGd94CGu6n3B9BH",
+  database: "gotham",
+  socket_dir: "/tmp/cloudsql/gotham-254312:europe-west1:gotham-db-instance",
   pool_size: 20
   # ssl: true
 
